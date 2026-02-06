@@ -43,6 +43,7 @@ Each agent has a personal workspace at `agent/workspace/{your_name}/`.
 **Rules:**
 - Keep it short (a few bullet points)
 - Replace previous note each cycle (don't accumulate)
+- **Always commit workspace changes to main branch** (not feature branches)
 - This is for YOU — help yourself be more effective
 
 ---
