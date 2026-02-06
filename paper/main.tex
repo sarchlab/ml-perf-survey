@@ -469,30 +469,297 @@ ArchGym~\cite{archgym2023} & Accelerator & Hybrid & Static & 0.61\% RMSE & ML-ai
 \section{Survey of Approaches}
 \label{sec:survey}
 
+This section surveys ML-based performance modeling approaches organized by target hardware platform.
+For each category, we examine the modeling challenges specific to that platform, describe representative techniques, and synthesize key findings across the literature.
+Table~\ref{tab:survey-summary} provides a comprehensive comparison of the surveyed approaches.
+
+\begin{table*}[t]
+\centering
+\caption{Summary of surveyed ML-based performance modeling approaches, organized by target hardware platform.}
+\label{tab:survey-summary}
+\small
+\begin{tabular}{llllll}
+\toprule
+\textbf{Paper} & \textbf{Platform} & \textbf{ML Technique} & \textbf{Prediction Target} & \textbf{Error} & \textbf{Key Innovation} \\
+\midrule
+\multicolumn{6}{l}{\textit{CPU Performance Modeling}} \\
+GRANITE~\cite{granite2022} & CPU & GNN & Basic block throughput & 0.97 corr & Instruction graph encoding \\
+gem5+ML~\cite{binkert2011gem5} & CPU & Hybrid & Execution time & 10--20\% & Simulation + learning \\
+\midrule
+\multicolumn{6}{l}{\textit{GPU Performance Modeling}} \\
+NeuSight~\cite{neusight2025} & GPU & Hybrid MLP & Kernel/E2E latency & 2.3\% & Tile-based prediction \\
+Habitat~\cite{habitat2021} & GPU & MLP & Training time & 11.8\% & Wave scaling analysis \\
+Accel-Sim~\cite{accelsim2020} & GPU & Simulation & Cycle-accurate & 10--20\% & SASS trace-driven \\
+\midrule
+\multicolumn{6}{l}{\textit{DNN Accelerator Modeling}} \\
+Timeloop~\cite{timeloop2019} & NPU & Analytical & Latency/Energy & 5--10\% & Loop-nest DSE \\
+MAESTRO~\cite{maestro2019} & NPU & Analytical & Latency/Energy & 5--15\% & Data-centric directives \\
+Sparseloop~\cite{sparseloop2022} & NPU & Analytical & Sparse tensors & 5--10\% & Compression modeling \\
+ArchGym~\cite{archgym2023} & Multi & RL+Surrogate & Multi-objective & 0.61\% & ML-aided DSE \\
+\midrule
+\multicolumn{6}{l}{\textit{Edge Device Modeling}} \\
+nn-Meter~\cite{nnmeter2021} & Edge & RF ensemble & Latency & $<$1\% & Kernel detection \\
+LitePred~\cite{litepred2024} & Edge & VAE+MLP & Latency & 0.7\% & 85-platform transfer \\
+HELP~\cite{help2021} & Multi & Meta-learning & Latency & 1.9\% & 10-sample adaptation \\
+\midrule
+\multicolumn{6}{l}{\textit{Distributed and LLM Systems}} \\
+ASTRA-sim~\cite{astrasim2023} & Distributed & Simulation & Training time & 5--15\% & Collective modeling \\
+VIDUR~\cite{vidur2024} & GPU cluster & Simulation & LLM serving & $<$5\% & Prefill/decode phases \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
 \subsection{CPU Performance Modeling}
 \label{subsec:cpu-modeling}
 
-\todo{Survey papers on ML-based CPU performance prediction.}
+CPU performance modeling for ML workloads presents unique challenges due to complex microarchitectural effects including out-of-order execution, branch prediction, and deep cache hierarchies.
+While GPUs have received more attention for DNN training, CPUs remain important for inference---particularly on edge devices and for operators that map poorly to SIMT execution.
+
+\subsubsection{Traditional CPU Performance Modeling}
+
+Traditional CPU modeling relies on cycle-accurate simulation through frameworks like gem5~\cite{binkert2011gem5}.
+The gem5 simulator provides multiple fidelity levels: fast functional simulation for correctness validation, and detailed out-of-order models achieving 10--20\% accuracy versus real hardware.
+For ML workloads, gem5 extensions such as gem5-Aladdin and SMAUG enable accelerator integration studies.
+
+However, cycle-accurate simulation suffers from fundamental speed limitations---simulating even modest DNN inference requires hours, making design space exploration impractical.
+This limitation has motivated ML-based alternatives that learn to predict performance from static program features.
+
+\subsubsection{ML-Based Basic Block Modeling}
+
+GRANITE~\cite{granite2022} represents the state of the art in ML-based CPU performance modeling.
+The key insight is that basic block throughput---the steady-state execution rate of a loop body---can be predicted from the instruction dependency graph without simulation.
+GRANITE encodes basic blocks as directed graphs where nodes represent instructions with features (opcode, operand types) and edges capture data dependencies.
+
+A graph neural network processes this representation through message passing layers:
+\begin{equation}
+\mathbf{h}_i^{(k+1)} = \text{MLP}\left(\mathbf{h}_i^{(k)} + \sum_{j \in \mathcal{N}(i)} \mathbf{h}_j^{(k)}\right)
+\end{equation}
+where $\mathbf{h}_i^{(k)}$ represents instruction $i$'s embedding at layer $k$.
+After several message passing rounds, a global pooling operation aggregates instruction embeddings into a single block representation, which a final MLP maps to throughput prediction.
+
+GRANITE achieves 0.97 Kendall's $\tau$ correlation with ground-truth measurements on x86 basic blocks, significantly outperforming prior analytical models like IACA and llvm-mca.
+Critically, the learned model generalizes across microarchitectures---a model trained on Skylake transfers to Haswell with only modest accuracy degradation.
+
+\subsubsection{Challenges and Opportunities}
+
+Despite GRANITE's success, several challenges remain for CPU performance modeling.
+First, DNN operators often involve memory-bound execution where cache behavior dominates---GRANITE focuses on compute-bound basic blocks and does not model memory hierarchy effects.
+Second, modern CPUs feature increasingly complex prefetchers and branch predictors whose behavior is difficult to capture in static features.
+Third, CPU-based DNN inference often involves highly optimized library code (Intel MKL, ARM Compute Library) whose performance depends on runtime scheduling decisions.
+
+Hybrid approaches combining coarse-grained simulation with learned correction factors represent a promising direction.
+Rather than simulating every cycle, these methods use fast simulation to establish approximate behavior, then train ML models to predict residual errors, potentially achieving simulation accuracy at reduced cost.
 
 \subsection{GPU Performance Modeling}
 \label{subsec:gpu-modeling}
 
-\todo{Survey papers on ML-based GPU performance prediction.}
+GPUs are the dominant platform for ML training and large-scale inference.
+Accurate GPU performance prediction is essential for neural architecture search, compiler optimization, and serving system design.
+However, GPU performance modeling is challenging due to SIMT execution, complex memory hierarchies, and workload-dependent scheduling behavior.
+
+\subsubsection{Cycle-Accurate GPU Simulation}
+
+GPGPU-Sim~\cite{gpgpusim2009} pioneered detailed GPU simulation, modeling SIMT cores, warp scheduling, memory coalescing, and cache hierarchies.
+Accel-Sim~\cite{accelsim2020} extended this foundation with trace-driven simulation and improved correlation with modern GPUs (Turing, Ampere), achieving 0.90--0.97 IPC correlation.
+
+These simulators provide high fidelity---essential for microarchitectural studies---but suffer from 1000--10000$\times$ slowdown versus real GPU execution.
+Simulating a single ResNet-50 inference can require hours, making design space exploration impractical.
+This has motivated the development of ML-based predictors that achieve comparable accuracy at dramatically reduced cost.
+
+\subsubsection{Learned GPU Performance Models}
+
+Habitat~\cite{habitat2021} introduced \emph{wave scaling} for cross-GPU prediction.
+The key insight is that GPU execution time can be decomposed into compute and memory components that scale differently across devices:
+\begin{equation}
+T_{\text{target}} = T_{\text{compute}} \cdot \frac{P_{\text{source}}}{P_{\text{target}}} + T_{\text{memory}} \cdot \frac{B_{\text{source}}}{B_{\text{target}}}
+\end{equation}
+where $P$ denotes peak compute throughput and $B$ memory bandwidth.
+By profiling on a source GPU and measuring how kernels respond to artificially reduced parallelism (``wave scaling''), Habitat estimates the compute and memory fractions, enabling prediction on unseen target GPUs.
+
+Habitat achieves 11.8\% average error predicting training iteration time across GPU generations (V100 to A100).
+However, it requires actual GPU execution for wave scaling measurements and cannot predict performance for unseen models.
+
+NeuSight~\cite{neusight2025} addresses these limitations through \emph{tile-based prediction}.
+The key innovation is decomposing GPU kernel execution into tiles---the basic scheduling unit in CUDA---and predicting per-tile behavior:
+\begin{equation}
+T_{\text{kernel}} = \max_{w \in \text{waves}} \sum_{t \in w} \left( T_{\text{compute}}^{(t)} + T_{\text{memory}}^{(t)} \right)
+\end{equation}
+
+This formulation mirrors actual GPU execution semantics: tiles are scheduled in waves, and kernel time is dominated by the slowest wave.
+NeuSight uses MLPs to predict tile-level compute and memory times from static features (tile dimensions, register usage, shared memory allocation).
+
+By capturing the wave-level structure, NeuSight achieves remarkable accuracy: 2.3\% error on GPT-3 inference across H100, A100, and V100 GPUs.
+This represents a 50$\times$ reduction in error compared to prior approaches like Habitat (121.4\% $\rightarrow$ 2.3\% on H100 for GPT-3).
+NeuSight's physics-informed architecture---encoding GPU execution semantics into the model structure---provides strong inductive bias that enables generalization to unseen models and GPUs.
+
+\subsubsection{Compiler Cost Models for GPUs}
+
+The TVM~\cite{tvm2018} and Ansor~\cite{ansor2020} systems use learned cost models to guide tensor program optimization.
+Rather than executing every candidate program, XGBoost or MLP models predict execution time from program features (loop bounds, vectorization widths, memory access patterns).
+
+Ansor's hierarchical search combines sketch generation, random annotation, and evolutionary refinement, using the cost model to prune the search space.
+With 10K profiled samples, Ansor achieves approximately 15\% MAPE on GPU kernel prediction.
+The TenSet dataset provides 52 million program performance records across CPUs and GPUs, enabling pre-trained cost models that accelerate autotuning convergence by 10$\times$.
+
+\subsubsection{LLM Inference Prediction}
+
+Large language model inference presents unique GPU modeling challenges.
+LLM execution exhibits distinct \emph{prefill} (compute-bound, parallel prompt processing) and \emph{decode} (memory-bound, sequential token generation) phases with fundamentally different performance characteristics.
+
+VIDUR~\cite{vidur2024} provides discrete-event simulation for LLM serving systems.
+Rather than modeling GPU microarchitecture, VIDUR simulates request scheduling, KV cache management, and batching decisions---the system-level factors that dominate serving performance.
+VIDUR achieves $<$5\% error on end-to-end serving metrics including time-to-first-token and request latency.
+
+Roofline-LLM extends traditional roofline analysis to LLM inference by decomposing transformer execution into compute-bound (prefill attention, FFN) and memory-bound (decode attention, KV cache access) components.
+Combined with learned correction factors, this hybrid approach achieves 87\% reduction in MSE compared to pure roofline predictions.
 
 \subsection{Accelerator Performance Modeling}
 \label{subsec:accelerator-modeling}
 
-\todo{Survey papers on ML models for DNN accelerators, FPGAs, etc.}
+DNN accelerators---including TPUs, NPUs, and custom ASIC designs---employ specialized dataflows and memory hierarchies optimized for tensor operations.
+Modeling these devices requires understanding the interaction between dataflow choices, memory hierarchy utilization, and workload characteristics.
+
+\subsubsection{Analytical Accelerator Modeling}
+
+Timeloop~\cite{timeloop2019} provides the foundational framework for DNN accelerator design space exploration.
+The key insight is that accelerator performance can be accurately predicted from loop-nest representations of tensor computations.
+For a given architecture specification and mapping (loop order, tiling, spatial distribution), Timeloop analytically computes:
+
+\begin{itemize}
+\item \textbf{Data reuse} at each memory level: how many times each tensor element is accessed from each buffer
+\item \textbf{Latency}: compute cycles plus memory stall cycles based on bandwidth constraints
+\item \textbf{Energy}: access counts multiplied by per-access energy at each memory level
+\end{itemize}
+
+Timeloop decouples architecture specification (PEs, buffer sizes, bandwidth) from mapping decisions, enabling systematic exploration of dataflow choices.
+The framework achieves 5--10\% accuracy versus RTL simulation while providing 2000$\times$ speedup, making million-point design sweeps tractable.
+
+MAESTRO~\cite{maestro2019} offers a complementary \emph{data-centric} perspective.
+Rather than loop-nest transformations, MAESTRO models performance through data movement analysis using compact dataflow directives.
+This representation is more intuitive---designers specify how tensors flow through the architecture rather than manipulating loop indices---while achieving comparable accuracy.
+
+Sparseloop~\cite{sparseloop2022} extends analytical modeling to sparse tensor accelerators.
+The key challenge is that sparse execution time depends on runtime sparsity patterns, not just static tensor dimensions.
+Sparseloop models compression formats (CSR, bitmap, RLE), gating logic, and sparse-dense conversion overhead, enabling accurate prediction for pruned neural networks and sparse attention patterns.
+
+\subsubsection{ML-Augmented Accelerator Design}
+
+ArchGym~\cite{archgym2023} demonstrates how ML-based surrogate models can accelerate accelerator design.
+The framework connects ML optimization algorithms (reinforcement learning, Bayesian optimization, evolutionary strategies) to hardware simulators through a unified interface.
+
+A key finding is the \emph{hyperparameter lottery}: ML algorithms show high variance across hyperparameter choices, with optimal settings differing substantially between target designs.
+ArchGym addresses this through systematic hyperparameter sweeps enabled by fast surrogate models.
+Trained surrogate models achieve 0.61\% RMSE while providing 2000$\times$ speedup over simulation, enabling exploration of hyperparameter configurations that would be intractable with direct simulation.
+
+\subsubsection{FPGA and Emerging Accelerator Modeling}
+
+FPGA-based accelerators present additional modeling challenges due to the flexibility of reconfigurable fabric and the complexity of HLS-generated datapaths.
+Recent work applies transfer learning to FPGA design space exploration: models trained on one design can adapt to new architectures with limited additional profiling.
+
+Emerging accelerators---including processing-in-memory (PIM), neuromorphic, and analog compute-in-memory designs---remain underexplored.
+These platforms exhibit fundamentally different performance characteristics (energy-dominated by activations, analog noise effects, sparse event-driven computation) that existing frameworks do not address.
+Developing unified modeling approaches for this diverse hardware landscape represents an important open challenge.
 
 \subsection{Memory System Modeling}
 \label{subsec:memory-modeling}
 
-\todo{Survey papers on cache, DRAM, and memory hierarchy modeling.}
+Memory system behavior increasingly dominates ML workload performance.
+Large language models may require hundreds of gigabytes for weights and KV cache, while training workloads stress memory bandwidth through gradient communication.
+Accurate memory modeling is essential for understanding performance across the modern hardware landscape.
+
+\subsubsection{Cache and Memory Hierarchy Modeling}
+
+Traditional memory system modeling relies on cache simulation within frameworks like gem5~\cite{binkert2011gem5} and GPGPU-Sim~\cite{gpgpusim2009}.
+These simulators model replacement policies, bank conflicts, memory coalescing (for GPUs), and DRAM controller behavior with high fidelity.
+
+For DNN workloads, memory access patterns are often highly regular---streaming through weight and activation tensors---making analytical prediction feasible.
+Timeloop~\cite{timeloop2019} models memory hierarchy through data reuse analysis: given a tiling and loop order, the framework computes exact access counts at each memory level.
+This analytical approach achieves high accuracy for regular workloads but may miss dynamic effects like cache contention in multi-tenant scenarios.
+
+\subsubsection{KV Cache for LLM Inference}
+
+KV cache management has emerged as the dominant memory challenge for LLM serving.
+The attention mechanism requires storing key-value tensors for all previously generated tokens, with memory growing linearly with sequence length and batch size.
+For long-context models serving concurrent requests, KV cache can consume hundreds of gigabytes.
+
+vLLM's PagedAttention introduces virtual memory concepts to KV cache management.
+By storing KV blocks in non-contiguous physical memory with page tables for address translation, PagedAttention achieves near-zero memory waste from fragmentation.
+This system-level optimization yields 2--4$\times$ throughput improvement over prior approaches.
+
+VIDUR~\cite{vidur2024} models KV cache behavior at the serving system level, simulating allocation, eviction, and paging decisions that affect request latency.
+More recent work explores KV cache compression through quantization (Oaken), sparsity (ALISA), and adaptive token selection (MorphKV), with potential memory savings exceeding 50\%.
+Accurate performance models for these compression techniques---predicting the latency-accuracy tradeoff for different compression levels---remain an open challenge.
+
+\subsubsection{Distributed Memory and Communication}
+
+Multi-GPU and multi-node training introduces communication overhead that can dominate performance at scale.
+ASTRA-sim~\cite{astrasim2023} provides end-to-end simulation of distributed training, modeling collective communication algorithms (ring, tree, halving-doubling all-reduce), network topology, and compute-communication overlap.
+
+The simulation decomposes collective operations into point-to-point messages, tracks network contention, and models the interaction between computation and communication phases.
+ASTRA-sim achieves 5--15\% error versus real multi-GPU clusters, enabling exploration of parallelization strategies (data parallel, model parallel, pipeline parallel) before expensive hardware experiments.
+
+A key insight from distributed training modeling is that communication overhead depends strongly on message granularity and overlap opportunities.
+Chunked gradient communication, where gradients are transmitted in pieces overlapped with backward pass computation, can hide communication latency.
+Accurate modeling of this overlap---which depends on operator ordering, chunk sizes, and network bandwidth---is essential for predicting distributed training performance.
 
 \subsection{Cross-Platform and Transfer Learning}
 \label{subsec:transfer-learning}
 
-\todo{Survey approaches that generalize across hardware configurations.}
+The proliferation of hardware platforms---from edge devices to datacenter GPUs to custom accelerators---creates demand for performance models that generalize across configurations.
+Training separate models for each target device is impractical given the diversity of the hardware landscape.
+Transfer learning and meta-learning approaches address this challenge by learning shared representations that adapt efficiently to new platforms.
+
+\subsubsection{Hardware-Adaptive Latency Prediction}
+
+HELP~\cite{help2021} formulates cross-hardware prediction as meta-learning.
+The key insight is that hardware platforms can be treated as ``tasks'' in meta-learning: each device provides a small sample of profiled networks, and the goal is rapid adaptation to new devices.
+
+HELP learns:
+\begin{itemize}
+\item \textbf{Architecture encoder}: A GNN that embeds neural network architectures into a fixed-dimensional space
+\item \textbf{Hardware encoder}: A learned function that represents devices from their profiled samples
+\item \textbf{Predictor}: An MLP that maps (architecture, hardware) pairs to latency
+\end{itemize}
+
+Using MAML-style~meta-learning, HELP achieves 93.2\% accuracy with just 10 profiled samples on new devices, reaching 98.1\% with 100 samples.
+This sample efficiency is critical for the fragmented edge hardware landscape where collecting exhaustive training data for each device type is impractical.
+
+\subsubsection{Transfer Learning at Scale}
+
+LitePred~\cite{litepred2024} scales cross-platform prediction to 85 edge devices---the most comprehensive evaluation to date.
+The framework introduces a VAE-based data sampler that intelligently selects which architectures to profile on new devices.
+Rather than random sampling, the VAE identifies architectures that are most informative for learning the device's performance characteristics.
+
+With less than one hour of profiling on a new device, LitePred achieves 99.3\% accuracy on held-out architectures.
+This combines pre-trained representations from source platforms with efficient adaptation, demonstrating that the cross-platform transfer learning problem is tractable even at scale.
+
+The latency predictors study~\cite{latencypredictorsnas2024} provides a systematic comparison of transfer learning approaches for NAS.
+Key findings include:
+\begin{itemize}
+\item End-to-end training on pooled multi-platform data outperforms sequential fine-tuning
+\item Transfer learning provides 22.5\% average improvement over training from scratch
+\item Benefits are largest for challenging cross-platform transfers (up to 87.6\% improvement)
+\end{itemize}
+
+\subsubsection{Hybrid Analytical-ML Transfer}
+
+Hybrid approaches combine analytical models with learned components to improve transfer efficiency.
+SynPerf decomposes GPU kernel execution into pipeline demands (compute, memory, cache) using analytical models, then trains MLPs to capture cross-pipeline interactions.
+The analytical decomposition provides physics-based structure that transfers across GPUs, while the learned component captures device-specific effects.
+
+This hybrid architecture achieves 6.1\% kernel-level error and has been applied to guide Triton kernel optimization, demonstrating 1.7$\times$ speedup on generated kernels.
+The combination of interpretable analytical structure with learned flexibility represents a promising direction for transferable performance modeling.
+
+\subsubsection{Open Challenges in Transfer Learning}
+
+Despite progress, several challenges remain.
+First, most transfer learning work focuses on CNN architectures; transformers and mixture-of-experts models remain underexplored.
+Second, transfer across \emph{workload types} (not just hardware) is challenging---models trained on vision networks may not transfer to language models or graph neural networks.
+Third, continual learning for performance models---adapting to hardware and software evolution over time---is largely unexplored.
+
+Foundation models for performance prediction represent an emerging opportunity.
+Pre-trained on large-scale profiling datasets spanning diverse architectures and hardware, such models could provide strong initialization for any new prediction task.
+The TenSet dataset with 52 million records represents a step in this direction, but comprehensive datasets covering the full range of modern workloads and hardware remain to be developed
 
 % ==============================================================================
 % COMPARISON AND ANALYSIS
