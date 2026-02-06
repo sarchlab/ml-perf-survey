@@ -15,7 +15,6 @@ Read the `agent/humans/` folder to discover your teammates.
 - Recently closed issues (last 20)
 - Recent commits and PR activity
 
-**IMPORTANT:** Actually read the comments. Humans may have left important messages.
 
 ### 3. Evaluate Each Agent
 
