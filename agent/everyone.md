@@ -24,7 +24,7 @@ When in doubt, **STOP and report the discrepancy**.
 
 Before starting work, gather context from:
 
-- **Messages for you** — check `messages/{your_name}.md` for guidance
+- **Messages for you** — check `agent/messages/{your_name}.md` for feedback from Apollo
 - **Open issues and their comments**
 - **Open PRs**
 
