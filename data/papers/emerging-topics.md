@@ -86,8 +86,8 @@ Models that adapt to deployment data and handle data drift are essential for pro
 | **Lumos** | MLSys | 2025 | Trace-driven performance modeling for LLM training. 3.3% error on 512 H100 GPUs. Reproduces execution breakdown and SM utilization without custom instrumentation. |
 | **VIDUR** | MLSys | 2024 | Discrete-event simulation for LLM serving with <5% error. Vidur-Search finds optimal deployment config in 1 hour vs 42K GPU hours. |
 | **CLONE (ATC)** | ATC | 2025 | MoE router for adaptive LoRA integration with DVFS for per-token energy optimization while meeting latency constraints. |
-| **Drift Detection MLOps** | ResearchGate | 2024 | Comprehensive MLOps for drift detection using statistical process control and adaptive windowing. |
-| **PELT Drift Detection** | ScienceDirect | 2025 | PELT algorithm for drift detection with selective model retraining in dynamic environments. |
+| **Drift Detection MLOps** | Tech Report | 2024 | Comprehensive MLOps for drift detection using statistical process control and adaptive windowing. |
+| **PELT Drift Detection** | Artificial Intelligence | 2025 | PELT algorithm for drift detection with selective model retraining in dynamic environments. |
 
 ### Observations
 
