@@ -22,7 +22,7 @@ This document provides structured comparison tables for the survey paper, coveri
 | GPGPU-Sim | 2009 | NVIDIA GPUs (Fermi-Kepler) | Cycle-accurate sim | 0.95 IPC correlation | GPU microarchitecture simulation |
 | Accel-Sim | 2020 | NVIDIA GPUs (Volta-Ampere) | Trace-driven sim | 0.85-0.97 IPC corr | Modern GPU correlation |
 | gem5 | 2011 | CPU (x86, ARM, RISC-V) | Full-system sim | 10-20% cycle error | Multi-ISA support |
-| ASTRA-sim | 2020/2023 | Distributed GPU clusters | Event-driven sim | 5-15% end-to-end | Distributed training DSE |
+| ASTRA-sim | 2023 | Distributed GPU clusters | Event-driven sim | 5-15% end-to-end | Distributed training DSE |
 | VIDUR | 2024 | GPU (LLM serving) | Discrete-event sim | <5% latency error | LLM serving simulation |
 | TrioSim | 2025 | Multi-GPU systems | Cycle-accurate sim | 15-25% error | Multi-GPU training |
 
@@ -44,7 +44,7 @@ This document provides structured comparison tables for the survey paper, coveri
 |-------|------|-----------------|-----------|-------------|------------------|
 | Orca | 2022 | GPU | Continuous batching | 36.9x throughput | Iteration-level scheduling |
 | vLLM | 2023 | NVIDIA GPUs | PagedAttention | 2-4x throughput | Virtual memory for KV cache |
-| FlashAttention | 2022 | NVIDIA GPUs | IO-aware attention | 2-4x speed, 10-20x memory | Linear memory attention |
+| FlashAttention | 2022 | NVIDIA GPUs | IO-aware attention | 2-4x speed, 10-20x lower memory use | Linear memory attention |
 | FlashAttention-2 | 2024 | A100 GPUs | Optimized parallelism | 2x vs. FA1 | 73% A100 utilization |
 | FlashAttention-3 | 2024 | H100 GPUs | Warp specialization + FP8 | 1.5-2x vs. FA2 | 75-85% H100 utilization |
 | DistServe | 2024 | Multi-GPU | Prefill-decode disaggregation | 7.4x request rate | Phase separation |
@@ -68,18 +68,20 @@ This document provides structured comparison tables for the survey paper, coveri
 | ML-Based | LitePred | Latency accuracy | 98.5-99.3% | 85 platform evaluation |
 | ML-Based | HELP | Latency accuracy | 93.2-98.1% | Cross-hardware transfer |
 | Hybrid | NeuSight | Latency accuracy | 97.7% | GPU profiling |
-| Hybrid | Roofline-LLM | R-squared | +17 points vs. pure analytical | LLM profiling |
+| Hybrid | Roofline-LLM | ΔR-squared vs. analytical | +17 points vs. pure analytical | LLM profiling |
 
 ### Table 2.2: Accuracy vs. Generality Trade-off
 
-| Paper | Accuracy | Hardware Scope | Workload Scope | Generality Score |
-|-------|----------|----------------|----------------|------------------|
+_Note: Accuracy column shows estimated (1 - error) or reported accuracy percentages for comparability across different metrics._
+
+| Paper | Accuracy (est.) | Hardware Scope | Workload Scope | Generality Score |
+|-------|-----------------|----------------|----------------|------------------|
 | nn-Meter | 99.0% | 4 edge platforms | CNNs | Narrow |
 | LitePred | 99.3% | 85 edge platforms | CNNs | Medium |
 | HELP | 98.1% | Multi (meta-learned) | NAS search spaces | Medium |
-| Ansor | 85% | CPU, GPU, accelerators | Tensor programs | Broad |
-| Timeloop | 95% | Spatial accelerators | DNN layers | Medium |
-| ASTRA-sim | 90% | Distributed clusters | DL training | Narrow-Medium |
+| Ansor | ~85% (15% MAPE) | CPU, GPU, accelerators | Tensor programs | Broad |
+| Timeloop | ~92.5% (7.5% avg error) | Spatial accelerators | DNN layers | Medium |
+| ASTRA-sim | ~90% (10% avg error) | Distributed clusters | DL training | Narrow-Medium |
 
 ### Table 2.3: Accuracy by Workload Type
 
@@ -104,9 +106,11 @@ This document provides structured comparison tables for the survey paper, coveri
 | LitePred | 85 platforms (full) | ~100 samples | 100-500 | VAE-guided sampling |
 | HELP | Multiple platforms | 10-100 samples | 10-100 | Meta-learning |
 | Ansor | None (online) | Grows during search | 1K-100K | Online profiling |
-| TLP | TenSet (52M records) | None | 0 | Pre-trained |
-| Timeloop | None | None | 0 | Analytical |
+| TLP | TenSet (52M records) | None | 0 (per-device) | Pre-trained |
+| Timeloop | None | None | 0 (analytical) | Analytical |
 | ASTRA-sim | None | Trace collection | Varies | Trace profiling |
+
+_Note: "Total Samples" refers to per-device adaptation samples only; pre-training data (e.g., TenSet) not included._
 
 ### Table 3.2: Training Time and Hardware
 
@@ -177,7 +181,7 @@ This document provides structured comparison tables for the survey paper, coveri
 | ML-Based (MLP/Tree) | 5 | nn-Meter, AutoTVM, Ansor, LitePred, TLP |
 | ML-Based (GNN) | 3 | HELP, CALO-GNN, GRAF |
 | Hybrid | 3 | NeuSight, Roofline-LLM, ALCOP |
-| LLM Serving Systems | 8 | vLLM, Orca, DistServe, Sarathi, FlashAttention (1-3), MEDUSA |
+| LLM Serving Systems | 8 | vLLM, Orca, DistServe, Sarathi-Serve, FlashAttention (1-3), MEDUSA |
 | KV Cache Optimization | 3 | Oaken, ALISA, MorphKV |
 | Speculative Decoding | 3 | MEDUSA, EAGLE-3, MagicDec |
 
