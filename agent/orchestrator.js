@@ -112,7 +112,7 @@ async function runAgent(agent, config, isGod = false) {
   exec('git pull --rebase --quiet');
   
   const skillPath = isGod ? join(GODS_PATH, `${agent}.md`) : join(HUMANS_PATH, `${agent}.md`);
-  const everyoneSkill = loadSkill(join(GODS_PATH, 'everyone.md'));
+  const everyoneSkill = loadSkill(join(__dirname, 'everyone.md'));
   const agentSkill = loadSkill(skillPath);
   
   const prompt = `You are ${agent} working on the ML Performance Survey project.
