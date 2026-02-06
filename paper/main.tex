@@ -767,26 +767,26 @@ The TenSet dataset with 52 million records represents a step in this direction, 
 \section{Comparison and Analysis}
 \label{sec:comparison}
 
-Having surveyed the landscape of ML-based performance modeling approaches, we now provide a comparative analysis across key dimensions.
+Having surveyed the landscape of ML-based performance modeling approaches, we now provide a comparative analysis across key dimensions, including commonly used analytical and simulation-based baselines.
 This analysis synthesizes trade-offs that practitioners face when selecting or developing performance models, examining accuracy, training cost, generalization, and interpretability.
 Table~\ref{tab:comparison-summary} provides a comprehensive comparison across these dimensions.
 
 \begin{table*}[t]
 \centering
-\caption{Comparative analysis of representative ML-based performance models across key dimensions.}
+\caption{Comparative analysis of representative performance models---including ML-based and analytical/simulation approaches---across key dimensions. The Accuracy column reports the metric and value as given in each original work (e.g., MAPE, RMSE, Kendall's $\tau$, ranges).}
 \label{tab:comparison-summary}
 \small
 \begin{tabular}{lcccccc}
 \toprule
-\textbf{Model} & \textbf{Accuracy} & \textbf{Training Data} & \textbf{Adaptation Cost} & \textbf{Generalization} & \textbf{Interpretability} & \textbf{Inference Time} \\
+\textbf{Model} & \textbf{Accuracy (as reported)} & \textbf{Training Data} & \textbf{Adaptation Cost} & \textbf{Generalization} & \textbf{Interpretability} & \textbf{Inference Time} \\
 \midrule
 \multicolumn{7}{l}{\textit{Classical ML}} \\
 nn-Meter~\cite{nnmeter2021} & $<$1\% MAPE & 1K/kernel & Hours/device & Device-specific & Medium & $<$1ms \\
-XGBoost (TVM) & 20\% MAPE & 10K+ & Online & Operator-level & Medium & $<$1ms \\
+XGBoost (TVM)~\cite{tvm2018} & 20\% MAPE & 10K+ & Online & Operator-level & Medium & $<$1ms \\
 \midrule
 \multicolumn{7}{l}{\textit{Deep Learning}} \\
 NeuSight~\cite{neusight2025} & 2.3\% MAPE & 100K+ & Pre-trained & Cross-GPU & Low & $<$10ms \\
-Habitat~\cite{habitat2021} & 11.8\% MAPE & Runtime & None (requires GPU) & Cross-GPU & Medium & Runtime \\
+Habitat~\cite{habitat2021} & 11.8\% MAPE & Online profiling runs & None (requires GPU) & Cross-GPU & Medium & Per-kernel profiling \\
 \midrule
 \multicolumn{7}{l}{\textit{Graph Neural Networks}} \\
 GRANITE~\cite{granite2022} & 0.97 $\tau$ & 10K+ & Hours & Cross-$\mu$arch & Low & $<$10ms \\
@@ -847,7 +847,7 @@ Habitat achieves 11.8\% error on cross-GPU prediction using wave scaling.
 Analytical frameworks like Timeloop and MAESTRO typically achieve 5--15\% error versus RTL simulation.
 
 \textbf{Tier 3 (15--25\% error):} Compiler cost models optimized for ranking rather than absolute accuracy.
-TVM's AutoTVM achieves approximately 20\% MAPE, sufficient for guiding autotuning search.
+TVM's AutoTVM~\cite{tvm2018} achieves approximately 20\% MAPE, sufficient for guiding autotuning search.
 These models prioritize speed and online adaptation over absolute precision.
 
 The key insight is that accuracy requirements depend on the use case: neural architecture search may tolerate 10--15\% error if rankings are preserved, while hardware cost estimation for procurement decisions demands $<$5\% accuracy.
@@ -1019,7 +1019,7 @@ TVM~\cite{tvm2018} and Ansor~\cite{ansor2020} demonstrate this integration, but 
 Cost model accuracy directly affects autotuning efficiency.
 Mispredictions cause the search to explore suboptimal regions, wasting compilation time.
 Uncertainty quantification---knowing when predictions are unreliable---could enable more efficient exploration-exploitation trade-offs.
-CALO-GNN provides calibrated uncertainty estimates, but such techniques are not yet standard.
+Recent uncertainty-aware cost models can provide calibrated uncertainty estimates, but such techniques are not yet standard.
 
 \subsubsection{Architecture Exploration}
 
