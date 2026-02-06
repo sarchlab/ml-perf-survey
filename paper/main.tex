@@ -45,20 +45,37 @@ machine learning, performance modeling, computer architecture, neural networks, 
 \section{Introduction}
 \label{sec:introduction}
 
-\todo{Motivate the importance of performance modeling in computer architecture.}
+Performance modeling is fundamental to computer architecture research and development.
+Architects rely on accurate performance predictions to navigate vast design spaces, optimize hardware-software co-design, and make informed decisions about resource allocation.
+Traditional approaches---analytical models~\cite{williams2009roofline} and cycle-accurate simulators~\cite{binkert2011gem5}---have served the community well, but face growing challenges as workloads and hardware become increasingly complex.
+Analytical models often oversimplify system behavior, while simulators can require hours or days to evaluate a single design point, making exhaustive exploration impractical.
 
-\todo{Explain why ML approaches are gaining traction over traditional analytical models.}
+The rise of deep learning workloads has intensified these challenges.
+Modern neural networks exhibit diverse computational patterns---from dense matrix operations in transformers to sparse irregular accesses in graph neural networks---that stress traditional modeling assumptions.
+Simultaneously, hardware diversity has exploded: GPUs, TPUs, custom accelerators, and multi-device distributed systems each present unique performance characteristics that resist unified analytical treatment.
+This complexity has motivated a new generation of \emph{machine learning-based} performance models that learn predictive functions directly from profiling data.
 
-\todo{State the scope and contributions of this survey:
+ML-based performance modeling has emerged as a compelling alternative.
+Learned models can capture complex, non-linear relationships between workload characteristics and hardware behavior that elude closed-form analysis.
+Recent work demonstrates remarkable accuracy: NeuSight~\cite{neusight2025} achieves 2.3\% error predicting GPT-3 latency on H100 GPUs, while nn-Meter~\cite{nnmeter2021} reaches 99\% accuracy for edge device latency prediction.
+Beyond accuracy, these approaches offer practical benefits: models trained on one platform can transfer to new hardware with minimal adaptation~\cite{litepred2024}, and inference-time predictions complete in milliseconds rather than hours.
+
+This survey provides a comprehensive analysis of ML-based performance modeling techniques for computer architecture.
+We make the following contributions:
 \begin{itemize}
-    \item Comprehensive taxonomy of ML-based performance modeling techniques
-    \item Analysis of X papers from MICRO, ISCA, HPCA, MLSys, etc. (2020-2025)
-    \item Comparison of approaches across key dimensions
-    \item Identification of open challenges and future directions
+    \item A \textbf{taxonomy} organizing approaches along eight dimensions: modeling technique, target hardware, workload types, prediction targets, accuracy metrics, input requirements, evaluation scope, and reproducibility.
+    \item A \textbf{systematic survey} of over 60 papers from architecture venues (MICRO, ISCA, HPCA, ASPLOS) and ML venues (MLSys, NeurIPS, ICML) published between 2016--2025.
+    \item A \textbf{comparative analysis} examining trade-offs between accuracy, training cost, generalization, and interpretability across approaches.
+    \item An identification of \textbf{open challenges} including data scarcity, cross-platform generalization, and integration with design automation flows.
 \end{itemize}
-}
 
-\todo{Outline the paper organization.}
+The remainder of this paper is organized as follows.
+Section~\ref{sec:background} provides background on traditional performance modeling and relevant ML techniques.
+Section~\ref{sec:taxonomy} presents our classification taxonomy.
+Section~\ref{sec:survey} surveys approaches organized by target hardware platform.
+Section~\ref{sec:comparison} offers comparative analysis across key dimensions.
+Section~\ref{sec:challenges} discusses open challenges and future directions.
+Section~\ref{sec:conclusion} concludes.
 
 % ==============================================================================
 % BACKGROUND
