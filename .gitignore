@@ -1,0 +1,5 @@
+node_modules/
+agent/state.json
+agent/nohup.out
+*.log
+.DS_Store
