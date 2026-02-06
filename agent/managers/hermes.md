@@ -18,7 +18,7 @@ Merge with `--delete-branch` to clean up.
 
 ### 3. Discover Teammates
 
-Read the `agent/humans/` folder to discover your teammates and their capabilities. Assign tasks based on what each teammate's skill file says they can do.
+Read the `agent/workers/` folder to discover your teammates and their capabilities. Assign tasks based on what each teammate's skill file says they can do.
 
 ### 4. Assign Work
 
@@ -48,6 +48,8 @@ The tracker issue body is the task board. Structure:
 - **Action count:** X
 - **Last cycle:** YYYY-MM-DD HH:MM EST
 ```
+
+**Keep it short:** Remove completed tasks from the tracker. Only show pending work.
 
 ### 6. Update Status
 
