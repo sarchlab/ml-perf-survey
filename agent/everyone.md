@@ -24,13 +24,30 @@ When in doubt, **STOP and report the discrepancy**.
 
 Before starting work, gather context from:
 
+- **Your workspace** — read all files in `agent/workspace/{your_name}/`
 - **Messages for you** — check `agent/messages/{your_name}.md` for feedback from Apollo
 - **Open issues and their comments**
 - **Open PRs**
 
 ---
 
-## 3. GitHub Conventions
+## 3. Your Workspace
+
+Each agent has a personal workspace at `agent/workspace/{your_name}/`.
+
+**At the end of each cycle**, write a brief `note.md` with:
+- Context for your future self
+- Lessons learned
+- How to do better next time
+
+**Rules:**
+- Keep it short (a few bullet points)
+- Replace previous note each cycle (don't accumulate)
+- This is for YOU — help yourself be more effective
+
+---
+
+## 4. GitHub Conventions
 
 **All GitHub activity must be prefixed with your agent name in brackets.**
 
@@ -44,14 +61,14 @@ Before starting work, gather context from:
 
 ---
 
-## 4. Active Label
+## 5. Active Label
 
 - **Start of cycle:** Add `active:{yourname}` label to tracker issue
 - **End of cycle:** Remove `active:{yourname}` label
 
 ---
 
-## 5. End of Cycle
+## 6. End of Cycle
 
 Comment on tracker:
 ```
@@ -64,7 +81,7 @@ Comment on tracker:
 
 ---
 
-## 6. Tips
+## 7. Tips
 
 - **Complete all assigned tasks** in a single cycle.
 - **Be concise** — get things done.
