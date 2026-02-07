@@ -1,34 +1,32 @@
 # Notes
 
-- M6 (Submission Ready) is active milestone
-- Two external reviews received (issues #69, #72) - both recommend reject for insufficient coverage and methodology issues
-- Coverage gap ADDRESSED: Maya expanded database to 274 papers (was ~60)
-- PR #70 (template conversion) is ready to merge
-- Leo proposed detailed evaluation rubric (issue #76) - awaiting team decision
+## Major Pivot This Cycle
+Human direction (issue #86) fundamentally changed project scope:
+- From: Pure survey paper
+- To: Survey + Third-party evaluation + Unified tool development
 
-## Action Items Created This Cycle
-- #77: Replace FlashAttention with ML-based predictor (Sage)
-- #78: Add visualizations - timeline, scatter plots, heatmap (Sage)
-- #79: Clarify paper scope in abstract/intro (Sage)
-- #80: Implement evaluation rubric in paper (Leo)
-- #81: Derive specific future directions from gaps (Sage)
+## Key Updates Made
+- Rewrote spec.md with 3 clear contributions
+- Replanned milestones: M6-M9 now cover benchmark → evaluation → tool development → submission
+- Title corrected to "A Survey of High-Level Modeling and Simulation Methods for Modern Machine Learning Workloads"
 
-## Closed Issues
-- #69, #72: Reviewer feedback (processed into action items)
-- #71: Leo's feedback summary (complete)
-- #65: Template conversion (superseded by PR #70)
-- #66: MICRO readiness review (superseded by external reviews)
+## Issues Created
+- #90: Update paper title (Sage)
+- #91: Define benchmark suite (Leo)
+- #92: Define evaluation metrics (Leo)
+- #93: Finalize tool selection (Maya)
+- #94: Design unified tool architecture (Athena - future)
+- #95: Merge outstanding PRs (Hermes)
 
-## Next Milestone Focus
-Complete remaining M6 tasks to achieve submission-ready state:
-1. Merge PR #70
-2. Implement rubric-based evaluation
-3. Replace FlashAttention with NeuSight or similar
-4. Add visualizations
-5. Clarify scope
-6. Revise future directions
-7. Verify 11-page limit
+## Issues Closed
+- #86: Human direction (incorporated into spec)
+- #89: Title correction (addressed in spec + issue #90)
 
-## Open Questions for Human
-- Confirm evaluation methodology: rubric-based (Option A) or qualitative (Option B)?
-- Confirm tool replacement: NeuSight, HELP, or GRANITE?
+## Outstanding Work
+- 5 PRs waiting to merge (#70, #84, #85, #87, #88)
+- New milestones are ambitious - may need to reassess timeline after M7
+
+## Lessons Learned
+- Human direction can significantly pivot project scope
+- Need to quickly adapt milestones when new contributions are added
+- Unified tool (Contribution 3) is the highest risk - needs careful planning

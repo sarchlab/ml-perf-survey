@@ -1,12 +1,29 @@
-# ML Performance Models Survey
+# A Survey of High-Level Modeling and Simulation Methods for Modern Machine Learning Workloads
 
 ## Goal
 
-Write a paper for **MICRO 2026** that provides a systematic review of high-level ML performance models and simulators, **including third-party evaluation of key solutions**.
+Write a paper for **MICRO 2026** that provides:
+1. A systematic survey on performance modeling and simulation for ML workloads with a novel taxonomy
+2. Third-party evaluation of tools using common benchmarks (run by us)
+3. A new unified tool that combines the best approaches
 
-## Long-Term Vision
+## Paper Contributions
 
-Beyond the survey paper, explore creating a unified performance modeling tool that combines the best approaches from literature—a practical contribution for the community.
+### Contribution 1: Systematic Survey with Taxonomy
+- Comprehensive literature review of performance modeling and simulation methods for ML workloads
+- Novel taxonomy that classifies approaches by methodology, target hardware, and workload coverage
+- Identification of gaps and trends in the field
+
+### Contribution 2: Third-Party Evaluation
+- Define common benchmark suite for fair comparison across tool categories
+- Execute all tools ourselves on the same benchmarks
+- Evaluate on multiple dimensions: **accuracy**, **ease of use**, **performance**, and **extensibility**
+- Report which tools excel and which fall short, with quantitative results
+
+### Contribution 3: Unified Tool (ZZZ)
+- Combine best methods from each category into a new unified tool
+- Target: outperform existing tools on key metrics
+- Open-source contribution for the community
 
 ## Milestones
 
@@ -30,51 +47,52 @@ Beyond the survey paper, explore creating a unified performance modeling tool th
 - Generate comparison tables and figures
 - Internal review and revision
 
-### M5: Experimental Evaluation (Target: Week 14) ✅ COMPLETE
-- Selected 5 tools: Timeloop, FlashAttention, ASTRA-sim, VIDUR, nn-Meter
-- Evaluated reproducibility, usability, and accuracy validation
+### M5: Preliminary Evaluation (Target: Week 14) ✅ COMPLETE
+- Initial tool evaluations (Timeloop, ASTRA-sim, VIDUR, nn-Meter, etc.)
 - Documented findings in data/evaluation/ directory
-- Added Section 7 (Experimental Evaluation) to paper (PR #59)
+- Added Section 7 (Experimental Evaluation) to paper
 
-### M6: Submission Ready (Target: Week 18) 🔄 IN PROGRESS
-- **Convert to official MICRO 2026 LaTeX template** (11 pages, 9pt Times, 2-column) ✅ (PR #70 ready to merge)
-- **Expand paper coverage** to address reviewer concerns ✅ (274 papers in database)
-- **Address evaluation methodology criticism** - implement transparent rubric (issue #76 proposal)
-- **Replace FlashAttention** in reproducibility section with ML-based predictor (e.g., NeuSight)
-- **Clarify scope** - address ML-only vs mixed coverage confusion
-- **Add quantitative synthesis** - normalized comparisons where feasible
-- **Add visualization** - timeline, accuracy scatter plots, coverage heatmap
+### M6: Benchmark Definition (Target: Week 18) 🔄 IN PROGRESS
+- Define common benchmark suite across tool categories
+- Select representative ML workloads (CNN, Transformer, LLM, etc.)
+- Define evaluation metrics: accuracy (vs. real hardware), latency, memory, ease of use, extensibility
+- Document benchmark methodology for reproducibility
+
+### M7: Comprehensive Third-Party Evaluation (Target: Week 22) 🆕
+- Execute all selected tools on common benchmarks
+- Collect quantitative results across all evaluation dimensions
+- Identify winners and losers for each metric
+- Generate comparison tables and figures
+
+### M8: Unified Tool Development (Target: Week 28) 🆕
+- Analyze best-performing approaches from each category
+- Design unified architecture combining strengths
+- Implement prototype of unified tool
+- Validate against benchmark suite
+
+### M9: Submission Ready (Target: Week 32) 🆕
+- Complete paper with all three contributions
+- Quantitative comparisons: "ZZZ outperforms X by Y% on metric Z"
 - Final polishing and formatting
 - Camera-ready submission to MICRO 2026
 
-### M7: Unified Tool Exploration (Post-Submission) 🆕
-- Analyze feasibility of combining approaches
-- Prototype unified performance modeling API
-- If viable, develop open-source tool for community
-
 ## Current Status
 
-**Active Milestone:** M6 - Submission Ready
+**Active Milestone:** M6 - Benchmark Definition
 
-**Progress:**
+**What's Changed:**
+- Human direction received (issue #86): Paper scope expanded to include unified tool development
+- Title corrected (issue #89): Now focuses on "ML Workloads" not "ML Approaches"
+- Previous M6 work (template conversion, scope clarification) carries forward
+
+**Carry-Forward Progress:**
 - Template conversion complete (PR #70 ready to merge)
-- External reviewer feedback received (issues #69, #72) - two detailed reviews
-- Paper database expanded to 274 papers (was ~60) - addresses coverage criticism
-- Evaluation rubric proposed by Leo (issue #76) - pending team decision
-- Merge conflicts resolved (issue #73 closed)
-
-**Critical Reviewer Feedback (Both Reviews):**
-1. Coverage was insufficient (~60 papers) - ADDRESSED (now 274)
-2. Evaluation scores lack defined rubric - PROPOSED (issue #76)
-3. Scope confusion: title says "ML" but includes non-ML tools - NEEDS DECISION
-4. FlashAttention in reproducibility section is out of scope - NEEDS REPLACEMENT
-5. Future directions too generic - NEEDS WORK
-6. Missing quantitative meta-analysis - NEEDS WORK
+- Paper database: 274 papers catalogued
+- Initial evaluations completed (5 tools)
+- Multiple open PRs addressing prior feedback (#84, #85, #87, #88)
 
 **Next Steps:**
-1. Merge PR #70 (template conversion)
-2. Decide on evaluation methodology: rubric-based (Option A) or qualitative-only (Option B)
-3. Replace FlashAttention with ML-based predictor in evaluation section
-4. Clarify paper scope in abstract/introduction
-5. Add additional figures for visual synthesis
-6. Final page count verification (11 pages max)
+1. Merge outstanding PRs (#70, #84, #85, #87, #88)
+2. Define common benchmark suite
+3. Select final tool set for comprehensive evaluation
+4. Begin benchmark execution
