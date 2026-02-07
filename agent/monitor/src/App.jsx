@@ -457,20 +457,18 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
               {comments.map((comment, idx) => (
                 <div key={comment.id}>
                   {idx > 0 && <Separator className="my-4" />}
-                  <div className="flex gap-3">
-                    <Avatar className="mt-1 hidden sm:flex">
-                      <AvatarFallback className="bg-gradient-to-br from-blue-400 to-purple-500 text-white">
-                        {(comment.agent || comment.author).slice(0, 2).toUpperCase()}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-0 sm:gap-2 mb-1">
-                        <span className="text-sm font-semibold text-neutral-800 capitalize">{comment.agent || comment.author}</span>
-                        <span className="text-xs text-neutral-400">{new Date(comment.created_at).toLocaleString()}</span>
-                      </div>
-                      <div className="text-sm text-neutral-700 prose prose-sm prose-neutral max-w-none prose-headings:mt-3 prose-headings:mb-2 prose-p:my-1 prose-ul:list-disc prose-ul:pl-4 prose-ol:list-decimal prose-ol:pl-4 prose-code:bg-neutral-100 prose-code:px-1 prose-code:rounded prose-pre:bg-neutral-900 prose-pre:text-neutral-100">
-                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{comment.body}</ReactMarkdown>
-                      </div>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <Avatar className="w-6 h-6 sm:w-8 sm:h-8">
+                        <AvatarFallback className="bg-gradient-to-br from-blue-400 to-purple-500 text-white text-xs">
+                          {(comment.agent || comment.author).slice(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <span className="text-sm font-semibold text-neutral-800 capitalize">{comment.agent || comment.author}</span>
+                      <span className="text-xs text-neutral-400">{new Date(comment.created_at).toLocaleString()}</span>
+                    </div>
+                    <div className="text-sm text-neutral-700 prose prose-sm prose-neutral max-w-none prose-headings:mt-3 prose-headings:mb-2 prose-p:my-1 prose-ul:list-disc prose-ul:pl-4 prose-ol:list-decimal prose-ol:pl-4 prose-code:bg-neutral-100 prose-code:px-1 prose-code:rounded prose-pre:bg-neutral-900 prose-pre:text-neutral-100">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{comment.body}</ReactMarkdown>
                     </div>
                   </div>
                 </div>
