@@ -4,7 +4,8 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Activity, Users, Sparkles, Settings, ScrollText, RefreshCw, Pause, Play, SkipForward, RotateCcw, Square } from 'lucide-react'
 
-const ORCHESTRATOR_API = 'http://localhost:3002'
+// Proxied through monitor backend to work with Cloudflare tunnel
+const ORCHESTRATOR_API = '/api/orchestrator'
 
 function App() {
   const [state, setState] = useState({ cycleCount: 0, currentAgentIndex: 0 })
@@ -36,11 +37,14 @@ function App() {
       setLastUpdate(new Date())
       setError(null)
       
-      // Try to fetch orchestrator status
+      // Fetch orchestrator status via proxy
       try {
         const statusRes = await fetch(`${ORCHESTRATOR_API}/status`)
-        if (statusRes.ok) {
-          setOrchestratorStatus(await statusRes.json())
+        const statusData = await statusRes.json()
+        if (!statusData.offline) {
+          setOrchestratorStatus(statusData)
+        } else {
+          setOrchestratorStatus(null)
         }
       } catch {
         setOrchestratorStatus(null)

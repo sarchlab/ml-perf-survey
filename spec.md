@@ -178,9 +178,9 @@ Implements the review process from #156. Three-phase review.
 
 ## Current Status
 
-**Project Status:** 🔄 **MAJOR REVISION IN PROGRESS**
+**Project Status:** 🚨 **STALLED — ALL WORK ITEMS BLOCKED OR IDLE**
 
-The paper received a Reject (3/10) from external review (#141). Combined with human directives (#140, #142, #143, #153, #156), a significant revision is required before submission.
+The paper received a Reject (3/10) from external review (#141). Combined with human directives (#140, #142, #143, #153, #156), a significant revision is required before submission. **However, no paper changes have been made in multiple cycles.** The project is at risk of failing to make the MICRO 2026 deadline.
 
 ### Critical Review Summary (Issue #141)
 | Dimension | Assessment |
@@ -203,39 +203,67 @@ The paper received a Reject (3/10) from external review (#141). Combined with hu
 ### Progress on Active Milestones
 
 **M11 (Scope Correction — ACTIVE, CRITICAL PATH):**
-- ⚠️ Sage assigned scope reframing (#145) — **NO PR after multiple cycles**. Crit provided detailed guidance on #145. This remains the #1 blocker.
-- Taxonomy redesign (#161) — NOT YET ADDRESSED. Cannot start until scope reframe lands.
-- Presentation fixes (#147) — not started
-- Methodology section (#146) — not started, blocked on #145
-- Content audit (#163) — not started
+- 🚨 **Sage assigned scope reframing (#145) — ZERO OUTPUT after many cycles.** Branch `sage/reframe-scope` has no relevant commits. Crit provided detailed guidance. **Escalated to Apollo for action.**
+- Taxonomy redesign (#161) — BLOCKED on #145. Zero progress.
+- Presentation fixes (#147) — NOT blocked, but zero progress. **Should be worked independently NOW.**
+- Methodology section (#146) — blocked on #145
+- Content audit (#163) — blocked on #145
 
 **M12 (Literature + Analysis):**
 - ✅ Maya: PR #158 MERGED — added 12 bib entries, created uncited-papers catalog (36 entries with priority rankings)
 - ✅ Leo: PR #157 MERGED — critical synthesis of 15+ tools with cross-cutting themes
-- Next: Sage must integrate Leo's critical synthesis and Maya's HIGH-priority papers into the paper text
+- 🚨 Integration (#166) — zero progress. Sage must integrate Leo's synthesis and Maya's HIGH-priority papers into paper text.
 
 **M13 (Accuracy Verification):**
-- Forge assigned (#155) — no work started yet
-- Forge also assigned prototype (#154) — no work started yet
+- 🚨 Forge assigned (#155) — **ZERO PROGRESS after multiple cycles**. No branches, no commits, no comments.
+- 🚨 Forge assigned prototype (#154) — **ZERO PROGRESS**. No branches, no commits, no comments.
+- **Escalated to Apollo for action on Forge.**
 
 **M14 (Figures + Expansion):**
-- #162 open — target 8-10 figures (currently 2)
-- Blocked on M11/M12 content changes
+- #162 open — target 8-10 figures (currently 2). Zero progress.
+- Partially blocked on M11/M12 content, but some figures (timeline, architecture) can start now.
 
 ### Key Metrics
-| Metric | Current | Target |
-|--------|---------|--------|
-| Paper pages | ~8 | 10.5-11 |
-| Cited references | 24 | 80-100 |
-| Bib entries | ~84 | 100+ |
-| Figures | 2 | 8-10 |
-| Tools evaluated independently | 2 (ASTRA-sim, VIDUR) | 4+ |
+| Metric | Current | Target | Change |
+|--------|---------|--------|--------|
+| Paper pages | ~8 | 10.5-11 | — no change |
+| Cited references | 24 | 80-100 | — no change |
+| Bib entries | ~84 | 100+ | — no change |
+| Figures | 2 | 8-10 | — no change |
+| Tools evaluated independently | 2 (ASTRA-sim, VIDUR) | 4+ | — no change |
+
+**No metrics have changed in multiple cycles.**
+
+### Stall Analysis
+
+The root causes of the stall:
+1. **Sage has not produced any paper edits** despite being assigned the critical-path scope reframe (#145) for many cycles. No branch work, no draft, no partial progress.
+2. **Forge has not started** on either assigned task (#154, #155). Zero output.
+3. **Independent tasks** that are NOT blocked by #145 (presentation fixes #147, some figures, reference integration) have also not been worked.
+4. **No parallelism**: Tasks that could be worked simultaneously are sitting idle.
+
+### Strategy Adjustment — Unblock Through Parallelism
+
+Instead of waiting for #145 to complete before starting everything else, **the revised strategy decomposes the work into pieces that CAN proceed now**:
+
+**Immediate (no blockers):**
+- Presentation fixes (#147) — fix #NaN, reference formatting, Figure 1 citations
+- Reference integration (#166 partial) — add HIGH-priority uncited papers from Maya's catalog
+- Figure creation (#162 partial) — timeline figure improvement, architecture diagram
+- Accuracy experiments (#155) — completely independent, should start immediately
+- Prototype work (#154) — completely independent, should start immediately
+
+**After scope reframe lands:**
+- Full taxonomy redesign (#161)
+- Content audit (#163)
+- Full scope-aware integration of synthesis
 
 ### Next Steps (Priority Order)
-1. **M11a**: Scope reframing (#145) — **URGENT, STALLED**. Must land before anything else.
-2. **M11b**: Taxonomy redesign (#161) — blocked on M11a
-3. **M11c**: Presentation fixes (#147) — can parallel with M11a
-4. **M12**: Integrate merged PRs (#157, #158) into paper text; continue literature expansion
-5. **M13**: Forge runs accuracy experiments (#155) + starts prototype (#154)
-6. **M14**: Add figures (#162), expand to page limit (#151)
-7. **M15**: Red team review cycle, final submission
+1. **Apollo must act on Sage and Forge performance** — these agents have been idle for many cycles
+2. **Presentation fixes (#147)** — zero blockers, should be worked NOW
+3. **Reference integration** — Maya's HIGH-priority papers can be cited NOW, before full scope reframe
+4. **M11a scope reframe (#145)** — remains critical path, must be unblocked
+5. **M13 accuracy experiments (#155)** — completely independent, should start NOW
+6. **M13 prototype (#154)** — can begin design work NOW
+7. **M11b taxonomy redesign (#161)** — after scope reframe
+8. **M14 figures and expansion** — partial work can start now, full work after M11/M12

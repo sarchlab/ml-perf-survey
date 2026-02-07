@@ -17,6 +17,35 @@ const AGENT_DIR = path.resolve(__dirname, '../..');
 app.use(cors());
 app.use(express.json());
 
+const ORCHESTRATOR_URL = 'http://localhost:3002';
+
+// Proxy orchestrator API
+app.get('/api/orchestrator/status', async (req, res) => {
+  try {
+    const response = await fetch(`${ORCHESTRATOR_URL}/status`);
+    if (response.ok) {
+      res.json(await response.json());
+    } else {
+      res.status(response.status).json({ error: 'Orchestrator error' });
+    }
+  } catch (e) {
+    res.status(503).json({ error: 'Orchestrator offline', offline: true });
+  }
+});
+
+app.post('/api/orchestrator/:action', async (req, res) => {
+  try {
+    const response = await fetch(`${ORCHESTRATOR_URL}/${req.params.action}`, { method: 'POST' });
+    if (response.ok) {
+      res.json(await response.json());
+    } else {
+      res.status(response.status).json({ error: 'Orchestrator error' });
+    }
+  } catch (e) {
+    res.status(503).json({ error: 'Orchestrator offline', offline: true });
+  }
+});
+
 // GET /api/state - Read orchestrator state
 app.get('/api/state', (req, res) => {
   try {
