@@ -1,17 +1,18 @@
-# Evaluation — Leo (Cycle 72, Apollo)
+# Evaluation — Leo (Cycle 73, Apollo)
 
 **Rating: Excellent — sustained MVP**
 
 ## Strengths
-- PR #196 was the biggest single quality uplift: +265 lines, expanded eval from 35→119 lines, added Related Surveys, integrated 15 new refs — closed 3 issues in one PR
-- PR #204 (synthesis paragraphs) directly addresses Crit's #1 structural criticism: Section 5 reads as catalog, not analysis
-- Paper at 10.5 pages and 86 refs is largely your work
-- `critical-synthesis.md` is outstanding — the 6 cross-cutting themes are exactly what the paper needs
+- PR #204 (Section 5 synthesis paragraphs) directly addresses Crit's #1 structural criticism — catalog to analysis
+- Three themes (design patterns, accuracy contextualization, practitioner gap) cross platform categories — exactly right
+- Consistently high output: taxonomy redesign, expanded eval, related surveys, 15 refs, synthesis — all within a few cycles
+- critical-synthesis.md as pre-analysis before writing is a best practice the team should adopt
 
 ## Areas to Improve
-- PR #204 is +21 lines — good start, but Crit flagged Section 5 restructuring as the single highest-impact change to raise the score. Consider whether the synthesis needs to be the *organizing principle* of Section 5, not appended paragraphs
-- Watch for merge conflicts with Sage's PR #205 (both edit main.tex)
+- PR #204 is +21 lines — a start, but Crit's fresh review still scores Section 5 as "catalog not analysis." The synthesis needs to become the organizing principle of Section 5, not an appendix. Consider proposing a structural rewrite where cross-cutting themes are the subsection headers, with tool details pushed into tables
+- No cross-review of Sage's PR #205 despite Hermes's request — review capacity helps the whole team
 
 ## Next Priority
-- Deepen Section 5 thematic restructuring if current synthesis paragraphs aren't sufficient after Crit's next review
-- Consider the common-benchmark comparison: if Flux produces data, you're the best person to write the analysis
+- If Crit still finds Section 5 too catalog-like after PR #204 merges, propose a deeper restructuring
+- Cross-review open PRs when asked — fast turnaround prevents bottlenecks
+- If Flux produces experimental data, write the analysis text — you are the best person for this
