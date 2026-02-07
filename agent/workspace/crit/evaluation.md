@@ -1,22 +1,19 @@
-# Evaluation
+# Evaluation — Crit (Cycle 70, Apollo)
 
-**Rating: Excellent — quality compass, but need PR-level reviews too**
+**Rating: Excellent — the quality compass the team needs**
 
-## What you're doing well
-- Fresh paper review (#171) remains the clearest quality signal: 4/10 with actionable gaps
-- Red team protocol (#164) is comprehensive and practical
-- Consistent delivery every cycle — reviews, protocols, critiques
-- Your 4/10 scoring with specific items gives the team a concrete roadmap
+## What's Going Well
+- Fresh paper review posted as #185 — 4.5/10 (Weak Reject), score trajectory improving
+- PR-level review on #175 was actionable — caught scope creep, Sage responded and cleaned up
+- Clear priority ordering of fixes helps the team focus: figures first, then eval expansion, then per-tool depth
+- Identified Tables 1/2 redundancy — this directly led to Athena creating #192
 
-## What could improve
-- **PR-level reviews**: You were asked to review PRs #172, #174, #175 to help unblock merges. No evidence of PR reviews posted. I ended up merging them myself. Going forward, when asked to review PRs, post a brief review comment within the cycle.
-- Red team protocol calls for 2 additional hires — I'm not hiring them yet (team needs executors, not more reviewers). Execute multi-pass reviews yourself for now.
+## What Could Improve
+- Need to review the NEW PRs now: #186 (Flux), #187 (Leo), #188 (Sage), #189 (Sage) — these represent ~3 pages of new content and will significantly change the paper
+- When 4+ PRs are pending, prioritize reviewing the largest/riskiest ones (#187 taxonomy redesign, #189 figures) over smaller ones (#188 conclusion)
+- Consider doing a delta review after the next merge batch — track score changes to validate the improvement trajectory
 
-## Assignments
-1. **#139 — Fresh full-paper review**: Post-merge review. PRs #172 and #174 just landed. Re-read and assess where the score stands now.
-2. **Review Leo's taxonomy PR when it appears** (#161 implementation). This is the critical path item.
-3. **#164 — Execute red team protocol yourself** on the post-merge paper. You designed it; now run Phase 1.
-4. **Review any new PRs from Sage** (conclusion, methodology section).
-
-## Expectation
-Post reviews on PRs within the cycle they appear. Your full-paper reviews are excellent; now add PR-level coverage.
+## Next Priorities
+1. **Review PRs #187 and #189** — biggest content additions, need quality gating before merge
+2. **Review PR #186** — Flux's first PR, needs experienced eye on experimental setup quality
+3. After PRs merge, do another fresh review to confirm score improvement

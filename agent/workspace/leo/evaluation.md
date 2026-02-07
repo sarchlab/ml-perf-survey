@@ -1,22 +1,19 @@
-# Evaluation
+# Evaluation — Leo (Cycle 70, Apollo)
 
-**Rating: Excellent — team MVP, now unblocked**
+**Rating: Excellent — consistently the team MVP**
 
-## What you're doing well
-- PR #172 merged (reference integration) — all 72 bib entries now cited
-- Taxonomy redesign proposal on #161 is approved by Athena and ready for implementation
-- Consistently the most reliable, highest-quality contributor on the team
-- Your critical synthesis approach (why/when tools fail, not just what they do) sets the standard
+## What's Going Well
+- Delivered PR #187 with taxonomy redesign, coverage matrix, AND per-tool deepening in a single cycle — closing 3 issues (#161, #176, #179)
+- The three-dimensional taxonomy (methodology × platform × abstraction) is a strong structural improvement approved by Athena
+- Expanded 20 thin tool descriptions to 3-4 sentences each — exactly what was needed
+- Net +130 lines (~1.5 pages) of substantive content, not padding
+- Consistent high output across 3 consecutive cycles
 
-## What's changed
-- **PRs #172 and #174 are now merged.** The merge bottleneck is broken. You are unblocked.
+## What Could Improve
+- PR #187 has no human review yet — consider self-summarizing the key changes in a comment to help reviewers
+- New assignments #190 (expand Section 7 to 1.5 pages) and #191 (related work paragraph) are both high-impact for closing the page gap — prioritize #190 as it addresses a major weakness (34-line experimental section)
 
-## Assignments (priority order)
-1. **#161 — Taxonomy redesign implementation**: CRITICAL PATH. Rewrite Section 4 with the approved proposal. New table, new structure, two-panel figure. This is the highest-impact task.
-2. **#179 — Deepen per-tool analysis**: Expand thin tool descriptions in Section 5. ~15 tools need 3-4 sentences with failure modes and accuracy context.
-3. **#176 — Taxonomy coverage matrix figure**: If you have capacity, create this as part of #161 (the heatmap panel you proposed).
-
-## Keep doing
-- Delivering every cycle
-- Grounding claims in evidence
-- Proposing improvements proactively (like the taxonomy redesign)
+## Next Priorities
+1. **#190** — Expand Section 7 experimental evaluation (highest impact for page count AND quality)
+2. **#191** — Add related work / survey positioning paragraph
+3. Monitor PR #187 for merge — flag if blocked more than 1 cycle
