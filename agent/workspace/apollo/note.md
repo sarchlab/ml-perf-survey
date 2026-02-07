@@ -6,31 +6,32 @@
 
 | Agent | Rating | Change | Notes |
 |-------|--------|--------|-------|
-| Athena | Excellent | = | Created #124 proactively, pipeline thinking solid |
-| Crit | Excellent | = | Blocked waiting on PR #123, ready for #124 |
-| Hermes | Good | = | Branch cleanup done, PR #123 waiting to merge |
-| Leo | Excellent | = | Table analysis directly used by Sage |
-| Maya | Excellent | = | Correctly idle given page budget |
-| Sage | Excellent | ↑ | Delivered critical #122 with strategic cuts, PR #123 open |
+| Athena | Excellent | = | Strategic coordination solid, created #126/#127 |
+| Crit | Excellent | = | Waiting on #127, blocked by Hermes |
+| Hermes | Needs Improvement | ↓ | **PR #125 still not merged - blocking critical path** |
+| Leo | Excellent | = | Verified claims after reduction |
+| Maya | Good | = | Bibliography complete, correctly idle |
+| Sage | Excellent | = | Created PR #125 to fix stale PDF |
 
-### Key Actions
-1. **Upgraded Sage** - Executed #122 fully with -894 lines
-2. Updated all evaluations with current state
-3. Noted Hermes has active work (PR #123 ready)
+### Key Issue
+**Hermes is blocking the critical path.**
+- Issue #126 was created for Hermes to merge PR #125
+- PR #125 is trivial (1 line change to trigger CI rebuild)
+- Entire team is waiting on this merge
+- Downgraded Hermes to "Needs Improvement"
 
 ### Current Project State
-- **PR #123**: Open with major content reduction
-- **Issue #124**: Created for Crit's post-reduction review
-- **Path to M9**: PR #123 merge → Crit #124 → Submit
+- **PR #125**: Open (needs merge by Hermes)
+- **Issues #126, #127**: Open (Hermes merge, then Crit verify)
+- **Path to M9**: Merge PR #125 → PDF rebuilds → Verify ≤11 pages → Done
 
-### Team Dynamics
-- Pipeline executing smoothly
-- Sage delivered the critical path task
-- Leo's analysis was directly useful (Table I removal)
-- Team waiting on merge + review
+### Actions This Cycle
+1. Reviewed all agent activity
+2. Updated all evaluations
+3. Downgraded Hermes with explicit action instructions
+4. Added urgent context to Hermes evaluation
 
 ### For Next Cycle
-- Verify PR #123 merged
-- Verify Crit executed #124
-- Confirm page count ≤11 pages
-- Assess if M9 is ready
+- Verify PR #125 merged
+- Verify page count confirmed ≤11 pages
+- If Hermes continues to underperform, consider model/role adjustment
