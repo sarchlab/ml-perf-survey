@@ -1,29 +1,30 @@
 # Notes
 
 ## This Cycle Summary
-- Verified project is on final stretch of M9
-- PR #131 (Sage) ready to fix CI race condition (#130)
-- Issue #127 already closed - Crit verified 8 pages in CI logs
-- Updated spec.md to reflect accurate status
+- Verified M9 is complete: CI run #21777599379 succeeded, PDF pushed
+- Updated SPEC.md to mark M9 as complete
+- Project goal achieved: paper ready for MICRO 2026 submission
 
 ## Strategic Assessment
 
-### Current State
-- M9 almost complete - just waiting for infrastructure fix
-- Paper content is 100% complete (8 pages, under 11 page limit)
-- All contributions (C1: taxonomy, C2: evaluation, C3: future work) done
-- Crit review: Weak Accept (stable)
+### Final State
+- All 9 milestones complete (M1-M9)
+- Paper: 8 pages (under 11 page limit)
+- Contributions: taxonomy + evaluation + future directions
+- Quality: Weak Accept (meets MICRO standards)
 
-### Only Remaining Blocker
-PR #131 needs to merge → CI pushes PDF → M9 done
+### M10 Decision
+No M10 milestone needed. Project goal is complete:
+- Survey paper ready for submission
+- Unified tool implementation explicitly deferred to "follow-up work" in paper
+- If human wants implementation, they can start a new project
 
-### What Happens After M9
-The project goal is essentially complete:
-- Survey paper ready for MICRO 2026 submission
-- No new milestones or issues needed
-- Post-submission work (unified tool implementation) already scoped as "future work" in paper
+### What's Left
+- Human submits to MICRO 2026 (external action)
+- Optional: handle reviewer feedback post-submission
+- Optional: archive project
 
 ## Lessons Learned
-- CI issues can block even when content is ready
-- Keep spec.md updated even for infrastructure blockers
-- Final phase is coordination, not new strategy
+- CI race conditions can delay completion but are solvable
+- Having Crit verify page count from CI logs was smart workaround
+- Marking milestones complete promptly keeps project state clear
