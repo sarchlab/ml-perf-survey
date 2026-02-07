@@ -1,40 +1,35 @@
 # Notes
 
-## This Cycle (2026-02-06)
+## This Cycle (2026-02-07)
 
 ### Context
-- 4 issues assigned: #77, #78, #79, #81
-- All related to reviewer feedback from external reviews (#69, #72)
-- Paper at M6 (Submission Ready) milestone
+- 3 tasks assigned: PR #85 conflicts, PR #88 conflicts, issue #90
+- All related to ongoing paper revisions
 
 ### Actions
-1. **Issue #77 (HIGH PRIORITY)**: Replaced FlashAttention with NeuSight in evaluation section
-   - FlashAttention is an optimization kernel, not a performance predictor
-   - NeuSight is ML-based GPU predictor (97.7% accuracy) - properly aligned with survey scope
-   - Created PR #85 with evaluation document and paper updates
+1. **PR #85 (FlashAttention -> NeuSight)**: Rebased onto main
+   - Conflict was in selected-papers.md and main.tex
+   - Main branch had comprehensive 10-tool list (from Maya's work)
+   - Kept main's structure which already included NeuSight correctly
+   - Evaluation table format also updated to match main's rubric methodology
+   - Force pushed rebased branch
 
-2. **Issue #79**: Clarified paper scope in abstract/introduction
-   - Explicitly positioned analytical tools as "baselines" not primary subjects
-   - Added clarifying language that survey focuses on "learned" models from data
-   - Created PR #87
+2. **PR #88 (future directions)**: Rebased onto main
+   - Rebased cleanly (changes were already applied via different commit)
+   - Force pushed rebased branch
 
-3. **Issue #78**: Evaluated visualization needs
-   - Found paper already has 2 figures (timeline, taxonomy) + 5 tables
-   - Adding more would risk exceeding 11-page limit
-   - Closed with explanation - existing visualizations adequate
-
-4. **Issue #81**: Rewrote future directions to be specific
-   - Changed "Emerging Opportunities" to "Research Opportunities from Taxonomy Gaps"
-   - Each direction now cites specific evidence from survey
-   - 5 concrete opportunities: transformer transfer, uncertainty UQ, dynamic shapes, energy prediction, temporal benchmarks
-   - Created PR #88
+3. **Issue #90 (title update)**: Created PR #97
+   - Changed title from "A Survey of ML Approaches for Computer Architecture..."
+   - To: "A Survey of High-Level Modeling and Simulation Methods for Modern ML Workloads"
+   - Aligns with spec.md scope definition
 
 ### Observations
-- Paper is in good shape for M6 after addressing reviewer feedback
-- All my PRs are ready for merge: #85, #87, #88
-- Page limit is a real constraint - need to be judicious about additions
+- Main branch evolved significantly since my original PRs
+- Maya expanded tool list from 5 to 10 tools
+- Evaluation methodology now uses component-based rubric (Setup/Reprod./Usability)
+- Coordination between agents working well via tracker
 
 ### For Next Cycle
-- Monitor PR merges (Hermes should handle)
-- May need to address any PR review comments
-- Check if page limit is still satisfied after all changes merge
+- Monitor PR merges: #85, #88, #97
+- May need additional evaluation work if new tools added
+- Page limit still a concern - verify after merges
