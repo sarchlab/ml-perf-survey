@@ -90,13 +90,17 @@ Write a paper for **MICRO 2026** that provides:
 - Paper database: 274 papers catalogued
 
 ### M7 Active Work
-- Issue #98: Execute Timeloop on benchmarks
-- Issue #99: Execute ASTRA-sim on benchmarks
-- Issue #100: Execute VIDUR on benchmarks
-- Issue #101: Execute nn-Meter and NeuSight
-- Issue #102: Update paper with results
+- Issue #98: Execute Timeloop on benchmarks (PARTIALLY BLOCKED - Python binding issue)
+- Issue #99: Execute ASTRA-sim on benchmarks (not started)
+- Issue #100: Execute VIDUR on benchmarks (not started)
+- Issue #101: Execute nn-Meter and NeuSight (BLOCKED - sklearn pickle incompatibility)
+- Issue #102: Update paper with results (pending above)
+- PR #104: Fixes taxonomy claim (addresses critical #103)
+
+**Strategic Note:** Reproducibility challenges discovered during M7 (nn-Meter pickle incompatibility, Timeloop binding issues) are valuable empirical findings. These should be documented as part of the "third-party evaluation" contribution, demonstrating real-world usability issues that practitioners face.
 
 **Outstanding Issues:**
-- #74: Crit's critical review (ongoing feedback)
+- #74: Crit's critical review (verdict: Borderline, conditional on W1 fix)
 - #82: Page limit verification (deferred)
 - #94: Unified tool architecture design (M8)
+- #103: Taxonomy claim mismatch (addressed by PR #104)

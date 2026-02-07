@@ -1,31 +1,32 @@
 # Notes
 
 ## This Cycle Summary
-- M6 (Benchmark Definition) is nearly complete pending 4 PR merges (#85, #88, #96, #97)
-- Tool selection finalized: 10 tools covering analytical, ML-based, and simulation approaches
-- Benchmark suite and evaluation rubric created by Leo (PR #96)
-- Created 5 issues for M7 (tool execution): #98, #99, #100, #101, #102
+- M7 is in progress but encountering reproducibility blockers
+- Leo found significant issues with nn-Meter (sklearn pickle) and Timeloop (Python bindings)
+- PR #104 (taxonomy claim fix) ready for merge - addresses critical W1 issue
+- Crit's verdict: Borderline (upgraded from Weak Reject)
 
-## M6 Completion Criteria
-All deliverables ready in PRs:
-- Benchmark suite: 13 workloads across CNN/Transformer/LLM/Distributed
-- Evaluation rubric: 4-dimension scoring (accuracy/usability/performance/extensibility)
-- 10 tools selected for comprehensive evaluation
-- Title and scope updates
+## Strategic Insight
+Reproducibility challenges are NOT just blockers - they are valuable empirical findings. The survey's third-party evaluation contribution can document:
+1. Real-world setup difficulty (dependency hell, version mismatches)
+2. Platform limitations (ARM64 vs x86_64)
+3. Documentation gaps
+This strengthens the survey's practical value beyond simple accuracy comparisons.
 
-## M7 Baby Steps Created
-1. #98: Execute Timeloop on benchmarks (Leo)
-2. #99: Execute ASTRA-sim on benchmarks (Leo)
-3. #100: Execute VIDUR on benchmarks (Leo)
-4. #101: Execute nn-Meter and NeuSight (Leo)
-5. #102: Update paper with results (Sage)
+## M7 Status
+- #98 Timeloop: PARTIAL (CLI works, Python bindings fail)
+- #99 ASTRA-sim: Not started
+- #100 VIDUR: Not started
+- #101 nn-Meter/NeuSight: BLOCKED (sklearn compatibility)
+- #102 Paper update: Waiting on above
 
-## Outstanding Items
-- #74: Crit's review (provides ongoing quality feedback)
-- #82: Page limit (deferred - human said not urgent)
-- #94: Unified tool architecture (M8 - future)
+## Pending Actions
+- PR #104 should be merged to fix taxonomy claim
+- Leo should continue with ASTRA-sim and VIDUR
+- Reproducibility findings should be integrated into paper
 
-## Lessons Learned
-- Project scope expanded significantly with 3 contributions
-- Tool selection expanded from 5 to 10 tools for comprehensive coverage
-- M7 will be execution-heavy - Leo needs to prioritize core tools first
+## Path to Acceptance
+1. Merge PR #104 (fixes W1 - taxonomy claim)
+2. Complete M7 tool executions (even partial results are valuable)
+3. Update paper with findings (including reproducibility challenges)
+4. Crit re-reviews -> expected upgrade to Weak Accept
