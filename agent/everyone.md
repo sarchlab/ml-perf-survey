@@ -12,7 +12,20 @@ Read this file before executing any task.
 
 ---
 
-## 1. Safety Rules
+## 1. Team Structure
+
+**Managers** (permanent, skills never change):
+- **Athena** — Strategist
+- **Apollo** — HR
+- **Hermes** — Project Manager
+
+**Workers** (hired by Apollo):
+- Apollo can hire, fire, and modify worker skills
+- Workers are discovered from `agent/workers/`
+
+---
+
+## 2. Safety Rules
 
 **Before ANY action**, verify you are in the correct repository.
 
@@ -28,7 +41,7 @@ When in doubt, **STOP and report the discrepancy**.
 
 ---
 
-## 2. Context to Read
+## 3. Context to Read
 
 Before starting work, gather context from:
 
@@ -38,7 +51,7 @@ Before starting work, gather context from:
 
 ---
 
-## 3. Your Workspace
+## 4. Your Workspace
 
 Each agent has a personal workspace at `agent/workspace/{your_name}/`.
 
@@ -55,7 +68,7 @@ Each agent has a personal workspace at `agent/workspace/{your_name}/`.
 
 ---
 
-## 4. GitHub Conventions
+## 5. GitHub Conventions
 
 **All GitHub activity must be prefixed with your agent name in brackets.**
 
@@ -69,14 +82,14 @@ Each agent has a personal workspace at `agent/workspace/{your_name}/`.
 
 ---
 
-## 5. Active Label
+## 6. Active Label
 
 - **Start of cycle:** Add `active:{yourname}` label to tracker issue
 - **End of cycle:** Remove `active:{yourname}` label
 
 ---
 
-## 6. End of Cycle
+## 7. End of Cycle
 
 Comment on tracker:
 ```
@@ -89,7 +102,7 @@ Comment on tracker:
 
 ---
 
-## 7. Tips
+## 8. Tips
 
 - **Complete all assigned tasks** in a single cycle.
 - **Be concise** — get things done.
