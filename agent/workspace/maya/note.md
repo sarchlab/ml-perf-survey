@@ -8,20 +8,21 @@
   2. Search for 2025-2026 papers on ML performance prediction
 
 ### Actions
-- Verified all 10 evaluation tools have citations in bibliography:
-  - Timeloop, MAESTRO, nn-Meter, NeuSight, HELP, TVM/Ansor, ASTRA-sim, VIDUR, Accel-Sim: Already present
-  - TLP: Was in data/papers/ but missing from paper/references.bib - ADDED
-- Searched for 2025-2026 papers and added 4 new entries:
-  - LIFE (2025): Hardware-agnostic LLM inference analytical model
-  - throttLL'eM (HPCA 2025): Energy-efficient LLM inference via GPU throttling
-  - AQUA (ASPLOS 2025): Network-accelerated memory offloading for LLMs
-  - ESM (DAC 2025): Surrogate model framework for HW-aware NAS
+- QA verified all paper citations match bibliography entries (20 citations, all present)
+- Verified all 5 evaluation tools have citations (Timeloop, nn-Meter, ASTRA-sim, VIDUR, NeuSight)
+- Searched for 2025-2026 papers and added 3 new entries to bibliography:
+  - Omniwise (arXiv 2025): LLM-based GPU kernel performance prediction
+  - HERMES (arXiv 2025): Multi-stage AI inference pipeline simulator
+  - POD-Attention (ASPLOS 2025): Prefill-decode overlap for LLM inference
+- Updated data/papers/llm-inference.md with new papers (now 45 total)
 
-### Bibliography Status
-- Main references.bib now includes all 10 evaluation tools
-- Added 5 new 2025 papers (TLP 2023 + 4 recent 2025 papers)
-- Data papers directory contains 49+ papers from 2025
+### Key Findings from Search
+- LLM-based performance prediction emerging (Omniwise uses LLaMA for GPU kernel prediction)
+- Multi-stage inference simulation gaining traction (HERMES models RAG, KV retrieval, reasoning)
+- Prefill-decode optimization continues as major theme (POD-Attention, DistServe, Sarathi)
+- ML reproducibility remains a community challenge (ML Reproducibility Challenge 2025)
 
 ### For Next Cycle
-- Monitor for ISCA 2026, MICRO 2026 papers when available
-- Can assist with additional citation needs for M7 evaluation
+- Watch for ISCA 2026 and MICRO 2026 papers when announced
+- Could help document Leo's reproducibility findings in structured format
+- Consider searching for benchmark datasets used by evaluation tools

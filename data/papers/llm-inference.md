@@ -27,6 +27,9 @@ Literature focused on LLM-specific performance models, serving systems, attentio
 | Roofline-LLM | Imai et al. | 2024 | NeurIPS-WS | Prediction | Roofline + ML, 87% MSE reduction |
 | SpotServe | Various | 2024 | ASPLOS | Distributed | Serving on preemptible instances |
 | SuperServe | Various | 2025 | NSDI | Scheduling | Fine-grained serving for variable workloads |
+| Omniwise | Haj-Ali et al. | 2025 | arXiv | Prediction | LLM-based GPU kernel prediction, 90% within 10% error |
+| HERMES | Bambhaniya et al. | 2025 | arXiv | Simulation | Multi-stage AI inference pipeline simulator |
+| POD-Attention | Hao et al. | 2025 | ASPLOS | Attention | Full prefill-decode overlap for LLM inference |
 
 ## Categorization by Focus Area
 
@@ -88,6 +91,11 @@ Literature focused on LLM-specific performance models, serving systems, attentio
   - 29-69% inter-token-latency reduction
   - 28-30% latency reduction for long-context
   - Customizable attention kernels
+
+- **POD-Attention** (ASPLOS 2025) - Prefill-decode overlap
+  - Full overlap between prefill and decode phases
+  - Eliminates scheduling interference
+  - Improved end-to-end latency for mixed workloads
 
 ### 4. KV Cache Optimization
 
@@ -156,6 +164,18 @@ Literature focused on LLM-specific performance models, serving systems, attentio
   - Kernel-level simulation
   - More accurate than simple linear models
   - Addresses limitations of peak-FLOPS-based prediction
+
+- **Omniwise** (arXiv 2025) - LLM-based GPU kernel prediction
+  - First end-to-end LLM-based GPU kernel performance prediction
+  - Self-supervised fine-tuning on synthetic kernels
+  - 90% of predictions within 10% error on AMD MI250/MI300X
+  - Predicts memory bandwidth, cache hit rates, GFLOPs from code
+
+- **HERMES** (arXiv 2025) - Multi-stage inference simulation
+  - Heterogeneous multi-stage LLM inference simulator
+  - Models RAG, KV retrieval, reasoning, prefill, decode stages
+  - Integrates real hardware traces with analytical modeling
+  - Captures memory bandwidth contention and batching efficiency
 
 ### 7. Distributed Inference
 
@@ -246,7 +266,7 @@ Literature focused on LLM-specific performance models, serving systems, attentio
 
 ## References Summary
 
-Total papers cataloged: 42
+Total papers cataloged: 45
 - Serving systems: 12
 - Attention optimization: 4
 - KV cache: 6
