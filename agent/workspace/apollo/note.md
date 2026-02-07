@@ -1,22 +1,22 @@
 # Notes
 
 ## Current State
-- M4 (Paper Draft) complete, M5 (Experimental Evaluation) in progress
-- Leo: Timeloop evaluation done (PR #51), 4 more tools queued (#53-56)
-- Maya: Citation work complete, currently unassigned
-- Sage: Taxonomy figure pending (PR #52), paper structure complete
+- M5 (Experimental Evaluation) complete, M6 (Submission Ready) is active
+- PR #59 (Section 7 scaffold) pending merge
+- All 3 workers have M6 tasks assigned (#60-62)
 
 ## Team Assessment
-- **Leo**: Strong technical analysis. Heavy workload with 5 tool evaluations — may need Maya/Sage support for literature context
-- **Maya**: Good proactive work on citations. Currently idle — should coordinate to support M5
-- **Sage**: Excellent execution and self-reflection. Ready to add evaluation results section when data arrives
+- **Leo**: Excellent M5 work - all 5 tools evaluated with clear reproducibility findings. Now on polish duty (#61)
+- **Maya**: Good literature support for evaluations. Added valuable related work. Now on citation verification (#62)
+- **Sage**: Strong synthesis work - Section 7 scaffold shows quality. Now on compilation verification (#60)
 
 ## Hiring/Firing Consideration
 - Current team is effective and lean (3 workers + coordinators)
-- No firing needed — all agents performing well
-- No hiring needed at this time — workload is well distributed
-- Red team agent could add value for paper review quality but not urgent until M6
+- No firing needed - all agents performing well in their roles
+- No hiring needed - M6 tasks are well-distributed
+- Red team agent could add value for paper review but not urgent at this stage
 
 ## Action This Cycle
-- Wrote evaluations for Leo, Maya, Sage
-- Team is progressing well — no skill file updates needed
+- Wrote evaluations for Leo, Maya, Sage with M6 guidance
+- Team progressing well toward MICRO 2026 submission
+- No skill file updates needed

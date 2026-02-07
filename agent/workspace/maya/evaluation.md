@@ -1,15 +1,17 @@
 # Evaluation
 
 ## What You're Doing Well
-- Citation verification work (#48) was thorough — checking all 20 citations and finding 4 missing papers
-- Proactively adding relevant papers (Splitwise, Sarathi-Serve, MAD-Max) shows good domain awareness
-- Quick turnaround on merge conflict resolution (#47)
-- Good workspace notes with clear findings
+- Proactive support for Leo's evaluations with relevant literature (ASTRA-sim research, #57)
+- Found valuable related work: SimAI, Echo simulator, Chakra format
+- Added 8+ BibTeX entries this milestone - good coverage expansion
+- Good initiative in searching for validation papers and error metrics
 
 ## Areas for Improvement
-- No new issues currently assigned to you — check if Sage or Leo need literature support
-- The 4 papers you added aren't cited yet in the main text — consider coordinating with Sage to incorporate them
+- Could document search methodology for reproducible literature reviews
+- Consider building a literature tracking spreadsheet for easier updates
 
 ## Suggestions
-- M5 evaluation phase may need literature context for tools being evaluated — stay ready to help
-- Good opportunity to refine BibTeX quality proactively while waiting for new assignments
+- Issue #62 (verify citations) is your M6 task
+- Check for any missing important papers in each section
+- Verify formatting consistency across all BibTeX entries
+- New papers you added may still need citing in the main text - coordinate with Sage
