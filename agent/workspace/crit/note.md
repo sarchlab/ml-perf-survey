@@ -1,27 +1,34 @@
 # Notes
 
-## Cycle 30 (2026-02-07)
+## Cycle 67 (2026-02-07)
 
 ### What I Did
-- Reviewed the revision plan (issue #144, milestones M11-M15) against the external review (#141)
-- Posted detailed critique on #144 identifying 5 structural risks in the plan
-- Posted proactive guidance on #145 for Sage's scope reframing (PR not yet created)
-- Saved detailed critique at `agent/workspace/crit/revision-plan-critique.md`
+- Designed and posted 3-phase red team review protocol on #164 (per #156 human directive)
+- Performed fresh paper review and posted as issue #171 (Reject 4/10, up from 3/10)
+- No open PRs to review this cycle (Sage and Forge remain non-productive)
 
-### Key Findings
-1. **Scope pivot is underestimated** — the taxonomy (ML technique × hardware × input repr) is wrong for "modeling FOR ML workloads" scope. Needs full redesign, not just abstract rewrite.
-2. **Coverage expansion risks quantity over quality** — bib has ~50 entries but paper discusses ~20 substantively. Adding more citations without depth repeats the original problem.
-3. **Experimental plan (M13) is too vague** — no hardware specified, no benchmark suite defined, no methodology for comparing across tool categories.
-4. **Nothing identified for removal** — plan only discusses additions, but current content includes out-of-scope items (vLLM PagedAttention, uncited Figure 1 entries).
-5. **Unified tool prototype is scope creep** during a major revision.
+### Key Findings (Fresh Review)
+1. **Paper is ~8 pages vs 11-page limit** — 3 pages short, structural gap not polish
+2. **Only 2 figures** — peer papers have 8-15; need 6-8 more
+3. **No independently verified accuracy** — abstract claims it, paper doesn't deliver (W3 in review)
+4. **Contribution 3 (unified tool) completely absent** — SPEC lists 3 contributions, paper delivers 2
+5. **Most tools get 1-2 sentence treatment** — ~15 tools substantive, ~35 name-checked
+6. **Improvement since last review:** scope framing fixed, methodology section added, accuracy caveats honest
+
+### Red Team Protocol (Posted on #164)
+- 3 roles: Crit (overall), Paragraph Reviewer (TBD), Comparative Reviewer (TBD)
+- 3 phases: Independent Review → Fix Verification → Final Gate
+- Trigger condition: paper ≥10 pages, ≥60 cited refs — NOT YET MET
+- Apollo needs to hire 2 additional red team members
 
 ### Context for Future Self
-- No Sage PR for scope reframing yet — review when it appears
-- Issue #152 (fresh review of revised paper) is blocked until M14 completion
-- External review is at #141, human directives at #140, #142, #143
-- The team is in MAJOR REVISION mode (Reject 3/10)
-- My next task will likely be reviewing Sage's scope reframing PR and Leo's analysis deepening PR
+- Paper score: 4/10 (improved from 3/10 at #141)
+- Blocking issues: Sage and Forge still producing nothing (#167 escalation unanswered)
+- My review is #171 — follow up next cycle to verify if actionable items are addressed
+- Red team protocol posted but 2 reviewers still need hiring by Apollo
+- No PRs came in this cycle — watch for Sage (#145, #168) and Forge (#170) PRs next cycle
 
 ### Lessons Learned
-- Proactive critique (before PR exists) is valuable — gives authors guidance before they commit to an approach
-- The taxonomy redesign is the linchpin — everything else follows from getting the organizational structure right
+- Posting reviews as issues (per #156) is better than comments — creates trackable actionable items
+- The abstract overclaim about "independently measured accuracy" is a credibility risk — flagging it now before a real reviewer sees it
+- Project stall is the real threat, not paper quality — the plan is right but execution is stuck
