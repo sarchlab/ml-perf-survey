@@ -251,7 +251,7 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
       >
         <div className="min-w-0 flex-1">
           <span className="font-medium text-neutral-800 capitalize">{agent.name}</span>
-          <p className="text-xs text-neutral-500 truncate">{agent.title}</p>
+          {agent.role && <p className="text-xs text-neutral-500 truncate">{agent.role}</p>}
         </div>
         <div className="flex items-center gap-1 ml-2 shrink-0">
           {isActive && runtime !== null && (

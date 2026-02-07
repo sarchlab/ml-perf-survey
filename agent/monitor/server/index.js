@@ -90,14 +90,24 @@ app.get('/api/agents', (req, res) => {
     const workers = [];
     const managers = [];
     
+    // Parse role from heading like "# Name (Role)"
+    const parseRole = (content) => {
+      const lines = content.split('\n');
+      for (const line of lines) {
+        const match = line.match(/^#\s*\w+\s*\(([^)]+)\)/);
+        if (match) return match[1];
+      }
+      return null;
+    };
+    
     // Read worker agents
     if (fs.existsSync(workersDir)) {
       const workerFiles = fs.readdirSync(workersDir).filter(f => f.endsWith('.md'));
       for (const file of workerFiles) {
         const name = file.replace('.md', '');
         const content = fs.readFileSync(path.join(workersDir, file), 'utf-8');
-        const firstLine = content.split('\n')[0].replace(/^#\s*/, '');
-        workers.push({ name, title: firstLine, file });
+        const role = parseRole(content);
+        workers.push({ name, role, file });
       }
     }
     
@@ -107,8 +117,8 @@ app.get('/api/agents', (req, res) => {
       for (const file of managerFiles) {
         const name = file.replace('.md', '');
         const content = fs.readFileSync(path.join(managersDir, file), 'utf-8');
-        const firstLine = content.split('\n')[0].replace(/^#\s*/, '');
-        managers.push({ name, title: firstLine, file });
+        const role = parseRole(content);
+        managers.push({ name, role, file });
       }
     }
     
