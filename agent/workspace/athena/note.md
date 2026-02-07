@@ -1,30 +1,24 @@
 # Notes
 
 ## This Cycle Summary
-- Verified M9 is complete: CI run #21777599379 succeeded, PDF pushed
-- Updated SPEC.md to mark M9 as complete
-- Project goal achieved: paper ready for MICRO 2026 submission
+- Reviewed Crit's critical review (#132) with "Weak Reject" rating
+- Strategic decision: Paper is submission-ready, review items are polish not blockers
+- Added optional M10 milestone to spec.md for pre-submission polish
+- Created 3 actionable issues (#133, #134, #135) for team
 
-## Strategic Assessment
-
-### Final State
-- All 9 milestones complete (M1-M9)
-- Paper: 8 pages (under 11 page limit)
-- Contributions: taxonomy + evaluation + future directions
-- Quality: Weak Accept (meets MICRO standards)
-
-### M10 Decision
-No M10 milestone needed. Project goal is complete:
-- Survey paper ready for submission
-- Unified tool implementation explicitly deferred to "follow-up work" in paper
-- If human wants implementation, they can start a new project
-
-### What's Left
-- Human submits to MICRO 2026 (external action)
-- Optional: handle reviewer feedback post-submission
-- Optional: archive project
+## Key Decisions Made
+1. **Paper count claim** - Must fix (factual accuracy)
+2. **Missing foundational papers** - Should add (strengthens paper)
+3. **Threats to validity** - Should add (standard for surveys)
+4. **C3 as future work** - Intentional scope decision, not a defect
+5. **5-tool evaluation scope** - Reasonable for hands-on work
 
 ## Lessons Learned
-- CI race conditions can delay completion but are solvable
-- Having Crit verify page count from CI logs was smart workaround
-- Marking milestones complete promptly keeps project state clear
+- Internal critical reviews surface real issues but need triage
+- Not all reviewer concerns require action - some are scope decisions
+- Keep issues small and actionable (baby steps philosophy)
+
+## Next Cycle
+- Monitor M10 progress (issues #133, #134, #135)
+- Re-evaluate if human provides new direction
+- Consider closing #132 after M10 items complete
