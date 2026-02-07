@@ -178,67 +178,70 @@ Implements the review process from #156. Three-phase review.
 
 ## Current Status
 
-**Project Status:** 🚨 **CRITICAL STALL — CONTINUED**
+**Project Status:** STALL BROKEN — Active development resumed
 
-The project remains stalled. No paper changes have been made since the major revision was identified. Escalation to Apollo (#167) has had no response. The MICRO 2026 deadline is at risk.
+Apollo responded to escalation #167. Workers are now delivering. Three PRs are open, and two more workers are active. The critical path is now M11 (scope/presentation) and M12 (literature depth).
+
+Crit posted a fresh review (#171) — confirms improvements (scope clarity, survey methodology, accuracy caveats) but identifies remaining gaps: paper is 3 pages short, only 2 figures, and analysis depth is thin.
 
 ### Human Directives (unchanged)
-- **#140**: Paper must be close to 11-page limit (currently 8 pages)
+- **#140**: Paper must be close to 11-page limit (currently ~8 pages)
 - **#142**: Scope is modeling FOR ML workloads, NOT ML-based modeling
 - **#143**: Run experiments to verify accuracy — don't trust paper-reported numbers
 - **#153**: Unified tool prototype must be implemented, not deferred
 - **#156**: Incremental work, review follow-up, red team of 3
 - **#83**: Paper comparison against top-tier papers every cycle
 
-### Key Metrics (UNCHANGED for many cycles)
-| Metric | Current | Target |
-|--------|---------|--------|
-| Paper pages | ~8 | 10.5-11 |
-| Cited references | 24 | 80-100 |
-| Figures | 2 | 8-10 |
-| Tools evaluated independently | 2 | 4+ |
+### Key Metrics
+| Metric | Current | Target | Trend |
+|--------|---------|--------|-------|
+| Paper pages | ~8 | 10.5-11 | Pending (PRs will add content) |
+| Cited references | ~63 (72 in bib) | 80-100 | Improving (PRs #172, #173 add ~23) |
+| Figures | 2 | 8-10 | Not started |
+| Tools evaluated independently | 2 | 4+ | Forge working on ASTRA-sim |
 
 ### Worker Status
-| Worker | Assigned | Output | Cycles Idle |
-|--------|----------|--------|-------------|
-| **Sage** | #145, #168, #169 | Zero | Many |
-| **Forge** | #155, #154, #170 | Zero | Many |
-| **Leo** | — | Done (PR #157 merged) | Available |
-| **Maya** | #160 | Done (PR #158 merged) | Available |
-| **Crit** | — | Done (review posted) | Available |
+| Worker | Assigned | Status | Output |
+|--------|----------|--------|--------|
+| **Sage** | #145, #168 | Delivering | PR #174 (scope reframe), PR #175 (NaN/ref fixes) |
+| **Leo** | #169 | Delivering | PR #172 (9 uncited refs integrated) |
+| **Maya** | #173 | Active | Integrating 14 foundational refs |
+| **Forge** | #170, #155, #154 | Active | Working on ASTRA-sim experiment |
+| **Crit** | #171 | Done | Fresh review posted |
 
-**3 of 5 workers are idle/available. 2 of 5 workers have produced nothing.**
+### Open PRs (need Hermes to merge)
+- **PR #175** (Sage) — NaN metadata + reference formatting fixes → closes #168
+- **PR #174** (Sage) — Scope reframe: abstract, keywords, intro → partially addresses #145
+- **PR #172** (Leo) — Integrate 9 uncited references → closes #169
 
-### Issue Cleanup This Cycle
-Closed redundant issues to reduce confusion: #147 (superseded by #168), #166 (superseded by #169), #151 (downstream), #150 (downstream), #152 (premature), #144 (incorporated into spec), #159 (duplicate of #162).
+### Active Issue Map
 
-### Active Issue Map (Simplified)
+**In progress (PRs open):**
+1. **#168** — Fix NaN metadata, reference formatting → PR #175
+2. **#145** — Scope reframe → PR #174 (abstract/intro done; conclusion still needs work)
+3. **#169** — Integrate uncited references → PR #172
 
-**Sage MUST do these NOW (no blockers):**
-1. **#168** — Fix NaN metadata, reference formatting
-2. **#169** — Integrate 5-8 HIGH-priority uncited references
+**In progress (active workers):**
+4. **#173** — Maya integrating 14 foundational refs (will bring cited refs to ~86)
+5. **#170** — Forge: ASTRA-sim on ResNet-50 (first accuracy experiment)
 
-**Sage MUST do next (critical path):**
-3. **#145** — Scope reframe (abstract, intro, conclusion)
-4. **#146** — Add survey methodology section
-
-**Forge MUST do these NOW (no blockers):**
-5. **#170** — First accuracy experiment: ASTRA-sim on ResNet-50
-6. **#155** — Broader accuracy experiments
-7. **#154** — Unified tool prototype
-
-**Blocked on M11a completion:**
-8. **#161** — Taxonomy redesign
-9. **#163** — Content audit
+**Next up after current PRs merge:**
+6. **#146** — Add survey methodology section (Sage, if not already covered)
+7. **#161** — Taxonomy redesign (unblocked once #145 merges)
+8. **#163** — Content audit (unblocked once #145 merges)
+9. **#162** — Add 6-8 figures (CRITICAL — still at 2 figures, need 8-10)
+10. **#155** — Broader accuracy experiments
+11. **#154** — Unified tool prototype
 
 **Longer-term:**
-10. **#162** — Add 6-8 figures
-11. **#160** — Expand to 80-100 cited refs
-12. **#164** — Red team review process
+12. **#160** — Expand to 80-100 cited refs (Maya's #173 will get close)
+13. **#164** — Red team review process
 
 ### Next Steps
-1. **Apollo MUST act on escalation #167** — Sage and Forge are non-functional
-2. **Sage**: Do #168 and #169 immediately (zero blockers, mechanical tasks)
-3. **Forge**: Do #170 immediately (one experiment, clear instructions)
-4. **Leo/Maya**: Available for reassignment if Apollo acts
-5. **If stall continues next cycle**: Consider human intervention flag
+1. **Hermes**: Review and merge PRs #172, #174, #175 — these unblock downstream work
+2. **Sage**: After PRs merge, tackle #146 (methodology section) and continue #145 (conclusion reframe)
+3. **Forge**: Complete #170, then move to #155 (broader experiments) and #154 (prototype)
+4. **Leo**: Available after PR #172 merges — assign to #161 (taxonomy redesign) or #162 (figures)
+5. **Maya**: Complete #173, then available — could help with #162 (figures)
+6. **Crit**: Ready for next review cycle after PRs merge and content stabilizes
+7. **PRIORITY GAP**: Figures (#162) — nobody is assigned, and this is a major weakness per Crit's review
