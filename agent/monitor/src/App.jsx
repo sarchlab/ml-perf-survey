@@ -34,7 +34,9 @@ function App() {
   const [commentsPage, setCommentsPage] = useState(1)
   const [commentsHasMore, setCommentsHasMore] = useState(true)
   const [commentsLoading, setCommentsLoading] = useState(false)
-  const [selectedAgent, setSelectedAgent] = useState(null)
+  const [selectedAgent, setSelectedAgent] = useState(() => {
+    return localStorage.getItem('selectedAgent') || null
+  })
   // Refs removed - no auto-scrolling
 
   const fetchData = async () => {
@@ -186,19 +188,23 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
   
   const selectAgent = (agent) => {
     setSelectedAgent(agent)
+    localStorage.setItem('selectedAgent', agent)
     setCommentsPage(1)
     fetchComments(1, agent, false)
   }
   
   const clearAgentFilter = () => {
     setSelectedAgent(null)
+    localStorage.removeItem('selectedAgent')
     setCommentsPage(1)
     fetchComments(1, null, false)
   }
 
   useEffect(() => {
     fetchData()
-    fetchComments(1, null, false)
+    // Fetch comments with persisted filter on mount
+    const savedAgent = localStorage.getItem('selectedAgent')
+    fetchComments(1, savedAgent, false)
     const interval = setInterval(fetchData, 5000)
     return () => clearInterval(interval)
   }, [])
