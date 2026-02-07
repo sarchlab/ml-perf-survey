@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Activity, Users, Sparkles, Settings, ScrollText, RefreshCw, Pause, Play, SkipForward, RotateCcw, Square, Save, MessageSquare, X, User } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { Separator } from '@/components/ui/separator'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 
@@ -594,7 +595,7 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
                         prose-ul:list-disc prose-ul:pl-4 prose-ol:list-decimal prose-ol:pl-4
                         prose-code:bg-neutral-100 prose-code:px-1 prose-code:rounded prose-code:text-neutral-700
                         prose-pre:bg-neutral-900 prose-pre:text-neutral-100">
-                        <ReactMarkdown>
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
                           {comment.body}
                         </ReactMarkdown>
                       </div>
