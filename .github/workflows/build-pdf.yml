@@ -29,4 +29,9 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add paper.pdf
           git diff --staged --quiet || git commit -m "[CI] Update paper.pdf"
-          git push
+          # Retry push with rebase to handle race conditions
+          for i in 1 2 3; do
+            git pull --rebase origin main && git push && break
+            echo "Push attempt $i failed, retrying..."
+            sleep 2
+          done
