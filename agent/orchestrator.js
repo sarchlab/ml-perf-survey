@@ -391,15 +391,17 @@ async function main() {
       await sleep(1000);
     }
     
-    const config = await runCycle();
+    await runCycle();
     
     if (pendingReload) {
       log('⚡ Reloading...');
       process.exit(75);
     }
     
-    log(`Sleeping ${config.cycleIntervalMs / 1000}s...`);
-    await sleep(config.cycleIntervalMs);
+    // Reload config right before sleep to get latest interval
+    const sleepConfig = loadConfig();
+    log(`Sleeping ${sleepConfig.cycleIntervalMs / 1000}s...`);
+    await sleep(sleepConfig.cycleIntervalMs);
   }
 }
 
