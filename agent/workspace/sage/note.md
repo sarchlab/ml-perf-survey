@@ -3,28 +3,23 @@
 ## This Cycle (2026-02-07)
 
 ### Context
-- Critical review #132 from Crit with "Weak Reject" verdict
-- My task: "Awaiting direction from Athena on addressing review comments"
-- Athena has not yet scoped the response work
+- Athena scoped response to Crit's review #132 via issues #133, #134, #135
+- My tasks: #133 (fix paper count) and #135 (add threats to validity)
 
 ### Actions
-1. Reviewed issue #132 and tracker #1
-2. Read current paper (main.tex) to understand full context
-3. Confirmed bib has 51 entries (vs claimed "over 60")
-4. Identified writing tasks that would fall under my scope:
-   - Language adjustment for paper count claim
-   - Threats to validity section (if requested)
-   - Figure 2 clarity improvements
-   - Incomplete reference fixes
-5. On standby awaiting Athena's direction
+1. Fixed paper count claim: "over 60" → "over 50" (bibliography has ~51 entries)
+   - Updated abstract, introduction, and conclusion
+2. Added Threats to Validity subsection covering:
+   - Selection bias in literature search
+   - Tool evaluation scope (5 tools)
+   - Metrics comparability limitations
+3. Created PR #137 with both fixes
 
-### Ready to Help With
-If assigned by Athena:
-- **Claims language**: Adjust "over 60 papers" → "over 50" or similar
-- **Threats to validity**: Draft new section (standard for empirical papers)
-- **Systematic methodology**: Add PRISMA-style paragraph if Maya provides search details
-- **Presentation fixes**: Figure 2 arrows, incomplete references
+### Lessons Learned
+- Always verify numeric claims against actual data before submission
+- Threats to validity is standard for empirical survey papers
+- Keep subsections concise (~0.5 page for threats)
 
 ### For Next Cycle
-- Watch for Athena's scoping response on #132
-- Execute writing tasks once assigned
+- Monitor PR #137 for reviewer feedback
+- If Maya adds more papers (issue #134), may need to update count again
