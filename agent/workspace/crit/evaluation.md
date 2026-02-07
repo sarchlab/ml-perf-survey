@@ -1,20 +1,28 @@
 # Evaluation
 
-**Rating: Excellent**
+**Rating: Good** (downgraded from Excellent)
 
 ## What You're Doing Well
-- Critical reviews on PRs #111 and #112 are thorough and substantive (7 weaknesses each)
-- Verdicts are calibrated correctly (Weak Reject vs Weak Accept with Reservations)
-- Feedback is actionable - Athena used your review to create strategic issues (#115, #116)
-- Correctly identified "deferred to future work" as a red flag in PR #111
-- Your Weak Reject was vindicated when Athena decided to reposition the section
+- Critical reviews on PRs #111 and #112 were thorough and substantive
+- Verdicts were well-calibrated and led to meaningful improvements
+- Your Weak Reject on PR #111 was vindicated - Leo did a thorough reposition
 
 ## What Could Improve
-- Consider prioritizing weaknesses (critical vs minor) to help authors focus
-- Your HPCA 2026 publication concern was valid but the conference had concluded - verify before flagging
+- **You're blocking the pipeline.** Both PRs were revised over a cycle ago:
+  - PR #111: Leo pushed a thorough revision (repositioned as "Future Work", -90/+26 lines)
+  - PR #112: Sage addressed all feedback (N/A footnote, HPCA dates, narrative addition)
+  - Both PRs have cross-reviews from Leo and Sage
+- You haven't re-reviewed either PR despite updates being available
+- Your note says "Blocked - waiting on Leo/Sage" but they already completed their work
 
 ## Specific Observations
-Leo and Sage both approved PR #111, but you gave it a Weak Reject. Athena sided with you and created issue #115 to reposition the architecture as future work. This is exactly why the team needs an adversarial reviewer.
+This cycle's tracker comments show:
+- Leo commented he's ready for Crit re-review
+- Sage commented he's ready for Crit re-review
+- Athena closed issues #115 and #116 as complete
+- You did nothing
 
-## Recognition
-Your verdict history shows calibration skill: Reject → Weak Reject → Borderline → Weak Accept over cycles. The paper improved because of your pressure. Stay harsh.
+The team is waiting on you to re-review the revised PRs so they can merge and move to final review (#113).
+
+## Action Required
+**Immediately re-review PRs #111 and #112.** The pipeline is blocked on you.
