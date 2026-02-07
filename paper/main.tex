@@ -1217,6 +1217,116 @@ Our taxonomy analysis reveals specific gaps where no existing work provides adeq
 
 \textbf{Opportunity:} Create versioned benchmark suites with measurements across software configurations (CUDA 11.x vs 12.x, PyTorch 1.x vs 2.x, TensorRT versions). Define temporal generalization metrics: accuracy on measurements from software stacks released N months after training data. This would enable principled evaluation of continual learning approaches.
 
+\subsection{Toward a Unified Performance Modeling Framework}
+\label{subsec:unified-architecture}
+
+Our empirical evaluation (Section~\ref{sec:evaluation}) reveals that no single tool addresses all performance modeling needs.
+Timeloop excels at spatial accelerator design space exploration; VIDUR provides unmatched LLM inference simulation; ASTRA-sim captures distributed training dynamics; nn-Meter targets edge device latency prediction.
+This fragmentation forces practitioners to learn multiple tools, manage incompatible dependencies, and manually synthesize results across modeling approaches.
+We propose a unified architecture that combines the strengths of these tools while addressing their reproducibility limitations.
+
+\subsubsection{Design Principles}
+
+Based on our evaluation findings, we identify four principles that should guide a unified framework:
+
+\textbf{Docker-first deployment.}
+Our M7 evaluation found that Docker-containerized tools (ASTRA-sim, VIDUR) achieved 8--9/10 reproducibility scores, while tools relying on native installation (nn-Meter) scored 3/10 due to dependency conflicts.
+A unified framework must provide containerized environments with pinned dependencies, enabling reproducible execution across platforms (x86\_64, aarch64) without environment engineering.
+
+\textbf{Modular, composable architecture.}
+Different workload classes require different modeling approaches: LLM serving needs prefill/decode phase separation (VIDUR), distributed training requires collective communication modeling (ASTRA-sim), and edge deployment benefits from kernel-level decomposition (nn-Meter).
+Rather than building a monolithic tool, a unified framework should provide modular components that can be composed based on the target use case.
+
+\textbf{Hybrid analytical-learned modeling.}
+The most accurate surveyed approaches (NeuSight, VIDUR) combine analytical structure with learned components.
+Analytical decomposition provides interpretability and physics-based inductive bias; ML captures complex effects that resist closed-form analysis.
+A unified framework should support both purely analytical, purely learned, and hybrid prediction pipelines.
+
+\textbf{Avoid fragile persistence formats.}
+Our nn-Meter evaluation (3/10) found that pickled scikit-learn models broke across versions, creating a ``time bomb'' that rendered the tool unusable.
+A unified framework must use portable model formats (ONNX, PMML) with explicit version constraints, or provide analytical fallbacks when learned models fail to load.
+
+\subsubsection{Proposed Architecture}
+
+Figure~\ref{fig:unified-architecture} illustrates our proposed three-layer architecture.
+
+\textbf{Layer 1: Workload Representation.}
+A common intermediate representation captures workload characteristics in a tool-agnostic format.
+Following nn-Meter's kernel decomposition insight, we propose representing workloads as directed graphs where nodes are operators (with shape, datatype, and fusion annotations) and edges capture data dependencies.
+This representation subsumes both tensor programs (TVM relay, ONNX) and execution traces (Chakra, PyTorch profiler output).
+
+\textbf{Layer 2: Modeling Engines.}
+Pluggable modeling engines consume the workload representation and produce predictions.
+Each engine targets a specific hardware class and prediction granularity:
+\begin{itemize}
+\item \textbf{Accelerator DSE Engine} (Timeloop-style): Loop-nest optimization, dataflow analysis, energy modeling for spatial accelerators.
+\item \textbf{LLM Inference Engine} (VIDUR-style): Discrete-event simulation with prefill/decode separation, batching, and scheduling policies.
+\item \textbf{Distributed Training Engine} (ASTRA-sim-style): Collective communication modeling, network topology simulation, compute-communication overlap.
+\item \textbf{Edge Predictor Engine} (nn-Meter-style): Kernel detection, fusion-aware decomposition, platform-specific latency prediction.
+\end{itemize}
+Each engine runs in an isolated Docker container, communicating via a standard RPC interface.
+This isolation prevents dependency conflicts---the edge predictor can use sklearn 1.0 while the LLM engine uses PyTorch 2.x.
+
+\textbf{Layer 3: Unified API.}
+A single Python API provides consistent access to all modeling engines.
+Users specify the workload (model checkpoint, ONNX file, or execution trace) and target scenario (inference latency, training throughput, energy, or multi-objective).
+The API routes requests to appropriate engines and aggregates results.
+For multi-device scenarios, the API orchestrates composition: per-device latency from the edge predictor combined with collective time from the distributed engine.
+
+\subsubsection{Expected Benefits}
+
+This architecture addresses the key limitations identified in our evaluation:
+
+\textbf{Reproducibility.}
+Docker containerization with explicit version pinning ensures that models trained in 2025 remain executable in 2030.
+Each engine container is versioned and immutable; updates create new container versions rather than modifying existing ones.
+
+\textbf{Extensibility.}
+Adding support for new hardware requires implementing a single engine conforming to the standard interface.
+The workload representation layer and API remain unchanged.
+
+\textbf{Accuracy-speed trade-offs.}
+Users can select engine fidelity based on their needs: analytical engines for fast design space exploration (millions of points/second), learned engines for higher accuracy with some training cost, or hybrid engines that combine both.
+
+\subsubsection{Implementation Scope}
+
+We scope the unified framework as follows:
+\begin{itemize}
+\item \textbf{In scope (architecture document):} Layer specifications, interface definitions, container orchestration patterns, example workflows for common use cases.
+\item \textbf{Deferred to future work:} Full implementation, integration testing across all engines, performance benchmarking of the framework itself.
+\end{itemize}
+
+This architecture document serves as a roadmap for the research community to collaboratively build toward unified performance modeling infrastructure.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[
+    layer/.style={draw, rounded corners, minimum width=7cm, minimum height=1.2cm, font=\small},
+    engine/.style={draw, rounded corners, minimum width=1.5cm, minimum height=0.8cm, font=\scriptsize},
+    arrow/.style={-{Stealth[length=2mm]}, thick}
+]
+% Layer 3: Unified API
+\node[layer, fill=blue!15] (api) at (0, 3) {Layer 3: Unified Python API};
+
+% Layer 2: Modeling Engines
+\node[layer, fill=green!15, minimum height=1.8cm] (engines) at (0, 1.2) {};
+\node[font=\small, anchor=north] at (0, 1.9) {Layer 2: Modeling Engines};
+\node[engine, fill=green!30] (dse) at (-2.2, 0.8) {Accelerator};
+\node[engine, fill=green!30] (llm) at (-0.7, 0.8) {LLM};
+\node[engine, fill=green!30] (dist) at (0.8, 0.8) {Distributed};
+\node[engine, fill=green!30] (edge) at (2.3, 0.8) {Edge};
+
+% Layer 1: Workload Representation
+\node[layer, fill=orange!15] (repr) at (0, -0.5) {Layer 1: Workload Representation (Graph IR)};
+
+% Arrows
+\draw[arrow] (api) -- (engines);
+\draw[arrow] (engines) -- (repr);
+\end{tikzpicture}
+\caption{Unified performance modeling framework architecture. Layer 1 provides a common workload representation. Layer 2 contains pluggable modeling engines in isolated Docker containers. Layer 3 exposes a unified API for all prediction tasks.}
+\label{fig:unified-architecture}
+\end{figure}
+
 % ==============================================================================
 % EXPERIMENTAL EVALUATION
 % ==============================================================================
