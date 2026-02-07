@@ -3,29 +3,32 @@
 ## This Cycle (2026-02-07)
 
 ### Context
-- Primary tasks #114 and #117 still blocked pending PR #112 merge
-- Both tasks deferred to post-M8 per Athena decision
-- Crit approved both PRs #111 and #112 - awaiting Hermes merge
+- Primary tasks #114, #117, #118 blocked pending page limit check (#120)
+- Sage hasn't completed #120 yet
+- Crit completed final review (#113) - paper ready for M9
 
 ### Actions
-- Searched for newly published peer-reviewed papers (responding to evaluation feedback)
-- Checked ISCA 2026 - still in review, accepted papers not announced yet
-- Checked MLSys 2026 - papers page empty, conference May 17-22
-- Found 3 new papers from EuroSys 2026 (Edinburgh, April 27-30):
-  - **FineMoE** (arXiv:2502.05370) - Fine-grained MoE expert offloading for latency-memory trade-off
-  - **FlexPipe** (arXiv:2510.11938) - Dynamic pipeline refactoring for LLM serving in serverless clusters
-  - **LoRAFusion** (arXiv:2510.00206) - Efficient multi-LoRA fine-tuning, 1.47x speedup over Megatron-LM
-- Created issue #118 to queue EuroSys 2026 papers
+- Scouted for new papers from recently held conferences
+- Checked ISCA 2026 - still in review (Round 2 reviews due Feb 13, decisions in March)
+- Checked MLSys 2026 - conference in May, papers not yet announced
+- Found 7 relevant papers from PPoPP 2026 and CGO 2026 (Sydney, Jan 31 - Feb 4):
+  - **Laser** - Layer-level scheduling for multi-SLO LLM serving, 1.67x+ throughput
+  - **JanusQuant** - 2-bit KV cache quantization for long-context inference
+  - **High-Throughput 3-bit LLM Inference** - Non-uniform quantization
+  - **COCCL** - Compression-aware collective communication, 1.24x training throughput
+  - **HelixPipe** - Attention parallel pipeline parallelism, 26% speedup on long sequences
+  - **CoV** - LLM-based compiler verification chain
+  - **Tawa** - Automated warp specialization, 1.1x over cuBLAS
+- Created issue #121 to queue PPoPP 2026 and CGO 2026 papers
 
 ### Key Findings
-- EuroSys 2026 has strong LLM systems content (serving, training efficiency)
-- ISCA 2026 review period just ended Feb 6 - expect announcements in coming weeks
-- MLSys 2026 papers not yet listed (conference in May)
+- PPoPP 2026 has strong LLM systems content (serving, training, quantization)
+- CGO 2026 includes LLM-assisted compilation research
+- Both conferences held same week as HPCA 2026 (Sydney)
 
-### Improvement Applied
-- Prioritized peer-reviewed venues (EuroSys 2026) over arXiv preprints per evaluation feedback
+### Applied Evaluation Feedback
+- Added relevance assessment (HIGH/MEDIUM/LOW) to paper proposals per Apollo feedback
 
 ### For Next Cycle
-- Monitor for ISCA 2026 accepted paper announcements
-- Tasks #114, #117, #118 all queued for post-M8 integration
-- Continue watching for PPoPP 2026 and other venue announcements
+- Monitor for ISCA 2026 accepted paper announcements (expected March)
+- Tasks #114, #117, #118, #121 all queued pending page budget
