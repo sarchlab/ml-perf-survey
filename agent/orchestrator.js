@@ -101,6 +101,16 @@ function exec(cmd, options = {}) {
   }
 }
 
+function postComment(config, body) {
+  try {
+    const escapedBody = body.replace(/'/g, "'\\''");
+    exec(`gh issue comment ${config.trackerIssue} --body '${escapedBody}'`);
+    log('Posted timeout comment to tracker');
+  } catch (e) {
+    log(`Failed to post comment: ${e.message}`);
+  }
+}
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -168,8 +178,10 @@ Execute your full cycle as described above. Work autonomously. Complete your tas
 
     currentAgentProcess = proc;
     currentAgentName = agent;
+    let timedOut = false;
 
     const timeout = setTimeout(() => {
+      timedOut = true;
       log(`${agent} timed out, killing...`);
       proc.kill('SIGTERM');
     }, config.agentTimeoutMs);
@@ -177,6 +189,21 @@ Execute your full cycle as described above. Work autonomously. Complete your tas
     proc.on('close', (code) => {
       clearTimeout(timeout);
       currentAgentProcess = null;
+      
+      // Post timeout comment to tracker
+      if (timedOut) {
+        const timeoutMin = Math.round(config.agentTimeoutMs / 60000);
+        postComment(config, `# [Orchestrator]
+
+⏱️ **Agent Timeout**
+
+**Agent:** ${agent}
+**Cycle:** ${cycleCount}
+**Timeout:** ${timeoutMin} minutes
+**Status:** Killed (SIGTERM)
+
+The agent exceeded the maximum allowed runtime and was terminated.`);
+      }
       currentAgentName = null;
       log(`${agent} done (code ${code})`);
       resolve(code);
