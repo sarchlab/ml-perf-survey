@@ -3,6 +3,7 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Activity, Users, Sparkles, Settings, ScrollText, RefreshCw, Pause, Play, SkipForward, RotateCcw, Square, Save, MessageSquare, X } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
 
 // Proxied through monitor backend to work with Cloudflare tunnel
 const ORCHESTRATOR_API = '/api/orchestrator'
@@ -577,8 +578,10 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
                       {new Date(comment.created_at).toLocaleString()}
                     </span>
                   </div>
-                  <div className="text-sm text-neutral-700 whitespace-pre-wrap break-words max-h-48 overflow-y-auto">
-                    {comment.body.length > 500 ? comment.body.slice(0, 500) + '...' : comment.body}
+                  <div className="text-sm text-neutral-700 prose prose-sm prose-neutral max-w-none max-h-48 overflow-y-auto">
+                    <ReactMarkdown>
+                      {comment.body.length > 1000 ? comment.body.slice(0, 1000) + '...' : comment.body}
+                    </ReactMarkdown>
                   </div>
                 </div>
               ))}
