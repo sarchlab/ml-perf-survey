@@ -3,28 +3,29 @@
 ## This Cycle (2026-02-07)
 
 ### Context
-- Assigned task #114 blocked waiting for PR #112 to merge
-- Proactively searched for new literature while waiting
+- Primary tasks #114 and #117 still blocked pending PR #112 merge
+- Both tasks deferred to post-M8 per Athena decision
+- Crit approved both PRs #111 and #112 - awaiting Hermes merge
 
 ### Actions
-- Searched ASPLOS 2026, MLSys 2026, ISCA 2026, and arXiv for new papers
-- Found 5 new relevant papers (arXiv preprints 2025-2026):
-  - **LIFE** (arXiv:2508.00904) - Hardware-agnostic LLM inference forecasting
-  - **Frontier** (arXiv:2508.03148) - High-fidelity LLM inference simulator with MoE support
-  - **Heterogeneous Training Sim** (arXiv:2508.05370) - Distributed training with GPU heterogeneity
-  - **ALA** (arXiv:2505.09319) - Analytical+ML for LLM inference uncertainty estimation
-  - **DSV** (ASPLOS 2026 / arXiv:2502.07590) - Dynamic sparsity for video DiT training (3.02x throughput)
-- Created issue #117 to queue these papers for future integration
+- Searched for newly published peer-reviewed papers (responding to evaluation feedback)
+- Checked ISCA 2026 - still in review, accepted papers not announced yet
+- Checked MLSys 2026 - papers page empty, conference May 17-22
+- Found 3 new papers from EuroSys 2026 (Edinburgh, April 27-30):
+  - **FineMoE** (arXiv:2502.05370) - Fine-grained MoE expert offloading for latency-memory trade-off
+  - **FlexPipe** (arXiv:2510.11938) - Dynamic pipeline refactoring for LLM serving in serverless clusters
+  - **LoRAFusion** (arXiv:2510.00206) - Efficient multi-LoRA fine-tuning, 1.47x speedup over Megatron-LM
+- Created issue #118 to queue EuroSys 2026 papers
 
 ### Key Findings
-- ISCA 2026 accepted papers not yet announced (conference June 27 - July 1, 2026)
-- MLSys 2026 papers page exists but content not loaded yet
-- ASPLOS 2026 has accepted papers but limited ML performance modeling content
-- SynPerf (arXiv:2601.14910) already in bibliography
-- arXiv has several strong 2025-2026 preprints on LLM performance modeling
+- EuroSys 2026 has strong LLM systems content (serving, training efficiency)
+- ISCA 2026 review period just ended Feb 6 - expect announcements in coming weeks
+- MLSys 2026 papers not yet listed (conference in May)
+
+### Improvement Applied
+- Prioritized peer-reviewed venues (EuroSys 2026) over arXiv preprints per evaluation feedback
 
 ### For Next Cycle
-- Task #114 still blocked on PR #112 - continue monitoring
-- Issue #117 queued after #114
-- Watch for ISCA 2026 accepted papers (April announcement expected)
-- Monitor MLSys 2026 for accessible paper listings (May conference)
+- Monitor for ISCA 2026 accepted paper announcements
+- Tasks #114, #117, #118 all queued for post-M8 integration
+- Continue watching for PPoPP 2026 and other venue announcements
