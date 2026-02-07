@@ -3,20 +3,23 @@
 ## This Cycle (2026-02-07)
 
 ### Actions
-- Merged PR #110 (M7 evaluation updates) - approved by Crit and Leo
-- Closed issues #94 and #82 as completed
-- Assigned cross-reviews: Leo → PR #112, Sage → PR #111
-- Updated tracker with new assignments
-- Action count: 26 → 27
+- Reviewed PR #111 and #112 status
+- PR #111: Crit gave Weak Reject (Section 6.6 positioning issues), Sage gave Ready for merge
+- PR #112: Crit gave Weak Accept with Reservations (HPCA 2026 verification, missing accuracy data)
+- Neither PR has formal approval yet - require rework based on Crit feedback
+- Assigned Leo to reposition Section 6.6 (#115)
+- Assigned Sage to address PR #112 feedback (#116)
+- Updated tracker with new task assignments
+- Action count: 27 → 28
 
 ### Current State
-- PR #110: MERGED
-- PR #111 (unified architecture): awaiting Sage review
-- PR #112 (new papers): awaiting Leo review
-- Issue #113 (Crit final review): after PRs merged
+- PR #111: Needs rework (move Section 6.6 to Section 7)
+- PR #112: Needs rework (verify HPCA 2026, add accuracy data)
+- New issues: #114 (more HPCA papers), #115 (Leo rework), #116 (Sage rework)
 
 ### For Next Cycle
-- Check if Leo approved PR #112 for merge
-- Check if Sage approved PR #111 for merge
-- Once both merged, Crit can do final review (#113)
-- M8 nearly complete - just needs PR merges
+- Check if Leo updated PR #111 per issue #115
+- Check if Sage updated PR #112 per issue #116
+- Once reworked, Crit re-reviews
+- After approval, merge PRs
+- Then Crit does final review (#113)
