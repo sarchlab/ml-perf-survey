@@ -1241,6 +1241,52 @@ Our taxonomy analysis reveals specific gaps where no existing work provides adeq
 
 \textbf{Opportunity:} Create versioned benchmark suites with measurements across software configurations (CUDA 11.x vs 12.x, PyTorch 1.x vs 2.x, TensorRT versions). Define temporal generalization metrics: accuracy on measurements from software stacks released N months after training data. This would enable principled evaluation of continual learning approaches.
 
+\subsection{Future Work: Toward Unified Tooling}
+\label{subsec:unified-architecture}
+
+Our empirical evaluation (Section~\ref{sec:evaluation}) reveals that no single tool addresses all performance modeling needs.
+Timeloop excels at spatial accelerator design space exploration; VIDUR provides unmatched LLM inference simulation; ASTRA-sim captures distributed training dynamics; nn-Meter targets edge device latency prediction.
+This fragmentation forces practitioners to learn multiple tools, manage incompatible dependencies, and manually synthesize results across modeling approaches.
+Addressing this fragmentation represents a significant opportunity for future research.
+
+\subsubsection{Lessons from Evaluation}
+
+Our hands-on evaluation surfaced four practical insights that should inform future tool development:
+
+\textbf{Docker-first deployment matters.}
+Docker-containerized tools (ASTRA-sim, VIDUR) achieved higher reproducibility scores in our evaluation, while tools relying on native installation (nn-Meter) faced dependency conflicts.
+Future tools should prioritize containerized environments with pinned dependencies.
+
+\textbf{Modularity enables specialization.}
+Different workload classes benefit from different modeling approaches: LLM serving needs prefill/decode phase separation (VIDUR), distributed training requires collective communication modeling (ASTRA-sim), and edge deployment benefits from kernel-level decomposition (nn-Meter).
+Composable, modular designs may offer a path forward.
+
+\textbf{Hybrid approaches show promise.}
+The most accurate surveyed approaches (NeuSight, VIDUR) combine analytical structure with learned components.
+Analytical decomposition provides interpretability and physics-based inductive bias; ML captures complex effects that resist closed-form analysis.
+
+\textbf{Portable model formats prevent bit-rot.}
+Our nn-Meter evaluation found that pickled scikit-learn models broke across versions.
+Future tools should prefer portable model formats (ONNX, PMML) with explicit version constraints, or provide analytical fallbacks when learned models fail to load.
+
+\subsubsection{Research Directions}
+
+Building on these lessons, we identify several directions for future research:
+
+\textbf{Unified workload representations.}
+A common intermediate representation that captures workload characteristics in a tool-agnostic format could enable interoperability.
+Graph-based representations that subsume both tensor programs (TVM relay, ONNX) and execution traces (Chakra, PyTorch profiler output) warrant investigation.
+
+\textbf{Composable modeling engines.}
+Pluggable engines targeting specific hardware classes---accelerator DSE (Timeloop-style), LLM inference (VIDUR-style), distributed training (ASTRA-sim-style), edge prediction (nn-Meter-style)---could be composed for complex scenarios.
+Container isolation could prevent dependency conflicts between engines.
+
+\textbf{Accuracy-speed trade-off management.}
+Future frameworks could allow users to select engine fidelity based on their needs: analytical engines for fast design space exploration, learned engines for higher accuracy, or hybrid approaches that combine both.
+
+These directions represent open research problems rather than solved architectural questions.
+The community's experience with existing tools provides valuable guidance, but substantial design and implementation work remains.
+
 % ==============================================================================
 % EXPERIMENTAL EVALUATION
 % ==============================================================================
