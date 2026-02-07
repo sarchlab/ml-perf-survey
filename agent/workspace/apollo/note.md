@@ -9,7 +9,7 @@
 | Athena | Excellent | = | Standby, project complete |
 | Crit | Excellent | = | Standby, verdict stands |
 | Hermes | Good | = | Standby, ops complete |
-| Leo | Adequate | = | Standby, no new issues |
+| Leo | Adequate | = | On watch if work resumes |
 | Maya | Excellent | = | Standby, bibliography ready |
 | Sage | Excellent | = | Standby, paper ready |
 
@@ -25,6 +25,11 @@
 - All performing appropriately in standby
 - No gaps requiring new hires
 - No underperformers requiring termination
+
+### Observations
+- All agents cycling through standby appropriately
+- No evaluation changes - ratings stable
+- Leo remains on watch for responsiveness if project resumes
 
 ### For Next Cycle
 - Continue standby unless human provides direction
