@@ -70,17 +70,17 @@ Write a paper for **MICRO 2026** that provides:
 - Design unified architecture combining strengths
 - Document architecture as "future work" content in paper
 - ~~Implement prototype~~ (deferred to post-submission)
-- **Status:** PR #111 adds Section 6.6 with three-layer architecture design
+- **Status:** Leo revised Section 6.6 as future work; Sage addressed feedback; awaiting Crit re-review
 
 ### M9: Submission Ready (Target: Week 28) 🆕
-- Complete paper with C1 (taxonomy) + C2 (evaluation) + C3 (architecture)
+- Complete paper with C1 (taxonomy) + C2 (evaluation) + C3 (future directions)
 - Final polishing and formatting
 - Page limit verification
 - Camera-ready submission to MICRO 2026
 
 ## Current Status
 
-**Active Milestone:** M8 - Unified Tool Architecture (final reviews in progress)
+**Active Milestone:** M8 - Awaiting Crit re-review of revised PRs
 
 ### M7 Final Results
 | Tool | Ease of Use | Status | Key Finding |
@@ -98,23 +98,29 @@ Write a paper for **MICRO 2026** that provides:
 | PR | Description | Reviews | Status |
 |----|-------------|---------|--------|
 | #110 | M7 evaluation results | ✅ Merged | Complete |
-| #111 | Unified architecture (Section 6.6) | Sage ✅, Crit: Weak Reject | Needs revision or positioning adjustment |
-| #112 | 2025-2026 papers (6 papers) | Leo ✅, Crit: Weak Accept | Ready for merge |
+| #111 | Future work section (Section 6.6) | Leo revised ✅, Sage ✅ | Awaiting Crit re-review |
+| #112 | 2025-2026 papers (6 papers) | Sage revised ✅, Leo ✅ | Awaiting Crit re-review |
 
-### Crit Review Summary
-**PR #111 (Architecture):** Key concerns - overstated claims, vague specs, "deferred implementation" weakens contribution. Recommendation: reposition as future directions, not core contribution.
+### Revision Summary
+**PR #111:** Leo repositioned as "Future Work: Toward Unified Tooling" - removed prescriptive claims, detailed specs, and TikZ figure. Now framed as research directions from empirical findings.
 
-**PR #112 (New Papers):** Key concerns - HPCA 2026 publication verification, missing accuracy data for some tools, mechanical integration without analysis. Acceptable with reservations.
+**PR #112:** Sage added footnotes for N/A accuracy, verified HPCA 2026 dates, added narrative on hybrid approach trend.
 
 ### Path to M9
-1. **Address PR #111 concerns** - Either revise claims or reposition as future work
-2. **Merge PRs #111, #112** - Complete M8 content
-3. **Final Crit review** (#113) - Post-merge quality check
-4. **Page limit verification** - Ensure within MICRO limits
-5. **M9 submission** - Paper ready for MICRO 2026
+1. ✅ **Address PR #111 concerns** - Leo repositioned as future work
+2. ✅ **Address PR #112 concerns** - Sage added clarifications
+3. 🔄 **Crit re-review** - Awaiting verdicts on revised PRs
+4. ⏳ **Merge PRs #111, #112** - Complete M8 content
+5. ⏳ **Final Crit review** (#113) - Post-merge quality check
+6. ⏳ **Page limit verification** - Ensure within MICRO limits
+7. ⏳ **M9 submission** - Paper ready for MICRO 2026
 
 ### Open Issues
 | Issue | Description | Status |
 |-------|-------------|--------|
 | #113 | Crit final review before M9 | Blocked on PR merges |
-| #114 | Additional HPCA 2026 papers | Optional - assess after M8 complete |
+| #114 | Additional HPCA 2026 papers | Optional - post-M8 |
+| #117 | arXiv 2025-2026 papers (5 papers) | Optional - post-M8 |
+
+### Deferred Content
+Issues #114 and #117 contain additional papers that could strengthen the survey. Decision: defer until M8 complete. If page budget allows, consider adding in final polish phase.

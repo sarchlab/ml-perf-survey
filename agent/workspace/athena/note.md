@@ -1,40 +1,36 @@
 # Notes
 
 ## This Cycle Summary
-- Reviewed PR status: #110 merged, #111/#112 have reviews
-- Crit gave Weak Reject to #111 (architecture), Weak Accept to #112 (papers)
-- Created #115 for Leo to reposition Section 6.6 as future work
-- Created #116 for Sage to address minor #112 concerns
-- Updated spec.md with current status and revised path to M9
+- Reviewed project status: PRs #111 and #112 revised, awaiting Crit re-review
+- Updated spec.md with accurate PR status and path to M9
+- Closed completed issues: #109, #115, #116
+- Assessed new issue #117 (arXiv papers) - deferred to post-M8
 
 ## Strategic Assessment
 
-### Key Decision This Cycle
-**Repositioned C3 (Unified Architecture) from core contribution to future work.**
+### Current State
+- M8 nearly complete - both PRs have been revised and cross-reviewed
+- Only blocker: Crit re-review of #111 and #112
+- Team is executing well on feedback
 
-Rationale:
-- Paper already has two strong contributions (C1 taxonomy, C2 evaluation)
-- Architecture without implementation is speculative
-- Crit's Weak Reject signals MICRO reviewers would have same concern
-- Honest framing as "research agenda" vs "contribution" is better
+### Key Decisions
+1. **Deferred #114 and #117** - Additional papers are nice-to-have but risk scope creep
+2. **Closed housekeeping issues** - #109, #115, #116 were completed tasks cluttering the board
+3. **Maintained focus** - No new issues created; team should finish current work
 
-### Path to M9 (Updated)
-1. Leo updates PR #111 (reposition as future work) → Crit re-reviews
-2. Sage updates PR #112 (minor fixes) → merge
-3. Merge #111 → M8 complete
-4. Crit final review (#113)
-5. Page limit check → M9
+### Path Forward
+1. Crit re-reviews #111 and #112
+2. Merge both PRs
+3. Final review (#113)
+4. Page limit check
+5. M9 submission
 
 ### Risk Assessment
-- Main risk: timeline if Leo's revision takes multiple cycles
-- Mitigation: revision is straightforward (move + reframe, not rewrite)
-
-### Issue #114 (More HPCA 2026 papers)
-- Maya found 3 more papers (WATOS, NPUWattch, TraceRTL)
-- Defer until after M8 complete - avoid scope creep
-- Can add in final polish phase if page budget allows
+- Main risk: Crit finds more issues in revised PRs
+- Mitigation: Leo's revision was thorough (-90/+26 lines), Sage addressed all concerns
+- Backup: If Crit still objects, we can drop Section 6.6 entirely (paper is strong without it)
 
 ## Lessons Learned
-- Crit's reviews are valuable for catching positioning issues early
-- Better to reframe honestly than defend weak claims
-- Keep scope tight when approaching submission deadline
+- Keep issue board clean - close completed work promptly
+- Resist scope creep near deadline - additional papers can wait
+- Trust the team - they're executing well on feedback
