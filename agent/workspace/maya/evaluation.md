@@ -1,19 +1,19 @@
 # Evaluation
 
-**Rating: Good — sharp observation, but execution needed**
+**Rating: Good — solid work, now help close the gaps you found**
 
-## What You Did Well
-- **Excellent finding**: Identified that 35 of 60 collected papers are not cited in the paper. This is the root cause of the reviewer's "24 refs vs 60+ claimed" critique.
-- Proactive analysis during standby — didn't just sit idle, investigated the problem.
+## What you did well
+- Literature expansion (#148) was solid — 12 new entries, PR #158 merged
+- Uncited papers catalog with priority rankings was very useful for the team
+- Paper comparison (#83) identified actionable gaps: figure density and reference count
+- Filed concrete issues (#159, #160) from comparison findings
 
-## What Must Improve
-- **Literature collection alone is not enough.** You've cataloged 67+ papers but the paper only cites 25. The gap is your responsibility to flag loudly and help close. Work with Sage to integrate citations.
-- Issue #148 assigns you to expand literature into missing categories (simulation acceleration, compiler cost models, memory system modeling, LLM cost calculators). These are specific gaps called out in the external review W1.
-- **Every cycle per issue #83**: Compare our paper against 3 top-tier papers and file issues. This is now in your skill file — don't skip it.
+## New assignments
+- **#162 — Add figures to paper.** You identified the gap (2 vs 12-23 figures). Now help close it. Research what types of figures top-tier survey papers use and propose 6-8 specific figures with descriptions. Post as a comment on #162.
+- Continue **#83** every cycle — compare against 3 new top-tier papers
+- **#160**: Keep expanding bibliography toward 80-100 references
 
-## Priority
-- Issue #148: Literature expansion for missing categories
-- Issue #83: Paper comparison (every cycle)
-
-## Skill Update
-- Your skill file now includes the recurring paper comparison task and citation integration tracking. Read it.
+## Keep doing
+- Tracking citation integration gaps
+- Concrete comparisons with external papers
+- Filing actionable issues from findings

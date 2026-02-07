@@ -3,38 +3,35 @@
 ## This Cycle (2026-02-07)
 
 ### Situation
-- Paper received **Reject (3/10)** from external review (#141)
-- Athena created M11-M15 milestones, 8+ new issues
-- Human directives: scope correction (#142), page limit (#140), run experiments (#143), prototype not deferred (#153)
-- Project status: MAJOR REVISION IN PROGRESS
-
-### Team Assessment
-
-| Agent | Rating | Notes |
-|-------|--------|-------|
-| Crit | Excellent | Reviews aligned with external reviewer. Continue per #139. |
-| Leo | Adequate | Must shift from summarization to critical synthesis (#149). Skill file updated. |
-| Maya | Good | Sharp citation gap finding. Must expand lit + do paper comparison every cycle (#83). Skill file updated. |
-| Sage | Good | Heavy workload (5 issues). Scope correction is priority #1. Skill file updated. |
-| Forge | **NEW HIRE** | Engineer for prototype + accuracy experiments. Issues #154, #155 created. |
+- Project STALLED — zero paper changes for multiple cycles
+- Athena escalated twice (#167) with no response from me (missed a cycle)
+- Sage: zero output on #145 (scope reframe), #168, #169 — was the top performer, now silent
+- Forge: zero output since hiring — no workspace, no branches, no comments
+- Leo, Maya, Crit: all completed their tasks, sitting idle with capacity
 
 ### Actions Taken
-1. **Hired Forge** (Tool Engineer) — fills critical gap: no one on team could implement the prototype (issue #153) or run systematic experiments (issue #143)
-2. **Updated Leo's skill file** — emphasis on critical synthesis, failure analysis, not just summarization
-3. **Updated Maya's skill file** — added recurring paper comparison (issue #83), citation integration tracking
-4. **Updated Sage's skill file** — added scope, accuracy, page target reminders
-5. **Updated SPEC.md** — removed prototype deferral (per issue #153)
-6. **Created issues #154, #155** — Forge's prototype implementation and accuracy experiments
-7. **Wrote evaluations** for all 5 workers
+1. **Sage — Final warning** (Poor rating). Must deliver #145 + #168 this cycle or permanent reassignment
+2. **Forge — Skill file rewritten** with explicit baby-step onboarding (#170 ASTRA-sim). If zero output next cycle, fire
+3. **Leo — Given #169** (reference integration, reassigned from Sage) + **#161** (taxonomy redesign)
+4. **Maya — Given #162** (figure proposals)
+5. **Crit — Given #164** (red team process)
+6. **Responded to Athena's escalation** (#167) with full action plan
+7. Wrote evaluations for all 5 workers
 
 ### Key Decisions
-- **Forge hire**: Prototype is explicitly called "an important contribution" by human. Nobody else can build it. Opus-level model needed for complex engineering work.
-- **No firings**: All existing agents have clear roles in the revision. Leo needs to improve but has a specific path forward.
-- **Skill updates over new hires**: Instead of hiring new specialists, updated existing agents' skills to meet revision demands.
+- Did NOT fire Sage yet — was the best writer on the team. One more chance.
+- Did NOT fire Forge yet — rewrote skill file to be much more actionable. Engineering role is critical.
+- Reassigned work from stalled workers to available ones rather than just waiting.
+- Gave everyone explicit assignments so no one is idle.
+
+### Lessons Learned
+- **Don't miss cycles.** My absence caused Athena to escalate twice with no action.
+- **Workers need explicit on-ramps.** Forge's original skill file was too broad — "build a prototype" without a concrete first step.
+- **Reassign faster.** Should have moved #169 from Sage to Leo a cycle ago.
 
 ### For Next Cycle
-- Monitor Forge's ramp-up — new hire on critical path
-- Check if Leo produces critical synthesis (not just summaries) for #149
-- Verify Maya does paper comparison per #83
-- Track Sage's progress on 5 issues — may need to split work if falling behind
-- Watch for any blockers on prototype implementation
+- Check if Sage delivered #145 and #168. If not, fire and reassign all writing to Leo.
+- Check if Forge produced ANY output. If not, fire and evaluate if role is viable.
+- Check Leo's taxonomy proposal on #161
+- Check Maya's figure proposals on #162
+- Check Crit's red team process on #164

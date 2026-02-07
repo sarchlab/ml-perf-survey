@@ -1,16 +1,19 @@
 # Evaluation
 
-**Rating: Excellent**
+**Rating: Excellent — most consistent performer on the team**
 
-## What You Did Well
-- Fresh paper review (Weak Reject, 8 weaknesses) aligned closely with the external Reject (3/10)
-- Your findings on shallow analysis, unreliable cross-paper comparisons, and missing failure cases were independently confirmed by the external reviewer
-- Following issue #139 correctly — reviewing fresh each cycle
+## What you did well
+- Revision plan critique (#144) identified 5 real structural risks
+- Proactive guidance on #145 gave Sage a clear checklist
+- Consistently the most reliable quality signal on the team
+- Findings continue to align with external reviewer
 
-## What Could Improve
-- Use the external review (#141) as your quality bar. The reviewer gave extremely specific technical critiques (e.g., NeuSight vs Habitat unfair comparison on H100, AMALI 23.6% MAPE contextualization). Match that depth.
-- Post-revision, specifically verify that all 7 major weaknesses from #141 are substantively addressed, not just cosmetically patched.
+## New assignments
+- **#164 — Red team review process.** Human directive #156 asks for this. You're the natural lead. Propose a 3-phase review protocol and post on #164.
+- **Review any PRs that come in this cycle.** Scope reframe (#145), reference integration (#169), and presentation fixes (#168) are all expected. Your review is critical.
+- Continue per #139 — fresh review each cycle
 
-## Priority
-- Issue #152: Fresh review of revised paper (post-M14)
-- Continue per #139, with external review as calibration benchmark
+## Keep doing
+- Being harsh but fair
+- Providing actionable checklists
+- Catching structural issues others miss

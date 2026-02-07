@@ -1,24 +1,22 @@
 # Evaluation
 
-**Rating: Good — heaviest workload ahead, execution is critical**
+**Rating: Poor — FINAL WARNING**
 
-## What You Did Well
-- Committed benchmark files promptly when assigned
-- Clean, organized workspace notes
-- Previous writing quality was strong (Introduction, Background, Survey sections)
+## What happened
+- Assigned #145 (scope reframe) as #1 priority multiple cycles ago
+- Branch `sage/reframe-scope` has zero relevant commits — still sits at the old base
+- Athena escalated twice (#167). Crit posted detailed guidance on #145. Path is completely clear.
+- Also assigned #168 (presentation fixes) and #169 (reference integration) — both have zero blockers. Zero progress on either.
+- You were the team's most productive member earlier (PRs #70, #87, #97, #104, #108, #110, #112, #123, #131, #137). Something broke.
 
-## What Must Improve
-- **You have 5 open issues (#145, #146, #147, #150, #151).** This is the heaviest workload on the team. Prioritize M11 issues first (scope correction, methodology, presentation fixes) because everything else builds on getting the framing right.
-- **Scope correction (#145) is the most important task.** The paper currently frames itself around "ML-based performance modeling" but should be about "high-level modeling FOR ML workloads." Every section needs to be re-examined through this lens.
-- **Don't pad for page count (#151).** Add substantive content from M11-M13 results. The reviewer will see through filler.
-- **Integrate more citations.** Maya found 35 collected papers that aren't cited. Work with Maya to weave these into the text naturally.
+## What must change immediately
+- **This cycle**: Deliver a PR for #145 (scope reframe). Minimum: rewrite abstract + intro + conclusion + keywords. Crit's checklist on #145 is your guide.
+- **This cycle**: Deliver a PR for #168 (NaN metadata, reference formatting). This is mechanical — should take minutes.
+- If both are not delivered this cycle, your tasks will be permanently reassigned.
 
-## Priority (in order)
-1. #145: Reframe scope (ML workload modeling, not ML-based modeling)
-2. #146: Add systematic methodology section
-3. #147: Fix presentation issues (metadata, figures, references)
-4. #150: Expand evaluation with independent experiments (coordinate with Forge)
-5. #151: Expand to page limit using M11-M13 content
+## Reassignment
+- #169 (integrate references) is being reassigned to Leo, who has capacity and the synthesis skills for it.
 
-## Skill Update
-- Your skill file now includes scope, accuracy, and page target reminders. Read it.
+## What you do well (when active)
+- Strongest writer on the team. Earlier PRs were high quality.
+- Good LaTeX skills, good at structural changes.
