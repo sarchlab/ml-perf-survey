@@ -52,13 +52,13 @@ Write a paper for **MICRO 2026** that provides:
 - Documented findings in data/evaluation/ directory
 - Added Section 7 (Experimental Evaluation) to paper
 
-### M6: Benchmark Definition (Target: Week 18) 🔄 IN PROGRESS
+### M6: Benchmark Definition (Target: Week 18) ✅ COMPLETE
 - Define common benchmark suite across tool categories
 - Select representative ML workloads (CNN, Transformer, LLM, etc.)
 - Define evaluation metrics: accuracy (vs. real hardware), latency, memory, ease of use, extensibility
 - Document benchmark methodology for reproducibility
 
-### M7: Comprehensive Third-Party Evaluation (Target: Week 22) 🆕
+### M7: Comprehensive Third-Party Evaluation (Target: Week 22) 🔄 IN PROGRESS
 - Execute all selected tools on common benchmarks
 - Collect quantitative results across all evaluation dimensions
 - Identify winners and losers for each metric
@@ -78,29 +78,25 @@ Write a paper for **MICRO 2026** that provides:
 
 ## Current Status
 
-**Active Milestone:** M6 - Benchmark Definition (nearly complete)
+**Active Milestone:** M7 - Comprehensive Third-Party Evaluation
 
-**M6 Completed Work:**
-- Tool selection finalized: 10 tools across analytical/ML-based/simulation (issue #93 closed)
-- Benchmark suite defined: 13 workloads across CNN/Transformer/LLM/Distributed (PR #96)
-- Evaluation rubric created: 4-dimension scoring (accuracy/ease-of-use/performance/extensibility) (PR #96)
-- Paper title updated to reflect scope (PR #97)
-- FlashAttention replaced with NeuSight in evaluation (PR #85)
-- Future directions rewritten with evidence-backed gaps (PR #88)
+### M6: Benchmark Definition ✅ COMPLETE
+- Tool selection finalized: 10 tools across analytical/ML-based/simulation
+- Benchmark suite defined: 13 workloads across CNN/Transformer/LLM/Distributed
+- Evaluation rubric created: 4-dimension scoring (accuracy/ease-of-use/performance/extensibility)
+- Paper title updated to reflect scope
+- FlashAttention replaced with NeuSight in evaluation
+- Future directions rewritten with evidence-backed gaps
 - Paper database: 274 papers catalogued
 
-**Awaiting Merge (4 PRs):**
-- PR #85: FlashAttention → NeuSight replacement
-- PR #88: Specific future directions from taxonomy gaps
-- PR #96: Benchmark suite and evaluation rubric
-- PR #97: Title update
-
-**M7 Preparation:**
-- Once PRs merge, M6 will be complete
-- Issue #94 (Unified tool architecture) exists for M8 planning
-- Team ready to begin comprehensive tool execution (M7)
+### M7 Active Work
+- Issue #98: Execute Timeloop on benchmarks
+- Issue #99: Execute ASTRA-sim on benchmarks
+- Issue #100: Execute VIDUR on benchmarks
+- Issue #101: Execute nn-Meter and NeuSight
+- Issue #102: Update paper with results
 
 **Outstanding Issues:**
 - #74: Crit's critical review (ongoing feedback)
-- #82: Page limit verification (deferred per human guidance)
-- #94: Unified tool architecture design (future - M8)
+- #82: Page limit verification (deferred)
+- #94: Unified tool architecture design (M8)
