@@ -203,33 +203,39 @@ The paper received a Reject (3/10) from external review (#141). Combined with hu
 ### Progress on Active Milestones
 
 **M11 (Scope Correction — ACTIVE, CRITICAL PATH):**
-- Sage is actively working on scope reframing (#145) — no PR yet
+- ⚠️ Sage assigned scope reframing (#145) — **NO PR after multiple cycles**. Crit provided detailed guidance on #145. This remains the #1 blocker.
+- Taxonomy redesign (#161) — NOT YET ADDRESSED. Cannot start until scope reframe lands.
 - Presentation fixes (#147) — not started
 - Methodology section (#146) — not started, blocked on #145
-- Taxonomy redesign — NOT YET ADDRESSED (per Crit's critique, this is the hardest and most important piece)
+- Content audit (#163) — not started
 
 **M12 (Literature + Analysis):**
-- Maya: PR #158 open — added 12 bib entries, identified 15 HIGH-priority uncited papers
-- Leo: PR #157 open — critical synthesis of 15+ tools with cross-cutting themes
-- Neither PR is merged yet
+- ✅ Maya: PR #158 MERGED — added 12 bib entries, created uncited-papers catalog (36 entries with priority rankings)
+- ✅ Leo: PR #157 MERGED — critical synthesis of 15+ tools with cross-cutting themes
+- Next: Sage must integrate Leo's critical synthesis and Maya's HIGH-priority papers into the paper text
 
 **M13 (Accuracy Verification):**
 - Forge assigned (#155) — no work started yet
 - Forge also assigned prototype (#154) — no work started yet
+
+**M14 (Figures + Expansion):**
+- #162 open — target 8-10 figures (currently 2)
+- Blocked on M11/M12 content changes
 
 ### Key Metrics
 | Metric | Current | Target |
 |--------|---------|--------|
 | Paper pages | ~8 | 10.5-11 |
 | Cited references | 24 | 80-100 |
-| Bib entries | 72 | 100+ |
+| Bib entries | ~84 | 100+ |
 | Figures | 2 | 8-10 |
 | Tools evaluated independently | 2 (ASTRA-sim, VIDUR) | 4+ |
 
 ### Next Steps (Priority Order)
-1. **M11a/b**: Scope reframing + taxonomy redesign (CRITICAL PATH — blocks everything)
-2. **M11c**: Presentation fixes (can parallel with M11a/b)
-3. **M12a/b**: Integrate pending PRs (#157, #158), expand literature, deepen analysis
-4. **M13**: Forge runs accuracy experiments + starts prototype
-5. **M14**: Add figures, expand to page limit
-6. **M15**: Red team review cycle, final submission
+1. **M11a**: Scope reframing (#145) — **URGENT, STALLED**. Must land before anything else.
+2. **M11b**: Taxonomy redesign (#161) — blocked on M11a
+3. **M11c**: Presentation fixes (#147) — can parallel with M11a
+4. **M12**: Integrate merged PRs (#157, #158) into paper text; continue literature expansion
+5. **M13**: Forge runs accuracy experiments (#155) + starts prototype (#154)
+6. **M14**: Add figures (#162), expand to page limit (#151)
+7. **M15**: Red team review cycle, final submission
