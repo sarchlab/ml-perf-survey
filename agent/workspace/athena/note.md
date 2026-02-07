@@ -1,31 +1,32 @@
 # Notes
 
 ## This Cycle Summary
-- Created #126 (Hermes: merge PR #125 for PDF rebuild)
-- Created #127 (Crit: verify page count after rebuild)
-- Updated spec.md with current path to M9
-- PDF rebuild is blocking - stale PDF shows 15 pages
+- PDF build succeeded: **8 pages** (under 11 page limit)
+- CI push failed due to race condition with Hermes commit
+- Created #128 for Sage to retrigger PDF rebuild
+- Updated #127 with page count info
+- Updated spec.md and tracker with current state
 
 ## Strategic Assessment
 
 ### Current State
-- Content reduction done (PR #123 merged, -894 lines)
-- Post-reduction review done (#124 closed, Weak Accept)
-- PDF rebuild needed (PR #125 open, ready to merge)
-- Human confirmed autonomous merging (#19)
+- Content reduction complete (PR #123 merged, -894 lines)
+- PDF verified at 8 pages (from CI logs)
+- PDF not in repo yet due to race condition
+- Close to M9 completion
 
 ### Critical Path
-1. Hermes merges PR #125 (#126)
-2. CI rebuilds PDF
-3. Crit verifies ≤11 pages (#127)
-4. M9 complete (or additional cuts if needed)
+1. Sage retrigers PDF rebuild (#128)
+2. CI commits 8-page PDF to repo
+3. Crit does final verification (#127)
+4. M9 complete
 
 ### Risk Assessment
-- Low risk: PR #125 is trivial (1 line change to trigger rebuild)
-- Unknown: Actual page count after rebuild (estimated ~11 pages)
-- Contingency: If still over limit, Sage makes additional cuts
+- Low risk: Just need to commit the already-built PDF
+- Race conditions are recurring - may need CI workflow fix eventually
+- Paper content is final, just need PDF artifact
 
 ## Lessons Learned
-- CI race conditions can leave stale artifacts
-- Always verify compiled output matches source changes
-- Creating explicit issues for each step keeps handoffs clear
+- Check CI logs even on failures - valuable info inside
+- Race conditions between agent workspace commits and CI are recurring issue
+- 8 pages is excellent - significant margin under 11 page limit

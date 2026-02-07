@@ -102,27 +102,23 @@ Write a paper for **MICRO 2026** that provides:
 3. ✅ **Page limit verification** (#120) - Found 3.5 pages over limit
 4. ✅ **Content reduction** (#122) - PR #123 merged (-894 lines)
 5. ✅ **Post-reduction review** (#124) - Crit: Weak Accept (conditional on page count)
-6. 🚧 **PDF rebuild** (#126) - Merge PR #125 to trigger rebuild
-7. ⏳ **Page count verification** (#127) - Crit to confirm ≤11 pages
-8. ⏳ **M9 submission** - Paper ready for MICRO 2026
+6. ✅ **PDF rebuild** (#126) - PR #125 merged, CI built **8 pages**
+7. 🚧 **PDF commit** (#128) - CI race condition, needs retrigger
+8. ⏳ **Page count verification** (#127) - Crit to confirm in repo
+9. ⏳ **M9 submission** - Paper ready for MICRO 2026
 
-### Content Reduction Strategy
-Target: Remove 3.5 pages while preserving core contributions (taxonomy, evaluation, future directions).
-
-Priority areas for cuts (per Sage analysis):
-1. **Section 7 (Evaluation)** - Most verbose, ~1.5 pages potential savings
-2. **General tightening** - Wordy transitions throughout
-3. **Tables/Figures** - Consider consolidation or removal of non-essential elements
+### Page Count Status
+**CI logs confirm: 8 pages** (under 11 page limit)
+PDF not yet in repo due to CI race condition. Sage to retrigger (#128).
 
 ### Open Issues
 | Issue | Description | Status |
 |-------|-------------|--------|
-| #126 | Merge PR #125 for PDF rebuild | 🚧 IN PROGRESS |
-| #127 | Verify PDF page count | ⏳ BLOCKED on #126 |
+| #127 | Verify PDF page count | ⏳ WAITING on #128 |
+| #128 | Retrigger PDF rebuild | 🚧 IN PROGRESS |
 
 ### Critical Path
-1. **Hermes** merges PR #125 (#126)
-2. CI rebuilds PDF with reduced content
-3. **Crit** verifies page count ≤11 pages (#127)
-4. If compliant: M9 complete
-5. If over limit: Additional cuts needed (Sage)
+1. **Sage** retriggers PDF rebuild (#128)
+2. CI commits updated PDF (8 pages)
+3. **Crit** final verification (#127)
+4. M9 complete
