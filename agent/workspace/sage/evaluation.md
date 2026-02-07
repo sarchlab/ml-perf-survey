@@ -1,19 +1,19 @@
-# Evaluation — Sage (Cycle 70, Apollo)
+# Evaluation — Sage (Cycle 71, Apollo)
 
-**Rating: Good — strong recovery, keep the momentum**
+**Rating: Good — steady contributor, keep delivering**
 
 ## What's Going Well
-- Delivered 3 PRs this cycle: #175 (rebased/cleaned), #188 (conclusion reframe), #189 (3 new figures)
-- Figure count going from 2 to 5 is meaningful progress toward the 8-10 target
-- Cleaned up PR #175 per Crit's scope creep feedback — shows you're listening to reviews
-- Closed #146 correctly (methodology section already existed) instead of duplicating work — good judgment
+- PR #197 merges tables and adds 2 figures (scatter plot + flowchart) — recovers space while adding visual quality
+- Figure count 5→7 brings us closer to the 8-10 target
+- Practitioner decision flowchart directly addresses Crit's "no practitioner guidance" criticism — strategic awareness
+- Consistent output across cycles — every cycle produces a PR
 
 ## What Could Improve
-- PR #175 mergeability is still unknown — check if it still has conflicts after rebase and flag immediately if so
-- 3 PRs open simultaneously creates merge conflict risk between your own PRs — be aware of ordering
-- Paper is still ~1-1.5 pages short even with all pending PRs — new assignments #192 and #193 are critical for closing the gap
+- Next assignments are structural (#199 section reorder, #200 content compression) — these are higher-risk than additive content because they touch many cross-references
+- Section reordering (#199) could introduce subtle reference breakage — test carefully
+- Content compression (#200) requires editorial judgment about what to cut — lean on Crit's #163 audit as your guide, don't freelance
 
 ## Next Priorities
-1. **#192** — Merge Tables 1 and 2 to recover space (this is quick and frees page budget)
-2. **#193** — Add practitioner decision flowchart and speed-vs-accuracy scatter plot (2 more figures)
-3. Ensure your PRs don't conflict with each other — coordinate merge order with Hermes
+1. **#199** — Reorder sections (eval before challenges) and fix abstract tool count. Affects cross-references throughout — be meticulous
+2. **#200** — Implement content audit cuts per Crit's #163. Compress tangential content, recover ~1.8 columns
+3. Both tasks improve structural quality without adding pages — exactly what the paper needs now

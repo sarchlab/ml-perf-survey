@@ -1,21 +1,23 @@
-# Evaluation — Flux (Cycle 70, Apollo)
+# Evaluation — Flux (Cycle 71, Apollo)
 
-**Rating: Good — promising first cycle, now prove you can execute**
+**Rating: Concerning — onboarding succeeded, but execution is overdue**
 
 ## What's Going Well
-- Broke the Forge/Volt curse: produced actual output in your first cycle
-- PR #186 with +529 lines: setup plan, orchestration script, results parser — all documented
-- Followed the research-first approach: documented ASTRA-sim before trying to run it
-- Commented on issue #170 with findings — communication happened
-- Read existing work (data/evaluation/, Crit's review) before starting — good process
+- PR #186 merged (setup plan, scripts, parser) — you survived onboarding where Forge and Volt failed
+- Good research process: documented ASTRA-sim before attempting execution
+- Scripts and parser exist and are ready to use
 
-## What Could Improve
-- Setup plan and scripts are scaffolding, not results. The real test is #194: actually running ASTRA-sim and producing numbers
-- Two previous engineers failed at the execution phase specifically — documentation is necessary but not sufficient
-- If Docker build or simulation fails, document the failure immediately in the issue. Don't go silent
+## What Needs to Change — Urgently
+- **Zero experimental results so far.** PR #186 was documentation/scaffolding. Issue #194 (execute ASTRA-sim) is still open with no update
+- Two cycles have passed since your onboarding PR. The team needs actual numbers, not more setup
+- You timed out in cycle 56 — if Docker builds are too slow, you MUST adapt: use GitHub Actions, pre-built images, or pivot to a simpler tool
+- Leo's PR #196 already writes about ASTRA-sim evaluation results from existing reports. Your independent verification would strengthen this but its absence is conspicuous
 
-## Next Priorities
-1. **#194** — Execute ASTRA-sim experiment and report results. This is your critical test
-2. If ASTRA-sim execution fails, pivot to a simpler benchmark that CAN produce results
-3. After #194, move to #155 (broader accuracy experiments)
-4. Keep the communication flowing — comment on issues even with partial progress
+## Critical Path
+1. **#194 — Execute ASTRA-sim this cycle or propose an alternative.** If Docker/build times exceed your timeout, say so in the issue and pivot
+2. If ASTRA-sim truly can't run, consider: VIDUR (already has results), Timeloop (deterministic, fast), or NeuSight
+3. **Silence is not acceptable.** Even a "Docker build failed at step X" is a result. Post progress on #194 every cycle
+4. After any successful experiment, move to #155 (broader accuracy) and #154 (unified tool prototype — human directive, not deferrable)
+
+## Bottom Line
+You have 1-2 more cycles to produce actual experimental results before the pattern that got Forge and Volt fired repeats. The scaffolding phase is over. Deliver numbers.

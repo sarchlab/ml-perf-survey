@@ -1,48 +1,51 @@
 # Notes
 
-## This Cycle (2026-02-07, Cycle 70)
+## This Cycle (2026-02-07, Cycle 71)
 
 ### Situation
-- **Breakthrough cycle**: All 4 workers produced output. 5 PRs open (#175, #186, #187, #188, #189).
-- **Flux survived onboarding**: First engineer to produce output. PR #186 (+529 lines) with ASTRA-sim setup plan, scripts, and parser.
-- **Leo delivered big**: PR #187 closes 3 issues (#161 taxonomy, #176 matrix, #179 depth). +164/-34 lines (~1.5 pages).
-- **Sage delivered 3 PRs**: #175 rebased, #188 conclusion, #189 three new figures. Figure count 2→5.
-- **Crit reviewed**: Fresh review #185 (4.5/10), PR review on #175.
-- **New concern**: 5 PRs pending with no merges yet. Merge throughput is the bottleneck again.
-- **Athena created 5 new issues** (#190-#194) for Phase 2 work.
+- **PRs #186-#189 all merged** — merge bottleneck resolved. Hermes delivered.
+- **Two new PRs open**: Leo #196 (+265/-24, closes #190/#191/#173) and Sage #197 (+150/-37, closes #192/#193)
+- **Paper approaching targets**: ~10.5 pages, 86 refs (target met), 7 figures (target 8-10)
+- **Crit scored 5/10** (up from 4.5). Score trajectory: 3→4.5→5. Still below 7+ target.
+- **Flux still has zero experimental results**. Currently active but no tracker comment or PR for #194.
+- **Athena created 4 new issues** (#198-#201) for next phase: synthesis, reordering, compression, fresh review.
+- **Human directive #195**: Crit must review independently without memory of prior reviews.
+
+### Checked Items from Last Cycle
+- ✅ PRs #186, #187, #188, #189 all merged — bottleneck resolved
+- ❌ Flux has NOT produced ASTRA-sim results (#194) — still no update
+- ✅ Leo expanded Section 8 (not 7 as labeled) — PR #196
+- ✅ Sage added 2 figures and merged tables — PR #197
+- ⚠️ Crit did fresh review (5/10) and content audit but didn't review individual PRs #187/#189 before merge
 
 ### Actions Taken
-1. **Evaluations**: Leo (Excellent), Sage (Good), Crit (Excellent), Flux (Good)
-2. **Updated Flux skill file**: Transitioned from onboarding to execution phase. Bar raised from "produce output" to "produce results."
-3. **No hiring/firing**: All 4 workers productive. Team is lean and effective.
-4. **Checked all "for next cycle" items from last cycle**:
-   - ✅ Flux produced output on #170 — PR #186
-   - ✅ Leo created PR for taxonomy — PR #187
-   - ✅ Sage rebased #175, delivered PRs #188 and #189
-   - ⚠️ Hermes created issues but PRs still not merged
-   - ✅ Crit posted review #185 (4.5/10)
+1. **Evaluations**: Leo (Excellent), Sage (Good), Crit (Excellent), Flux (Concerning — downgraded)
+2. **Updated Flux skill file**: Added timeout awareness section with concrete pivot instructions. Escalated urgency to "FINAL WARNING". Added guidance on using GitHub Actions for long-running builds.
+3. **No hiring/firing**: Flux gets one more cycle. Other 3 workers are productive. Team stays at 4.
 
 ### Team Status
 | Agent | Rating | Key Deliverable | Next Assignment |
 |-------|--------|----------------|-----------------|
-| Leo | Excellent | PR #187 (taxonomy+depth) | #190 (Section 7 expansion), #191 (related work) |
-| Sage | Good | PRs #175, #188, #189 | #192 (merge tables), #193 (2 more figures) |
-| Crit | Excellent | Review #185, PR review #175 | Review PRs #187, #189, #186 |
-| Flux | Good | PR #186 (ASTRA-sim setup) | #194 (execute experiment — critical test) |
+| Leo | Excellent | PR #196 (eval+refs+surveys) | #198 (Section 5 synthesis) |
+| Sage | Good | PR #197 (tables+figures) | #199 (section reorder), #200 (content cuts) |
+| Crit | Excellent | Review 5/10, content audit | #201 (fresh independent review) |
+| Flux | Concerning | No new output since #186 | #194 (execute experiment — FINAL) |
 
 ### Key Concerns
-- **Merge bottleneck risk**: 5 open PRs. If Hermes doesn't merge promptly, we'll stall again. I may need to merge directly again.
-- **Flux execution phase**: Research-first worked for onboarding. The real test is whether Flux can actually run experiments.
-- **Paper still short**: Even with all PRs merged, likely still ~1 page short of 10.5-11 target. #190 and #193 are critical.
+- **Flux is the #1 risk.** Two cycles with no experimental results. Updated skill file with timeout guidance and pivot options. If still nothing next cycle, fire.
+- **PRs #196 and #197 need merge.** Hermes must merge promptly or we're bottlenecked again.
+- **Quality score still at 5/10.** Content volume targets are met but structural quality and synthesis depth need improvement. #198 (Section 5 synthesis) and #199 (section reorder) are the key quality-lift tasks.
+- **Unified tool prototype (#154) not started.** This is a human directive. Flux must begin after any experiment succeeds.
 
 ### Lessons Learned
-- **Research-first onboarding works**: Flux is the first engineer to survive. The task structure change was the key differentiator.
-- **All 4 workers productive = no hiring needed**: Resist the urge to over-staff. 4 focused workers > 6 inconsistent ones.
-- **Merge throughput is the persistent bottleneck**: PRs sitting unmerged for cycles is the #1 project risk.
+- **Merge bottleneck CAN be resolved**: Hermes merged 5 PRs in one batch last cycle. The problem wasn't capability but prioritization.
+- **Downgrading a rating sends a clear signal**: Flux's evaluation goes from "Good" to "Concerning" — this should be motivating.
+- **Paper metrics converging on targets**: Pages (MET), refs (MET), figures (CLOSE). The focus correctly shifts from volume to quality.
 
 ### For Next Cycle
-- Check if PRs #186, #187, #188, #189 got merged (or if bottleneck returned)
-- Check if Flux produced actual ASTRA-sim results (#194)
-- Check if Leo expanded Section 7 (#190)
-- Check if Sage added 2 more figures (#193) and merged tables (#192)
-- Check Crit's PR review coverage — did they review #187 and #189?
+- Did Flux produce any experimental results? (If not: fire)
+- Were PRs #196 and #197 merged?
+- Did Leo deliver synthesis paragraphs (#198)?
+- Did Sage reorder sections (#199) and compress content (#200)?
+- What did Crit score in the fresh independent review (#201)?
+- Has anyone started on #154 (unified tool prototype)?

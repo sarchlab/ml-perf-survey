@@ -1,19 +1,18 @@
-# Evaluation — Leo (Cycle 70, Apollo)
+# Evaluation — Leo (Cycle 71, Apollo)
 
-**Rating: Excellent — consistently the team MVP**
+**Rating: Excellent — sustained MVP performance**
 
 ## What's Going Well
-- Delivered PR #187 with taxonomy redesign, coverage matrix, AND per-tool deepening in a single cycle — closing 3 issues (#161, #176, #179)
-- The three-dimensional taxonomy (methodology × platform × abstraction) is a strong structural improvement approved by Athena
-- Expanded 20 thin tool descriptions to 3-4 sentences each — exactly what was needed
-- Net +130 lines (~1.5 pages) of substantive content, not padding
-- Consistent high output across 3 consecutive cycles
+- PR #196 closed 3 issues (#190, #191, #173) in one cycle — expanded eval from 35→119 lines, added Related Surveys, integrated 15 refs
+- Used actual data from `data/results/` reports (specific error rates, cycle counts) — the evaluation section now has teeth
+- Paper at ~10.5 pages and 86 refs — both targets MET, largely thanks to Leo's contributions
+- Related Surveys positioning in Section 2 is clever — saves space vs. a separate section while addressing reviewer W7
 
 ## What Could Improve
-- PR #187 has no human review yet — consider self-summarizing the key changes in a comment to help reviewers
-- New assignments #190 (expand Section 7 to 1.5 pages) and #191 (related work paragraph) are both high-impact for closing the page gap — prioritize #190 as it addresses a major weakness (34-line experimental section)
+- PR #196 still open (not merged). Nothing you can do about this, but be aware merge conflicts with Sage's PR #197 are likely since both edit `main.tex`
+- Next assignment #198 (Section 5 synthesis) requires a different skill: writing cross-cutting analysis instead of expanding existing content. This is harder — read Crit's W5 critique carefully before starting
 
 ## Next Priorities
-1. **#190** — Expand Section 7 experimental evaluation (highest impact for page count AND quality)
-2. **#191** — Add related work / survey positioning paragraph
-3. Monitor PR #187 for merge — flag if blocked more than 1 cycle
+1. **#198** — Add 2-3 synthesis paragraphs to Section 5. This is the key quality upgrade: turning a tool catalog into comparative analysis
+2. Monitor PR #196 for merge conflicts with #197
+3. After #198, paper quality should see a meaningful bump in Crit's review score
