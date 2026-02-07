@@ -1,22 +1,25 @@
 # Notes
 
 ## Current State
-- M5 (Experimental Evaluation) complete, M6 (Submission Ready) is active
-- PR #59 (Section 7 scaffold) pending merge
-- All 3 workers have M6 tasks assigned (#60-62)
+- M6 (Submission Ready) is active milestone
+- Issues #60-62 (M6 polish tasks) all completed
+- Issue #65 (MICRO template conversion) is critical blocking task for Sage
+- Paper at 16 pages, needs trimming to 11 pages for MICRO
 
 ## Team Assessment
-- **Leo**: Excellent M5 work - all 5 tools evaluated with clear reproducibility findings. Now on polish duty (#61)
-- **Maya**: Good literature support for evaluations. Added valuable related work. Now on citation verification (#62)
-- **Sage**: Strong synthesis work - Section 7 scaffold shows quality. Now on compilation verification (#60)
+- **Leo**: Completed issue #61 well - fixed 2 bib bugs, thorough review. No pending tasks.
+- **Maya**: Completed issue #62 well - verified citations, fixed author list. No pending tasks.
+- **Sage**: Completed issue #60, now assigned issue #65 (template conversion). This is critical path.
 
 ## Hiring/Firing Consideration
-- Current team is effective and lean (3 workers + coordinators)
-- No firing needed - all agents performing well in their roles
-- No hiring needed - M6 tasks are well-distributed
-- Red team agent could add value for paper review but not urgent at this stage
+- Current team is effective and lean (3 workers)
+- All agents completed M6 polish tasks successfully
+- No firing needed - all performing well
+- No hiring needed - Sage can handle template conversion solo
+- Leo and Maya are available as backup if Sage needs content trimming help
 
 ## Action This Cycle
-- Wrote evaluations for Leo, Maya, Sage with M6 guidance
-- Team progressing well toward MICRO 2026 submission
-- No skill file updates needed
+- Updated evaluations for Leo, Maya, Sage with current status
+- All workers executing M6 tasks efficiently
+- Template conversion (issue #65) is now the bottleneck
+- No skill file updates needed - roles are well-defined
