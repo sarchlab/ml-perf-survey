@@ -519,3 +519,115 @@
   pages     = {1--14},
   note      = {HPCA 2026 (Jan 31--Feb 4, 2026, Las Vegas). First comprehensive system-level analysis of AI agents; quantifies resource usage, latency, and datacenter power consumption}
 }
+
+% ============================================================================
+% Foundational Papers - Simulation Sampling (Added by Maya)
+% ============================================================================
+
+@inproceedings{simpoint2002,
+  author    = {Sherwood, Timothy and Perelman, Erez and Hamerly, Greg and Calder, Brad},
+  title     = {Automatically Characterizing Large Scale Program Behavior},
+  booktitle = {Proceedings of the 10th International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS)},
+  year      = {2002},
+  pages     = {45--57},
+  doi       = {10.1145/605397.605403},
+  note      = {Introduces SimPoint: automatic selection of representative simulation points using k-means clustering}
+}
+
+@inproceedings{smarts2003,
+  author    = {Wunderlich, Roland E. and Wenisch, Thomas F. and Falsafi, Babak and Hoe, James C.},
+  title     = {{SMARTS}: Accelerating Microarchitecture Simulation via Rigorous Statistical Sampling},
+  booktitle = {Proceedings of the 30th Annual International Symposium on Computer Architecture (ISCA)},
+  year      = {2003},
+  pages     = {84--97},
+  doi       = {10.1109/ISCA.2003.1206991},
+  note      = {Statistical sampling achieving 0.64\% CPI error with 35x speedup over detailed simulation}
+}
+
+@inproceedings{looppoint2022,
+  author    = {Sabu, Alen and Patil, Harish and Haj-Ali, Ameer and Carlson, Trevor E.},
+  title     = {{LoopPoint}: Checkpoint-driven Sampled Simulation for Multi-threaded Applications},
+  booktitle = {Proceedings of the IEEE International Symposium on High Performance Computer Architecture (HPCA)},
+  year      = {2022},
+  pages     = {606--618},
+  doi       = {10.1109/HPCA53966.2022.00052},
+  note      = {Extends sampling to multi-threaded applications with 2.3\% error and up to 800x speedup}
+}
+
+% ============================================================================
+% Foundational Papers - Memory Simulation (Added by Maya)
+% ============================================================================
+
+@article{dramsim2_2011,
+  author    = {Rosenfeld, Paul and Cooper-Balis, Elliott and Jacob, Bruce},
+  title     = {{DRAMSim2}: A Cycle Accurate Memory System Simulator},
+  journal   = {IEEE Computer Architecture Letters},
+  volume    = {10},
+  number    = {1},
+  pages     = {16--19},
+  year      = {2011},
+  doi       = {10.1109/L-CA.2011.4},
+  note      = {Widely-used cycle-accurate DDR2/DDR3 memory simulator validated against manufacturer Verilog models}
+}
+
+@inproceedings{dramsim3_2020,
+  author    = {Li, Shang and Yang, Zhiyuan and Reddy, Dhiraj and Srivastava, Ankur and Jacob, Bruce},
+  title     = {{DRAMsim3}: A Cycle-Accurate, Thermal-Capable {DRAM} Simulator},
+  booktitle = {IEEE Computer Architecture Letters},
+  volume    = {19},
+  number    = {2},
+  pages     = {106--109},
+  year      = {2020},
+  doi       = {10.1109/LCA.2020.2973991},
+  note      = {Modernized DRAM simulator with thermal modeling and HMC support}
+}
+
+@article{ramulator2015,
+  author    = {Kim, Yoongu and Yang, Weikun and Mutlu, Onur},
+  title     = {Ramulator: A Fast and Extensible {DRAM} Simulator},
+  journal   = {IEEE Computer Architecture Letters},
+  volume    = {15},
+  number    = {1},
+  pages     = {45--49},
+  year      = {2016},
+  doi       = {10.1109/LCA.2015.2414456},
+  note      = {Fast extensible DRAM simulator supporting DDRx, LPDDRx, GDDRx, WIOx, HBMx standards}
+}
+
+@article{ramulator2_2023,
+  author    = {Luo, Haocong and Tugrul, Yahya Can and Bostanc{\i}, F. Nisa and Olgun, Ataberk and Ya{\u{g}}l{\i}kc{\i}, A. Giray and Mutlu, Onur},
+  title     = {Ramulator 2.0: A Modern, Modular, and Extensible {DRAM} Simulator},
+  journal   = {IEEE Computer Architecture Letters},
+  volume    = {22},
+  number    = {2},
+  pages     = {129--132},
+  year      = {2023},
+  doi       = {10.1109/LCA.2023.3333759},
+  note      = {Modular DRAM simulator with DDR5, LPDDR5, HBM3, GDDR6 support and RowHammer mitigation modeling}
+}
+
+% ============================================================================
+% Foundational Papers - Hardware Performance Counters (Added by Maya)
+% ============================================================================
+
+@article{papi2000,
+  author    = {Browne, Shirley and Dongarra, Jack and Garner, Nathan and Ho, George and Mucci, Philip},
+  title     = {A Portable Programming Interface for Performance Evaluation on Modern Processors},
+  journal   = {International Journal of High Performance Computing Applications},
+  volume    = {14},
+  number    = {3},
+  pages     = {189--204},
+  year      = {2000},
+  doi       = {10.1177/109434200001400303},
+  note      = {PAPI: portable API for hardware performance counters, foundational tool for performance analysis}
+}
+
+@inproceedings{likwid2010,
+  author    = {Treibig, Jan and Hager, Georg and Wellein, Gerhard},
+  title     = {{LIKWID}: A Lightweight Performance-Oriented Tool Suite for x86 Multicore Environments},
+  booktitle = {Proceedings of the 39th International Conference on Parallel Processing Workshops (ICPPW)},
+  year      = {2010},
+  pages     = {207--216},
+  doi       = {10.1109/ICPPW.2010.38},
+  note      = {Lightweight tools for thread/cache topology, affinity, and performance counter measurement}
+}
