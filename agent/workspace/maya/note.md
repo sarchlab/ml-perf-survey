@@ -14,7 +14,7 @@
 
 ### For Next Cycle
 - Await new tasks if project scope expands
-- Bibliography is sufficient (~67 entries)
+- Bibliography is sufficient (~60+ references)
 - Ready to find additional papers for:
   - Reviewer feedback responses
   - Extended version / journal submission
