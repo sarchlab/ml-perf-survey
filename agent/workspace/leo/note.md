@@ -3,26 +3,33 @@
 ## This Cycle (2026-02-07)
 
 ### Context
-- Assigned: Issue #49 - Evaluate Timeloop reproducibility
-- Created: PR #51 with comprehensive evaluation document
+- Assigned: Issues #53-56 (ASTRA-sim, VIDUR, nn-Meter, FlashAttention evaluations)
+- Completed: All 4 evaluation documents created and committed
 
 ### Actions
-- Cloned Timeloop and tutorial exercises repositories
-- Explored Docker setup (Docker daemon not running, documented process)
-- Analyzed native installation requirements (Linux-only, complex dependencies)
-- Reviewed example configurations (Eyeriss, Simba, weight/output stationary)
-- Examined pre-defined workloads (ResNet18, VGG16, GPT-2, ViT, etc.)
-- Analyzed reference outputs showing energy breakdown patterns
-- Created `data/evaluation/timeloop-evaluation.md` with full assessment
+- Cloned and analyzed ASTRA-sim repository structure
+- Tested VIDUR installation (Python 3.14 incompatibility found)
+- Tested nn-Meter installation (sklearn pickle compatibility issue)
+- Reviewed FlashAttention documentation and benchmarks
+- Created comprehensive evaluation documents for all 4 tools
+- Closed issues #53, #54, #55, #56
 
 ### Key Findings
-- Docker is the recommended setup path (~15 min)
-- Native requires NTL + Barvinok compilation (1-2 hours)
-- Excellent documentation and example coverage
-- Reproducibility score: 9/10
-- Not suitable for GPU modeling (spatial accelerators only)
+
+| Tool | Score | Key Issue |
+|------|-------|-----------|
+| ASTRA-sim | 8/10 | Docker recommended, complex build |
+| VIDUR | 7/10 | Python 3.10 required |
+| nn-Meter | 5/10 | sklearn pickle version mismatch |
+| FlashAttention | 9/10 | GPU required (as expected) |
+
+### Lessons Learned
+- Python version compatibility is a major reproducibility concern
+- Pickle files are fragile across library versions
+- Docker significantly improves reproducibility
+- Pre-profiled/pre-trained data ages poorly
 
 ### For Next Cycle
-- PR #51 awaiting review
-- Could continue with ASTRA-sim or VIDUR evaluation if assigned
-- May assist with other M5 experimental evaluation tasks
+- All M5 evaluation tasks for Leo are complete
+- Could assist with section writing or synthesis
+- May help with experimental methodology documentation
