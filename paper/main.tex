@@ -819,23 +819,20 @@ Projects should prefer portable formats (ONNX) or pin exact dependency versions.
 \section{Conclusion}
 \label{sec:conclusion}
 
-This survey analyzed over 50 tools and methods for modeling and simulating the performance of ML workloads, spanning analytical models, cycle-accurate simulators, trace-driven simulation, and ML-augmented hybrid approaches.
+This survey analyzed over 50 tools and methods for modeling and predicting the performance of ML workloads, organized along two primary dimensions: methodology type (analytical, simulation, trace-driven, ML-augmented, hybrid) and target platform (DNN accelerators, GPUs, distributed systems, edge devices).
 
-\textbf{Key findings:}
-(1) Analytical frameworks (Timeloop, MAESTRO) remain the most effective for DNN accelerator design space exploration, offering microsecond evaluation with full interpretability.
-(2) Trace-driven simulators (ASTRA-sim, VIDUR, SimAI, Lumos) have emerged as the practical choice for system-level modeling of distributed training and LLM serving, achieving 2--15\% accuracy at practical speeds.
-(3) Hybrid approaches combining analytical structure with learned components (NeuSight, Concorde) achieve the best accuracy on GPU kernel prediction (2--3\% error).
-(4) LLM workloads require specialized modeling for prefill/decode phases, KV cache management, and multi-stage inference pipelines.
-(5) Reproducibility varies dramatically---Docker-first tools (Timeloop, ASTRA-sim, VIDUR) score 8.5+/10 on our rubric while tools relying on serialized ML models (nn-Meter) risk becoming unusable within months of release.
+\textbf{Key findings.}
+(1) \emph{Methodology determines trade-offs, not quality.} Analytical frameworks (Timeloop, MAESTRO) offer microsecond evaluation with full interpretability for accelerator design space exploration; trace-driven simulators (ASTRA-sim, VIDUR, SimAI, Lumos) provide 2--15\% accuracy for system-level distributed training and LLM serving; hybrid approaches (NeuSight, Concorde) achieve the best accuracy on GPU kernel prediction (2--3\% error) by combining analytical structure with learned components.
+(2) \emph{LLM workloads demand specialized modeling.} Prefill/decode phase distinctions, KV cache management, multi-stage inference pipelines, and dynamic batching require purpose-built tools (VIDUR, Frontier, LIFE, HERMES) rather than extensions of CNN-era frameworks.
+(3) \emph{Reproducibility is a practical bottleneck.} Docker-first tools (Timeloop, ASTRA-sim, VIDUR) score 8.5+/10 on our rubric, while tools relying on serialized ML models (nn-Meter) risk becoming unusable due to dependency drift---a challenge the community must address through portable model formats and pinned environments.
+(4) \emph{Accuracy claims require scrutiny.} Paper-reported accuracy numbers are measured under varying benchmarks, metrics, and hardware targets; direct cross-tool comparison remains unreliable without standardized evaluation protocols.
 
-\textbf{Gaps and opportunities:}
-Most tools are validated on CNN workloads; transformer/MoE validation is sparse.
-The kernel-to-end-to-end composition problem remains unsolved.
-Emerging hardware (PIM, chiplets) lacks mature modeling support.
-The community needs standardized benchmarks for cross-tool accuracy comparison.
+\textbf{Gaps and future directions.}
+The most pressing gaps align with the challenges identified in Section~\ref{sec:challenges}: (1) nearly all tools are validated on CNN workloads, leaving transformer, MoE, and diffusion model performance largely uncharacterized; (2) composing kernel-level predictions into accurate end-to-end estimates remains unsolved; (3) emerging hardware (PIM, chiplets, disaggregated architectures) lacks mature modeling support; and (4) cross-platform generalization (GPU$\rightarrow$TPU$\rightarrow$accelerator) requires new transfer learning or meta-learning approaches.
+The community would benefit most from standardized benchmarks for cross-tool accuracy comparison and from unified tooling with composable modeling engines and standard workload representations.
 
-As ML workloads grow in scale and diversity---from edge inference to multi-thousand-GPU training---accurate performance prediction becomes critical for efficient hardware design, system provisioning, and serving infrastructure planning.
-This survey provides practitioners a guide for selecting appropriate modeling tools for their specific use case and researchers a roadmap for advancing the field of ML workload performance prediction.
+As ML workloads grow in scale and diversity, accurate performance prediction becomes critical for hardware design, system provisioning, and serving infrastructure planning.
+This survey provides practitioners guidance for selecting appropriate tools and researchers a roadmap for advancing the field.
 
 %%%%%%% -- PAPER CONTENT ENDS -- %%%%%%%%
 
