@@ -181,15 +181,19 @@ Execute your full cycle as described above. Work autonomously. Complete your tas
     currentAgentName = agent;
     currentAgentStartTime = Date.now();
     let timedOut = false;
+    let timeout = null;
 
-    const timeout = setTimeout(() => {
-      timedOut = true;
-      log(`${agent} timed out, killing...`);
-      proc.kill('SIGTERM');
-    }, config.agentTimeoutMs);
+    // Only set timeout if agentTimeoutMs > 0 (0 = never timeout)
+    if (config.agentTimeoutMs > 0) {
+      timeout = setTimeout(() => {
+        timedOut = true;
+        log(`${agent} timed out, killing...`);
+        proc.kill('SIGTERM');
+      }, config.agentTimeoutMs);
+    }
 
     proc.on('close', (code) => {
-      clearTimeout(timeout);
+      if (timeout) clearTimeout(timeout);
       currentAgentProcess = null;
       currentAgentStartTime = null;
       
@@ -213,7 +217,7 @@ The agent exceeded the maximum allowed runtime and was terminated.`);
     });
 
     proc.on('error', (err) => {
-      clearTimeout(timeout);
+      if (timeout) clearTimeout(timeout);
       currentAgentProcess = null;
       currentAgentName = null;
       log(`${agent} error: ${err.message}`);

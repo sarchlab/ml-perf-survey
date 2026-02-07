@@ -331,7 +331,7 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
                 <div className="flex items-center justify-between">
                   <label className="text-neutral-600">Timeout</label>
                   <select className="px-2 py-1 bg-neutral-100 border rounded text-sm" value={configForm.agentTimeoutMs} onChange={(e) => updateConfigField('agentTimeoutMs', Number(e.target.value))}>
-                    <option value={300000}>5m</option><option value={600000}>10m</option><option value={900000}>15m</option><option value={1800000}>30m</option>
+                    <option value={300000}>5m</option><option value={600000}>10m</option><option value={900000}>15m</option><option value={1800000}>30m</option><option value={3600000}>1h</option><option value={7200000}>2h</option><option value={14400000}>4h</option><option value={0}>Never</option>
                   </select>
                 </div>
                 <div className="flex items-center justify-between">

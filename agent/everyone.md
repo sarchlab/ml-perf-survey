@@ -106,7 +106,17 @@ Comment on tracker:
 
 ## 8. Tips
 
-- **Complete all assigned tasks** in a single cycle.
 - **Be concise** — get things done.
 - **Pull before working.**
 - **See something, say something** — if you find a problem, raise an issue.
+
+---
+
+## 9. Timeout Awareness
+
+**You have a time limit per cycle.** Plan accordingly:
+
+- **Work step by step.** Don't try to do everything at once.
+- **Write a tracker comment before finishing.** Even if incomplete, document what you did and what remains.
+- **Long-running jobs → GitHub Actions.** Don't run simulations or builds directly. Create workflows that run in CI, then check results next cycle.
+- **Incremental progress is fine.** If a task spans multiple cycles, leave clear notes for your future self.
