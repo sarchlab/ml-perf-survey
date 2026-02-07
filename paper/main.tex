@@ -32,7 +32,14 @@
 % ABSTRACT
 % ==============================================================================
 \begin{abstract}
-\todo{Write abstract summarizing the survey scope, methodology, key findings, and contributions. Target: 150-200 words.}
+Machine learning-based performance modeling has emerged as a powerful alternative to traditional analytical models and cycle-accurate simulators for predicting computer system behavior.
+This survey comprehensively analyzes ML techniques for performance prediction across CPUs, GPUs, accelerators, and distributed systems, covering over 60 papers from architecture and ML venues published between 2016--2025.
+We propose an eight-dimension taxonomy organizing approaches by modeling technique, target hardware, workload types, prediction targets, accuracy metrics, input requirements, evaluation scope, and reproducibility.
+Our analysis reveals that specialized models achieve remarkable accuracy---below 5\% error for narrow domains---while general-purpose models trade accuracy for broader applicability.
+Transfer learning and meta-learning techniques increasingly enable adaptation to new hardware with minimal profiling, addressing the challenge of hardware diversity.
+We identify key open challenges including benchmark diversity, cross-platform generalization, and integration with compiler and architecture exploration workflows.
+Hybrid approaches combining analytical structure with learned components represent a promising direction, offering both interpretability and accuracy.
+This survey provides practitioners guidance for selecting appropriate techniques and researchers a roadmap for advancing the field.
 \end{abstract}
 
 \begin{IEEEkeywords}
