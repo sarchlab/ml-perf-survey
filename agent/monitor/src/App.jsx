@@ -591,6 +591,7 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
                       <div className="text-sm text-neutral-700 prose prose-sm prose-neutral max-w-none 
                         prose-headings:text-neutral-800 prose-headings:font-semibold prose-headings:mt-3 prose-headings:mb-2
                         prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0
+                        prose-ul:list-disc prose-ul:pl-4 prose-ol:list-decimal prose-ol:pl-4
                         prose-code:bg-neutral-100 prose-code:px-1 prose-code:rounded prose-code:text-neutral-700
                         prose-pre:bg-neutral-900 prose-pre:text-neutral-100">
                         <ReactMarkdown>
