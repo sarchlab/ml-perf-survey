@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Activity, Users, Sparkles, Settings, ScrollText, RefreshCw, Pause, Play, SkipForward, RotateCcw, Square, Save } from 'lucide-react'
+import { Activity, Users, Sparkles, Settings, ScrollText, RefreshCw, Pause, Play, SkipForward, RotateCcw, Square, Save, MessageSquare, X } from 'lucide-react'
 
 // Proxied through monitor backend to work with Cloudflare tunnel
 const ORCHESTRATOR_API = '/api/orchestrator'
@@ -26,7 +26,13 @@ function App() {
   const [orchestratorStatus, setOrchestratorStatus] = useState(null)
   const [lastUpdate, setLastUpdate] = useState(null)
   const [error, setError] = useState(null)
+  const [comments, setComments] = useState([])
+  const [commentsPage, setCommentsPage] = useState(1)
+  const [commentsHasMore, setCommentsHasMore] = useState(true)
+  const [commentsLoading, setCommentsLoading] = useState(false)
+  const [selectedAgent, setSelectedAgent] = useState(null)
   const logsEndRef = useRef(null)
+  const commentsEndRef = useRef(null)
 
   const fetchData = async () => {
     try {
@@ -145,9 +151,51 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
     setConfigDirty(false)
     setConfigError(null)
   }
+  
+  const fetchComments = async (page = 1, agent = null, append = false) => {
+    setCommentsLoading(true)
+    try {
+      const params = new URLSearchParams({ page, per_page: 10 })
+      if (agent) params.set('author', agent)
+      
+      const res = await fetch(`/api/comments?${params}`)
+      const data = await res.json()
+      
+      if (append) {
+        setComments(prev => [...prev, ...data.comments])
+      } else {
+        setComments(data.comments)
+      }
+      setCommentsHasMore(data.hasMore)
+      setCommentsPage(page)
+    } catch (err) {
+      console.error('Failed to fetch comments:', err)
+    } finally {
+      setCommentsLoading(false)
+    }
+  }
+  
+  const loadMoreComments = () => {
+    if (!commentsLoading && commentsHasMore) {
+      fetchComments(commentsPage + 1, selectedAgent, true)
+    }
+  }
+  
+  const selectAgent = (agent) => {
+    setSelectedAgent(agent)
+    setCommentsPage(1)
+    fetchComments(1, agent, false)
+  }
+  
+  const clearAgentFilter = () => {
+    setSelectedAgent(null)
+    setCommentsPage(1)
+    fetchComments(1, null, false)
+  }
 
   useEffect(() => {
     fetchData()
+    fetchComments(1, null, false)
     const interval = setInterval(fetchData, 5000)
     return () => clearInterval(interval)
   }, [])
@@ -264,13 +312,17 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
               <div className="space-y-2">
                 {agents.workers.map((agent) => {
                   const isActive = orchestratorStatus?.currentAgent === agent.name
+                  const isSelected = selectedAgent === agent.name
                   return (
                     <div
                       key={agent.name}
-                      className={`flex items-center justify-between p-2 rounded ${
+                      onClick={() => selectAgent(agent.name)}
+                      className={`flex items-center justify-between p-2 rounded cursor-pointer transition-colors ${
                         isActive
                           ? 'bg-blue-50 border border-blue-200'
-                          : 'bg-neutral-50'
+                          : isSelected
+                          ? 'bg-purple-50 border border-purple-200'
+                          : 'bg-neutral-50 hover:bg-neutral-100'
                       }`}
                     >
                       <div>
@@ -281,9 +333,10 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
                           {agent.title}
                         </p>
                       </div>
-                      {isActive && (
-                        <Badge variant="success">Active</Badge>
-                      )}
+                      <div className="flex items-center gap-1">
+                        {isSelected && <Badge variant="secondary">Viewing</Badge>}
+                        {isActive && <Badge variant="success">Active</Badge>}
+                      </div>
                     </div>
                   )
                 })}
@@ -306,13 +359,17 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
               <div className="space-y-2">
                 {agents.managers.map((agent) => {
                   const isActive = orchestratorStatus?.currentAgent === agent.name
+                  const isSelected = selectedAgent === agent.name
                   return (
                     <div
                       key={agent.name}
-                      className={`flex items-center justify-between p-2 rounded ${
+                      onClick={() => selectAgent(agent.name)}
+                      className={`flex items-center justify-between p-2 rounded cursor-pointer transition-colors ${
                         isActive
                           ? 'bg-blue-50 border border-blue-200'
-                          : 'bg-neutral-50'
+                          : isSelected
+                          ? 'bg-purple-50 border border-purple-200'
+                          : 'bg-neutral-50 hover:bg-neutral-100'
                       }`}
                     >
                       <div>
@@ -323,9 +380,10 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
                           {agent.title}
                         </p>
                       </div>
-                      {isActive && (
-                        <Badge variant="success">Active</Badge>
-                      )}
+                      <div className="flex items-center gap-1">
+                        {isSelected && <Badge variant="secondary">Viewing</Badge>}
+                        {isActive && <Badge variant="success">Active</Badge>}
+                      </div>
                     </div>
                   )
                 })}
@@ -477,6 +535,68 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
             </CardContent>
           </Card>
         </div>
+
+        {/* Comments Section */}
+        <Card className="mt-4">
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <span className="flex items-center gap-2">
+                <MessageSquare className="w-4 h-4" />
+                Agent Comments
+                {selectedAgent && (
+                  <Badge variant="secondary" className="ml-2">
+                    {selectedAgent}
+                    <button onClick={clearAgentFilter} className="ml-1 hover:text-red-500">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </Badge>
+                )}
+              </span>
+              <span className="text-sm font-normal text-neutral-500">
+                {comments.length} comments
+              </span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3 max-h-96 overflow-y-auto" onScroll={(e) => {
+              const { scrollTop, scrollHeight, clientHeight } = e.target
+              if (scrollHeight - scrollTop - clientHeight < 100) {
+                loadMoreComments()
+              }
+            }}>
+              {comments.length === 0 && !commentsLoading && (
+                <p className="text-sm text-neutral-400 text-center py-4">No comments found</p>
+              )}
+              {comments.map((comment) => (
+                <div key={comment.id} className="p-3 bg-neutral-50 rounded-lg">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-medium text-neutral-600">
+                      {comment.author}
+                    </span>
+                    <span className="text-xs text-neutral-400">
+                      {new Date(comment.created_at).toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="text-sm text-neutral-700 whitespace-pre-wrap break-words max-h-48 overflow-y-auto">
+                    {comment.body.length > 500 ? comment.body.slice(0, 500) + '...' : comment.body}
+                  </div>
+                </div>
+              ))}
+              {commentsLoading && (
+                <p className="text-sm text-neutral-400 text-center py-2">Loading...</p>
+              )}
+              {!commentsLoading && commentsHasMore && (
+                <button 
+                  onClick={loadMoreComments}
+                  className="w-full py-2 text-sm text-blue-600 hover:text-blue-700"
+                >
+                  Load more
+                </button>
+              )}
+              <div ref={commentsEndRef} />
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   )

@@ -149,6 +149,58 @@ app.post('/api/config', (req, res) => {
   }
 });
 
+// GET /api/comments - Fetch GitHub issue comments
+app.get('/api/comments', async (req, res) => {
+  try {
+    const configPath = path.join(AGENT_DIR, 'config.yaml');
+    const configContent = fs.readFileSync(configPath, 'utf-8');
+    const config = yaml.load(configContent);
+    const issueNumber = config.trackerIssue || 1;
+    
+    const { author, page = 1, per_page = 20 } = req.query;
+    
+    // Use gh CLI to fetch comments
+    const { execSync } = await import('child_process');
+    
+    let cmd = `gh api repos/syifan/ml-perf-survey/issues/${issueNumber}/comments --paginate -q '.[] | {id, author: .user.login, body, created_at, updated_at}'`;
+    
+    const output = execSync(cmd, { 
+      cwd: path.resolve(AGENT_DIR, '..'),
+      encoding: 'utf-8',
+      maxBuffer: 10 * 1024 * 1024 
+    });
+    
+    // Parse JSONL output
+    let comments = output.trim().split('\n')
+      .filter(line => line.trim())
+      .map(line => JSON.parse(line))
+      .reverse(); // Most recent first
+    
+    // Filter by author if specified
+    if (author) {
+      comments = comments.filter(c => 
+        c.body.toLowerCase().includes(`[${author.toLowerCase()}]`) ||
+        c.body.toLowerCase().startsWith(`**${author.toLowerCase()}`)
+      );
+    }
+    
+    // Pagination
+    const startIdx = (parseInt(page) - 1) * parseInt(per_page);
+    const paginatedComments = comments.slice(startIdx, startIdx + parseInt(per_page));
+    
+    res.json({ 
+      comments: paginatedComments,
+      total: comments.length,
+      page: parseInt(page),
+      per_page: parseInt(per_page),
+      hasMore: startIdx + parseInt(per_page) < comments.length
+    });
+  } catch (error) {
+    console.error('Error fetching comments:', error.message);
+    res.status(500).json({ error: error.message, comments: [] });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Monitor API server running on http://localhost:${PORT}`);
 });
