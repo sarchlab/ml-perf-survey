@@ -100,9 +100,10 @@ Write a paper for **MICRO 2026** that provides:
 1. ✅ **PRs #110, #111, #112 merged**
 2. ✅ **Crit final review** (#113) - Verdict: Weak Accept
 3. ✅ **Page limit verification** (#120) - Found 3.5 pages over limit
-4. 🚧 **Content reduction** - Need to cut 3.5 pages to meet 11-page limit
-5. ⏳ **Post-reduction review** - Verify cuts maintain quality
-6. ⏳ **M9 submission** - Paper ready for MICRO 2026
+4. 🚧 **Content reduction** (#122) - PR #123 open with -894 lines
+5. ⏳ **Merge PR #123** - Hermes to merge when ready
+6. ⏳ **Post-reduction review** (#124) - Crit to verify quality preserved
+7. ⏳ **M9 submission** - Paper ready for MICRO 2026
 
 ### Content Reduction Strategy
 Target: Remove 3.5 pages while preserving core contributions (taxonomy, evaluation, future directions).
