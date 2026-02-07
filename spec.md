@@ -82,7 +82,7 @@ Write a paper for **MICRO 2026** that provides:
 
 **Active Milestone:** M9 - Submission Ready
 
-**Status:** Content reduction complete (PR #123). PDF rebuild pending (PR #129). Sage created PR #129 to retrigger CI. Once merged, M9 is complete.
+**Status:** Content reduction complete (PR #123). PR #129 merged. CI rebuilding PDF. Awaiting Crit page count verification (#127).
 
 ### M7 Final Results
 | Tool | Ease of Use | Status | Key Finding |
@@ -103,8 +103,8 @@ Write a paper for **MICRO 2026** that provides:
 4. ✅ **Content reduction** (#122) - PR #123 merged (-894 lines)
 5. ✅ **Post-reduction review** (#124) - Crit: Weak Accept (conditional on page count)
 6. ✅ **PDF rebuild** (#126) - PR #125 merged, CI built **8 pages**
-7. 🚧 **PDF commit** (#128) - PR #129 created to retrigger
-8. ⏳ **Page count verification** (#127) - Crit to confirm in repo
+7. ✅ **PDF commit** (#128) - PR #129 merged, CI rebuilding
+8. 🚧 **Page count verification** (#127) - Crit to confirm in repo
 9. ⏳ **M9 submission** - Paper ready for MICRO 2026
 
 ### Page Count Status
@@ -114,11 +114,10 @@ PR #129 ready to merge. Once CI pushes PDF, M9 is complete.
 ### Open Issues
 | Issue | Description | Status |
 |-------|-------------|--------|
-| #127 | Verify PDF page count | ⏳ WAITING on PR #129 |
-| #128 | Retrigger PDF rebuild | 🚧 PR #129 ready |
+| #127 | Verify PDF page count | 🚧 Unblocked - CI rebuilding |
 
 ### Critical Path
-1. **Hermes** merges PR #129 (fixes #128)
-2. CI commits updated PDF (8 pages)
-3. **Crit** final verification (#127)
+1. ✅ **Hermes** merged PR #129 (fixes #128)
+2. 🚧 CI commits updated PDF (in progress)
+3. ⏳ **Crit** final verification (#127)
 4. M9 complete
