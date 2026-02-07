@@ -1170,50 +1170,50 @@ VIDUR~\cite{vidur2024} provides offline simulation, but online serving requires 
 Lightweight models suitable for real-time inference, combined with periodic retraining on observed performance, could enable adaptive serving optimization.
 The challenge is maintaining accuracy while meeting strict latency requirements.
 
-\subsection{Emerging Opportunities}
+\subsection{Research Opportunities from Taxonomy Gaps}
 \label{subsec:opportunities}
 
-Several emerging trends create new opportunities for ML-based performance modeling.
+Our taxonomy analysis reveals specific gaps where no existing work provides adequate solutions. We identify five high-priority research opportunities grounded in concrete unmet needs.
 
-\subsubsection{Foundation Models for Performance Prediction}
+\subsubsection{Transformer-Aware Cross-Platform Transfer}
 
-The success of foundation models in NLP and vision suggests potential for performance modeling.
-A foundation model pre-trained on diverse workload-hardware-performance tuples could provide strong initialization for downstream tasks.
+\textbf{Gap:} Transfer learning works (HELP~\cite{help2021}, LitePred~\cite{litepred2024}) achieve 98\%+ accuracy but focus on CNNs. No published work demonstrates cross-platform transfer for attention-based models.
 
-Key requirements include: (1) massive, diverse training datasets spanning hardware platforms and workload types; (2) representation learning that captures transferable performance patterns; and (3) efficient adaptation mechanisms for new domains.
-The TenSet dataset~\cite{tenset2021} provides a starting point, but orders-of-magnitude more data may be needed for true foundation model capabilities.
+\textbf{Evidence:} HELP's evaluation uses NAS-Bench search spaces containing only CNNs. LitePred's 85-platform validation covers MobileNet and ResNet variants. Meanwhile, transformers dominate modern workloads with distinct memory access patterns (sequence-length-dependent attention, KV cache growth) that differ fundamentally from CNN data reuse.
 
-\subsubsection{LLM-Assisted Performance Analysis}
+\textbf{Opportunity:} Extend meta-learning approaches to transformer-specific operators (multi-head attention, layer normalization, feedforward blocks). This requires new benchmark datasets pairing transformer architectures with edge/GPU measurements---currently none exist publicly.
 
-Large language models offer new modalities for performance understanding.
-Recent work explores using code LLMs to extract performance-relevant features, explain performance anomalies, and suggest optimizations.
+\subsubsection{Uncertainty-Aware Autotuning Cost Models}
 
-Challenges include hallucination (LLMs may generate plausible-sounding but incorrect performance estimates) and limited numerical reasoning.
-Hybrid approaches combining LLM-based code understanding with principled performance models could leverage the strengths of both paradigms.
+\textbf{Gap:} Of 60+ surveyed papers, only one addresses calibrated uncertainty quantification. TVM/Ansor cost models provide point predictions without confidence estimates.
 
-\subsubsection{Hardware-Software Co-Design}
+\textbf{Evidence:} Autotuning spends significant search budget evaluating configurations where the cost model is uncertain~\cite{ansor2020}. Without uncertainty estimates, the search cannot distinguish ``confident low-latency'' from ``uncertain low-latency'' predictions.
 
-ML performance models can enable tighter hardware-software co-design by rapidly evaluating how software changes affect hardware utilization and vice versa.
+\textbf{Opportunity:} Integrate Bayesian neural networks or ensemble methods into compiler cost models with calibrated confidence intervals. The reward: provably fewer measured evaluations during autotuning, directly reducing compilation time. TenSet~\cite{tenset2021} provides 52M records for training and validation.
 
-ArchGym~\cite{archgym2023} demonstrates ML-guided accelerator design, but joint optimization of hardware architecture, compiler mappings, and model structure remains underexplored.
-Differentiable performance models could enable gradient-based co-optimization across the full stack.
+\subsubsection{Dynamic Shape and Sparse Workload Prediction}
 
-\subsubsection{Emerging Hardware Paradigms}
+\textbf{Gap:} Existing models assume fixed input shapes. No surveyed work handles dynamic shapes (variable batch size, sequence length) or activation sparsity (early exit, MoE gating).
 
-New computing paradigms---processing-in-memory, neuromorphic computing, analog accelerators, quantum-classical hybrids---require new performance modeling approaches.
-These platforms exhibit fundamentally different performance characteristics (energy-dominated costs, stochastic execution, analog noise) that existing frameworks do not address.
+\textbf{Evidence:} nn-Meter~\cite{nnmeter2021} requires shape specification at prediction time. NeuSight~\cite{neusight2025} assumes fixed tile configurations. Real LLM serving sees sequences from 128 to 128K tokens; mixture-of-experts models activate 2 of 64 experts per token---both create highly variable execution patterns.
 
-Early-stage performance modeling for emerging hardware could accelerate adoption by enabling software optimization before hardware availability.
-Transfer learning from related platforms (e.g., digital accelerators to analog) represents a promising direction.
+\textbf{Opportunity:} Shape-parameterized prediction networks that take input dimensions as features, combined with sparsity-aware roofline models. Sparseloop~\cite{sparseloop2022} provides analytical foundations for sparse tensors; extending this to learned models for dynamic workloads is unexplored.
 
-\subsubsection{Multi-Objective and Constraint-Aware Prediction}
+\subsubsection{Unified Energy-Latency-Memory Prediction}
 
-Practical deployment involves multiple objectives: latency, throughput, energy, memory, cost.
-Most current models predict single metrics independently.
-Joint multi-objective prediction could enable Pareto-optimal design selection.
+\textbf{Gap:} Energy prediction remains fragmented. Accelergy provides analytical energy estimates; ML-based approaches focus almost exclusively on latency.
 
-Additionally, constraint-aware prediction---determining whether a workload \emph{fits} on target hardware given memory limits---is often more valuable than precise latency estimates.
-Models that directly predict feasibility and constraint violations could better support deployment decisions.
+\textbf{Evidence:} Table~\ref{tab:comparison-summary} shows all surveyed ML models target latency or throughput. Meanwhile, edge deployment is often energy-constrained (battery budget, thermal limits), and datacenter cost optimization increasingly considers Joules-per-inference alongside latency SLOs.
+
+\textbf{Opportunity:} Multi-task learning that jointly predicts latency, energy, and peak memory from shared representations. Timeloop+Accelergy~\cite{timeloop2019} provides paired latency-energy labels for spatial accelerators; extending this to GPU/edge devices requires new measurement infrastructure but offers immediate practical value.
+
+\subsubsection{Temporal Robustness Benchmarks}
+
+\textbf{Gap:} No benchmark systematically measures model robustness to software evolution. Models may achieve 99\% accuracy on static datasets but fail when drivers, compilers, or frameworks update.
+
+\textbf{Evidence:} Our nn-Meter evaluation (Section~\ref{sec:evaluation}) found pre-trained predictors broken by scikit-learn version changes---a concrete instance of temporal fragility. TenSet versioning provides some temporal signal but lacks explicit evaluation protocols.
+
+\textbf{Opportunity:} Create versioned benchmark suites with measurements across software configurations (CUDA 11.x vs 12.x, PyTorch 1.x vs 2.x, TensorRT versions). Define temporal generalization metrics: accuracy on measurements from software stacks released N months after training data. This would enable principled evaluation of continual learning approaches.
 
 % ==============================================================================
 % EXPERIMENTAL EVALUATION
