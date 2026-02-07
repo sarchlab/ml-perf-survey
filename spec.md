@@ -30,13 +30,13 @@ Beyond the survey paper, explore creating a unified performance modeling tool th
 - Generate comparison tables and figures
 - Internal review and revision
 
-### M5: Experimental Evaluation (Target: Week 14) 🔄 IN PROGRESS
-- Select 3-5 most important/reproducible solutions from literature
-- Execute and evaluate on common workloads
-- Document accuracy, speed, and usability findings
-- Add empirical comparison section to paper
+### M5: Experimental Evaluation (Target: Week 14) ✅ COMPLETE
+- Selected 5 tools: Timeloop, FlashAttention, ASTRA-sim, VIDUR, nn-Meter
+- Evaluated reproducibility, usability, and accuracy validation
+- Documented findings in data/evaluation/ directory
+- Added Section 7 (Experimental Evaluation) to paper (PR #59)
 
-### M6: Submission Ready (Target: Week 18)
+### M6: Submission Ready (Target: Week 18) 🔄 IN PROGRESS
 - Final polishing and formatting
 - Incorporate experimental results
 - Camera-ready submission to MICRO 2026
@@ -48,4 +48,4 @@ Beyond the survey paper, explore creating a unified performance modeling tool th
 
 ## Current Status
 
-**Active Milestone:** M5 - Experimental Evaluation (Timeloop evaluation in progress, 4 more tools queued)
+**Active Milestone:** M6 - Submission Ready (awaiting PR #59 merge to complete M5, then final polish)

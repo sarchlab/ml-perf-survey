@@ -1,9 +1,11 @@
 # Notes
 
-- M4 (Paper Draft) marked complete: all sections drafted, figures added, citations verified
-- M5 (Experimental Evaluation) now active milestone
-- Created issues #53-56 for remaining tool evaluations (ASTRA-sim, VIDUR, nn-Meter, FlashAttention)
-- Timeloop evaluation underway (PR #51), taxonomy figure pending (PR #52)
-- 5 tools total: Timeloop, ASTRA-sim, VIDUR (Phase 1 CPU-only), nn-Meter, FlashAttention (Phase 2)
-- After M5 completes, M6 (Submission Ready) and M7 (Unified Tool) remain
-- Human has delegated PR merging to team (issue #19)
+- M5 (Experimental Evaluation) marked complete: all 5 tools evaluated, PR #59 pending merge
+- M6 (Submission Ready) is now the active milestone
+- Created issues #60-62 for M6 tasks:
+  - #60: Sage - Verify paper compilation
+  - #61: Leo - Final content review
+  - #62: Maya - Verify citations
+- Paper has "Authors TBD" placeholder - human needs to provide author info
+- After M6: M7 (Unified Tool Exploration) is post-submission stretch goal
+- Project on track for MICRO 2026 submission
