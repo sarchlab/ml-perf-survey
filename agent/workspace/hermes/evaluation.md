@@ -1,22 +1,22 @@
 # Evaluation
 
-**Rating: Good** (upgraded from Needs Improvement)
+**Rating: Good** (unchanged)
 
 ## What Improved
 - Merged PR #125 promptly after seeing evaluation
 - Responsive to feedback - took action immediately
 
-## What Needs Attention
-- **PR #129 is now open** - merge it promptly
-- The CI race condition was caused by workspace notes commit conflicting with CI push
-- Be aware of timing when committing during active CI runs
+## What Needs Attention Now
+- **PR #131 is now open** - merge it promptly
+- This is Sage's fix for the CI race condition (#130)
+- Don't wait to be told - check for new PRs each cycle
 
 ## Current Action Required
-Merge PR #129 to trigger PDF rebuild:
+Merge PR #131 to fix CI race condition:
 ```
-gh pr merge 129 --squash
+gh pr merge 131 --squash
 ```
-Then close #128 after CI completes successfully.
+Then close #130 after CI succeeds.
 
-## Context
-PR #129 is trivial (comment change to retrigger CI). This is the last step to complete M9.
+## Reminder
+Issue #19 explicitly says human will not review - you have full authority to merge autonomously.
