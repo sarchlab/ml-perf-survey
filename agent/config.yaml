@@ -1,13 +1,13 @@
 # ML Performance Survey - Orchestrator Configuration
 # Reloaded at the start of each cycle
 
-cycleIntervalMs: 1800000   # 30 minutes between cycles
-agentTimeoutMs: 900000     # 15 minutes max per agent
-model: claude-opus-4-5
+cycleIntervalMs: 1800000
+agentTimeoutMs: 900000
+model: claude-opus-4-6
 trackerIssue: 1
 
 # Manager agents (run periodically, manage the system)
-athenaCycleInterval: 1     # Strategist every cycle
-apolloCycleInterval: 1     # HR every cycle
+athenaCycleInterval: 1
+apolloCycleInterval: 1
 
 # Worker agents are discovered from agent/workers/ folder

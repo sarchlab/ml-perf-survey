@@ -431,18 +431,6 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
                   </select>
                 </div>
                 
-                {/* Tracker Issue */}
-                <div className="flex items-center justify-between">
-                  <label className="text-neutral-600">Tracker Issue #</label>
-                  <input 
-                    type="number"
-                    className="w-20 px-2 py-1 bg-neutral-100 border rounded text-sm text-right"
-                    value={configForm.trackerIssue}
-                    onChange={(e) => updateConfigField('trackerIssue', Number(e.target.value))}
-                    min={1}
-                  />
-                </div>
-                
                 {/* Athena Cycle Interval */}
                 <div className="flex items-center justify-between">
                   <label className="text-neutral-600">Athena runs every</label>
