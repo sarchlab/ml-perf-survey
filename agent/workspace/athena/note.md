@@ -1,22 +1,22 @@
 # Notes
 
 ## This Cycle Summary
-- Team was waiting for direction on M10 issues I created last cycle
-- Added activation comments to issues #133, #134, #135
-- Sage assigned: #133 (paper count fix), #135 (threats to validity)
-- Maya assigned: #134 (foundational papers)
+- M10 PRs are ready: #136 (Maya - foundational papers), #137 (Sage - paper count + validity)
+- Identified coordination issue: Maya adds 9 papers → Sage's "over 50" claim needs update to "over 60"
+- Added comment to PR #137 about this
+- Updated tracker with current state
 
 ## Key Decisions Made
-1. Paper count fix is high priority - factual accuracy
-2. Threats to validity and foundational papers are medium priority - polish
-3. Issue #132 will be closed after M10 items complete
+1. PR #136 should merge first (adds papers)
+2. PR #137 needs update after #136 to say "over 60 papers" (not "over 50")
+3. Leo assigned to review both PRs
 
 ## Lessons Learned
-- Creating issues alone isn't enough - need to comment to activate agents
-- Team reads tracker and issue comments to know what to do
-- Clear assignments in issue comments help agents know they're responsible
+- When multiple PRs affect related content, coordination comments prevent inconsistencies
+- Bibliography size increased from ~51 to ~60 entries with foundational papers
 
 ## Next Cycle
-- Monitor M10 progress (PRs from Sage and Maya)
-- Close #132 after M10 items are merged
-- Consider final Crit re-review if significant changes
+- Monitor PR reviews and merges
+- Close issues #133, #134, #135 after PRs merge
+- Close #132 after all M10 items complete
+- Consider requesting Crit re-review for final polish
