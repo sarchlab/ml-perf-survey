@@ -1,13 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Activity, Users, Sparkles, Settings, ScrollText, RefreshCw } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Activity, Users, Sparkles, Settings, ScrollText, RefreshCw, Pause, Play, SkipForward, RotateCcw, Square } from 'lucide-react'
+
+const ORCHESTRATOR_API = 'http://localhost:3002'
 
 function App() {
   const [state, setState] = useState({ cycleCount: 0, currentAgentIndex: 0 })
   const [logs, setLogs] = useState([])
   const [agents, setAgents] = useState({ workers: [], managers: [] })
   const [config, setConfig] = useState({ config: null, raw: '' })
+  const [orchestratorStatus, setOrchestratorStatus] = useState(null)
   const [lastUpdate, setLastUpdate] = useState(null)
   const [error, setError] = useState(null)
   const logsEndRef = useRef(null)
@@ -31,8 +35,29 @@ function App() {
       setConfig(await configRes.json())
       setLastUpdate(new Date())
       setError(null)
+      
+      // Try to fetch orchestrator status
+      try {
+        const statusRes = await fetch(`${ORCHESTRATOR_API}/status`)
+        if (statusRes.ok) {
+          setOrchestratorStatus(await statusRes.json())
+        }
+      } catch {
+        setOrchestratorStatus(null)
+      }
     } catch (err) {
       setError(err.message)
+    }
+  }
+  
+  const controlAction = async (action) => {
+    try {
+      const res = await fetch(`${ORCHESTRATOR_API}/${action}`, { method: 'POST' })
+      if (res.ok) {
+        await fetchData()
+      }
+    } catch (err) {
+      console.error(`Control action ${action} failed:`, err)
     }
   }
 
@@ -79,23 +104,59 @@ function App() {
             <CardContent>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
+                  <span className="text-neutral-600">Status</span>
+                  {orchestratorStatus ? (
+                    <Badge variant={orchestratorStatus.paused ? 'warning' : 'success'}>
+                      {orchestratorStatus.paused ? '⏸️ Paused' : '▶️ Running'}
+                    </Badge>
+                  ) : (
+                    <Badge variant="destructive">Offline</Badge>
+                  )}
+                </div>
+                <div className="flex justify-between items-center">
                   <span className="text-neutral-600">Cycle Count</span>
                   <span className="text-2xl font-mono font-bold text-neutral-800">
-                    {state.cycleCount}
+                    {orchestratorStatus?.cycleCount ?? state.cycleCount}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-neutral-600">Current Agent Index</span>
-                  <span className="text-2xl font-mono font-bold text-neutral-800">
-                    {state.currentAgentIndex}
-                  </span>
+                  <span className="text-neutral-600">Current Agent</span>
+                  <Badge variant="secondary">
+                    {orchestratorStatus?.currentAgent || 'None'}
+                  </Badge>
                 </div>
-                {agents.workers.length > 0 && (
-                  <div className="pt-2 border-t">
-                    <span className="text-sm text-neutral-500">Current Agent: </span>
-                    <Badge variant="secondary">
-                      {agents.workers[state.currentAgentIndex]?.name || 'N/A'}
-                    </Badge>
+                {orchestratorStatus && (
+                  <div className="flex justify-between items-center">
+                    <span className="text-neutral-600">Uptime</span>
+                    <span className="text-sm font-mono text-neutral-700">
+                      {Math.floor(orchestratorStatus.uptime / 3600)}h {Math.floor((orchestratorStatus.uptime % 3600) / 60)}m
+                    </span>
+                  </div>
+                )}
+                
+                {/* Control Buttons */}
+                {orchestratorStatus && (
+                  <div className="pt-3 border-t flex flex-wrap gap-2">
+                    {orchestratorStatus.paused ? (
+                      <Button size="sm" onClick={() => controlAction('resume')} className="flex-1">
+                        <Play className="w-3 h-3 mr-1" /> Resume
+                      </Button>
+                    ) : (
+                      <Button size="sm" variant="outline" onClick={() => controlAction('pause')} className="flex-1">
+                        <Pause className="w-3 h-3 mr-1" /> Pause
+                      </Button>
+                    )}
+                    <Button size="sm" variant="outline" onClick={() => controlAction('skip')} className="flex-1">
+                      <SkipForward className="w-3 h-3 mr-1" /> Skip
+                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => controlAction('reload')}>
+                      <RotateCcw className="w-3 h-3" />
+                    </Button>
+                    <Button size="sm" variant="destructive" onClick={() => {
+                      if (confirm('Stop the orchestrator?')) controlAction('stop')
+                    }}>
+                      <Square className="w-3 h-3" />
+                    </Button>
                   </div>
                 )}
               </div>

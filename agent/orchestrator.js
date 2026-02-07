@@ -9,6 +9,7 @@ import { spawn, execSync } from 'child_process';
 import { existsSync, readFileSync, writeFileSync, readdirSync, watch } from 'fs';
 import { dirname, join, basename } from 'path';
 import { fileURLToPath } from 'url';
+import { createServer } from 'http';
 import YAML from 'yaml';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -19,12 +20,15 @@ const SKILLS_PATH = join(__dirname, 'skills');
 const CONFIG_PATH = join(__dirname, 'config.yaml');
 const ORCHESTRATOR_PATH = join(__dirname, 'orchestrator.js');
 const STATE_PATH = join(__dirname, 'state.json');
+const CONTROL_PORT = 3002;
 
 let currentAgentProcess = null;
 let currentAgentName = null;
 let cycleCount = 0;
 let currentAgentIndex = 0;
 let pendingReload = false;
+let isPaused = false;
+let startTime = Date.now();
 
 function loadState() {
   try {
@@ -238,9 +242,137 @@ async function runCycle() {
   return config;
 }
 
+// ============ Control API Server ============
+
+function startControlServer() {
+  const server = createServer((req, res) => {
+    // CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    
+    if (req.method === 'OPTIONS') {
+      res.writeHead(200);
+      res.end();
+      return;
+    }
+    
+    const url = new URL(req.url, `http://localhost:${CONTROL_PORT}`);
+    const path = url.pathname;
+    
+    // GET /status
+    if (req.method === 'GET' && path === '/status') {
+      const config = loadConfig();
+      const workers = discoverWorkers();
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        running: !isPaused,
+        paused: isPaused,
+        currentAgent: currentAgentName,
+        currentAgentIndex,
+        cycleCount,
+        totalWorkers: workers.length,
+        pid: process.pid,
+        uptime: Math.floor((Date.now() - startTime) / 1000),
+        cycleIntervalMs: config.cycleIntervalMs,
+        pendingReload
+      }));
+      return;
+    }
+    
+    // GET /queue
+    if (req.method === 'GET' && path === '/queue') {
+      const workers = discoverWorkers();
+      const config = loadConfig();
+      const queue = [];
+      
+      // Add remaining workers in current cycle
+      for (let i = currentAgentIndex; i < workers.length; i++) {
+        queue.push({ name: workers[i], type: 'worker' });
+      }
+      
+      // Add managers for next cycle
+      const nextCycle = cycleCount + 1;
+      if ((nextCycle - 1) % (config.athenaCycleInterval || 10) === 0) {
+        queue.push({ name: 'athena', type: 'manager', nextCycle: true });
+      }
+      if ((nextCycle - 1) % (config.apolloCycleInterval || 10) === 0) {
+        queue.push({ name: 'apollo', type: 'manager', nextCycle: true });
+      }
+      queue.push({ name: 'hermes', type: 'manager', nextCycle: true });
+      
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ queue, workers }));
+      return;
+    }
+    
+    // POST /pause
+    if (req.method === 'POST' && path === '/pause') {
+      isPaused = true;
+      log('⏸️  Paused via API');
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, paused: true }));
+      return;
+    }
+    
+    // POST /resume
+    if (req.method === 'POST' && path === '/resume') {
+      isPaused = false;
+      log('▶️  Resumed via API');
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, paused: false }));
+      return;
+    }
+    
+    // POST /skip
+    if (req.method === 'POST' && path === '/skip') {
+      if (currentAgentProcess) {
+        log(`⏭️  Skipping ${currentAgentName} via API`);
+        currentAgentProcess.kill('SIGTERM');
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, skipped: currentAgentName }));
+      } else {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: false, message: 'No agent running' }));
+      }
+      return;
+    }
+    
+    // POST /reload
+    if (req.method === 'POST' && path === '/reload') {
+      log('🔄 Reload requested via API');
+      pendingReload = true;
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, pendingReload: true }));
+      return;
+    }
+    
+    // POST /stop
+    if (req.method === 'POST' && path === '/stop') {
+      log('🛑 Stop requested via API');
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, stopping: true }));
+      if (currentAgentProcess) currentAgentProcess.kill('SIGTERM');
+      setTimeout(() => process.exit(0), 500);
+      return;
+    }
+    
+    // 404
+    res.writeHead(404, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ error: 'Not found' }));
+  });
+  
+  server.listen(CONTROL_PORT, () => {
+    log(`Control API listening on http://localhost:${CONTROL_PORT}`);
+  });
+  
+  return server;
+}
+
 async function main() {
   log('Orchestrator started');
   loadState();
+  startControlServer();
   
   let debounce = null;
   watch(ORCHESTRATOR_PATH, (eventType) => {
@@ -254,6 +386,11 @@ async function main() {
   });
   
   while (true) {
+    // Check pause state
+    while (isPaused) {
+      await sleep(1000);
+    }
+    
     const config = await runCycle();
     
     if (pendingReload) {
