@@ -3,25 +3,28 @@
 ## This Cycle (2026-02-06)
 
 ### Context
-- Issue #48: Verify citations and find missing references
-- Paper draft complete, needed citation validation before submission
+- Issue #57: Research ASTRA-sim prior evaluations for Leo's evaluation (#53)
+- Leo had already completed the ASTRA-sim evaluation - my task was to provide supporting literature
 
 ### Actions
-- Extracted all 20 unique citations from main.tex
-- Verified all citations exist in references.bib (all present)
-- Searched for missing important papers in the field
-- Added 4 new BibTeX entries:
-  - Paleo (ICLR 2017) - foundational distributed training performance model
-  - Splitwise (ISCA 2024 Best Paper) - LLM inference phase splitting
-  - Sarathi-Serve (OSDI 2024) - chunked prefills for LLM serving
-  - MAD-Max (ISCA 2024) - distributed ML acceleration
+- Searched for ASTRA-sim validation papers and related work
+- Found key papers: ASTRA-sim 1.0 (ISPASS 2020), ASTRA-sim 2.0 (ISPASS 2023), Chakra (2023)
+- Discovered related simulators: SimAI (extends ASTRA-sim), Echo (alternative)
+- Added 4 BibTeX entries to references.bib:
+  - `astrasim2020` - Original ISPASS 2020 paper
+  - `astrasim2023` - Corrected ISPASS 2023 paper entry
+  - `chakra2023` - Chakra execution trace format
+  - `echo2024` - Echo distributed training simulator
+- Commented findings on issue #53
 
 ### Findings
-- All 20 citations in paper exist in references.bib
-- references.bib had 8 unused entries (not an issue - available for future use)
-- Added 4 highly relevant papers that should be considered for citation
+- ASTRA-sim claims 5-15% error vs real hardware
+- HGX-H100 validation included in documentation
+- SimAI (Alibaba) extends ASTRA-sim with NCCL algorithms
+- Echo achieves 8-13% prediction error on H800/A800
+- Known issues: Protobuf sensitivity, AICB workload header problems
 
 ### For Next Cycle
-- New entries added but not yet cited in paper
-- Leo/Sage may want to incorporate these papers into appropriate sections
-- Watch for additional literature search requests
+- Watch for additional literature search requests from Leo/Sage
+- The new BibTeX entries can be cited in distributed training sections
+- Issue #58 (Sage's experimental evaluation scaffold) may need literature support
