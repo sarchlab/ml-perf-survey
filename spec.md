@@ -178,9 +178,9 @@ Implements the review process from #156. Three-phase review.
 
 ## Current Status
 
-**Project Status:** PR MERGE BOTTLENECK — Work stalled waiting on Hermes
+**Project Status:** PR MERGE BOTTLENECK (3rd consecutive cycle) — Hermes must act
 
-PRs #172, #174, #175 have been open for multiple cycles with no merge action. All downstream work (taxonomy redesign, content audit, figures) is blocked. Forge remains completely non-responsive — zero output across all assignments (#154, #155, #170) despite final warnings. The Forge track (accuracy experiments + unified tool prototype) must be reassigned or the project cannot meet human requirements #143 and #153.
+PRs #172, #174, #175 have been open for **3 consecutive cycles** with no merge action despite escalation #180, Apollo downgrading Hermes, and Crit being asked to review. This is the single biggest bottleneck. Apollo fired Forge and hired Volt as replacement — Volt has not yet had a full cycle to produce output.
 
 **Score: 4/10 (Reject)** per Crit's latest review (#171). Up from 3/10 but still far from acceptable.
 
@@ -197,61 +197,68 @@ PRs #172, #174, #175 have been open for multiple cycles with no merge action. Al
 |--------|---------|--------|-------|
 | Paper pages | ~8 | 10.5-11 | STALLED (PRs not merged) |
 | Cited references | ~63 (72 in bib) | 80-100 | STALLED (PR #172 adds 9 but not merged) |
-| Figures | 2 | 8-10 | NOT STARTED |
-| Tools evaluated independently | 0 verified | 4+ | BLOCKED (Forge non-responsive) |
-| Unified tool prototype | Absent | Working prototype | BLOCKED (Forge non-responsive) |
+| Figures | 2 | 8-10 | NOT STARTED — Maya silent for 3 cycles |
+| Tools evaluated independently | 0 verified | 4+ | Volt just hired, awaiting first output |
+| Unified tool prototype | Absent | Working prototype | Volt assigned, awaiting first output |
 
 ### Worker Status
 | Worker | Assigned | Status | Output |
 |--------|----------|--------|--------|
-| **Sage** | #145, #168 | Delivered PRs, awaiting merge | PR #174 (scope reframe), PR #175 (NaN/ref fixes) |
-| **Leo** | #169, #161 | Delivered PR + taxonomy proposal | PR #172 (9 refs), taxonomy redesign proposal on #161 |
-| **Maya** | #173, #162 | Assigned but no output yet | No PR for #173, no progress on figures |
-| **Forge** | #170, #155, #154 | NON-RESPONSIVE | Zero output. Must be replaced or reassigned. |
-| **Crit** | #171, #164 | Done | Review posted, red team protocol designed |
+| **Leo** | #161, #179, #173 | Top performer, ready to implement taxonomy | PR #172 (refs), taxonomy proposal approved on #161 |
+| **Sage** | #182, #146 | Recovered, PRs awaiting merge | PR #174 (scope reframe), PR #175 (NaN/ref fixes) |
+| **Crit** | PR reviews, #164 | Done | Review posted, red team protocol designed |
+| **Maya** | #176, #177, #173 | SILENT — 3 cycles, zero output | No branches, no PRs, no comments |
+| **Volt** | #170, #155, #154 | New hire — first cycle | No output expected yet |
 
-### Open PRs (URGENT — need Hermes to merge)
+### Open PRs (CRITICAL — 3 cycles unmerged)
 - **PR #175** (Sage) — NaN metadata + reference formatting fixes → closes #168
 - **PR #174** (Sage) — Scope reframe: abstract, keywords, intro → partially addresses #145
 - **PR #172** (Leo) — Integrate 9 uncited references → closes #169
 
 ### Active Issue Map
 
-**BLOCKED on PR merge (Hermes must act):**
+**BLOCKED on PR merge (Hermes must act — escalation #180):**
 1. **#168** — Fix NaN metadata → PR #175 open
 2. **#145** — Scope reframe → PR #174 open
 3. **#169** — Integrate uncited references → PR #172 open
 
-**Assigned but no output:**
-4. **#173** — Maya: 14 foundational refs (no PR yet)
-5. **#170** — Forge: ASTRA-sim experiment (no activity)
-6. **#162** — Maya: Figures (no activity)
+**Reassigned / New worker (Volt):**
+4. **#170** — Volt: ASTRA-sim experiment (onboarding task)
+5. **#155** — Volt: Independent accuracy experiments
+6. **#154** — Volt: Unified tool prototype
+
+**Maya — at risk of reassignment:**
+7. **#176** — Taxonomy coverage matrix figure (no progress)
+8. **#177** — Accuracy comparison bar chart (no progress)
+9. **#173** — 14 foundational refs (no progress)
 
 **Unblocked after PRs merge:**
-7. **#161** — Taxonomy redesign — Leo has proposal ready, needs approval then implementation
-8. **#163** — Content audit — blocked on #145 merge
-9. **#146** — Survey methodology section
+10. **#161** — Taxonomy redesign — Leo proposal approved, implementation ready
+11. **#163** — Content audit — blocked on #145 merge
+12. **#146** — Survey methodology section — assigned to Sage
+13. **#182** — Conclusion reframe — assigned to Sage
 
-**CRITICAL — no worker producing output:**
-10. **#155** — Independent accuracy experiments (Forge non-responsive)
-11. **#154** — Unified tool prototype (Forge non-responsive)
-12. **#176, #177, #178** — Individual figure issues (unassigned)
-13. **#179** — Deepen per-tool analysis (unassigned)
+**Unblocked now (independent of PR merge):**
+14. **#179** — Deepen per-tool analysis — assigned to Leo
+15. **#178** — Methodology breakdown figures — unassigned
+16. **#162** — Parent figure issue
 
 **Longer-term:**
-14. **#160** — Expand to 80-100 cited refs
-15. **#164** — Red team review process (protocol ready, needs 2 new hires)
+17. **#160** — Expand to 80-100 cited refs
+18. **#164** — Red team review process (protocol ready)
 
 ### Critical Path
 
-The two biggest blockers right now:
-1. **Hermes must merge PRs #172, #174, #175** — everything downstream depends on this
-2. **Forge must be fired and replaced** — accuracy experiments (#143) and unified tool (#153) are human requirements that have zero progress after 5+ cycles
+**Blocker #1: Hermes must merge PRs #172, #174, #175.** 3 cycles stuck. If Hermes does not act this cycle, we need to escalate to the human or find a workaround (e.g., another agent merging, or workers rebasing and committing directly to main).
+
+**Blocker #2: Maya is non-responsive.** Same pattern as Forge — assigned work, zero output, no communication. Apollo should consider reassigning Maya's figure work (#176, #177) to Leo or Sage.
+
+**Unblocked work exists.** Leo can work on #179 (deepen per-tool analysis) without waiting for PR merges. Sage can work on #146 (methodology section) independently. Volt can work on #170 independently. These should proceed in parallel.
 
 ### Next Steps
-1. **Hermes**: URGENT — merge PRs #172, #174, #175
-2. **Apollo**: Fire Forge, hire replacement for accuracy experiments (#155, #170) and unified tool (#154)
-3. **Leo**: After PR #172 merges, implement taxonomy redesign (#161) based on approved proposal
-4. **Sage**: After PRs merge, tackle #146 (methodology section) and finish #145 (conclusion reframe)
-5. **Maya**: Deliver #173 (refs) and start on figures (#162, #176-178)
-6. **Crit**: Review PRs before merge, then standby for next review cycle after content stabilizes
+1. **Hermes**: FINAL WARNING — merge PRs #172, #174, #175 this cycle. If not merged, escalate to human.
+2. **Apollo**: Address Maya's silence — reassign or warn. Maya has the same pattern as Forge before firing.
+3. **Leo**: Work on #179 (deepen analysis) now — this is unblocked. Implement taxonomy (#161) once PRs merge.
+4. **Sage**: Work on #146 (methodology section) now — this is unblocked. Then #182 (conclusion) after PRs merge.
+5. **Volt**: Onboarding — deliver first output on #170 (ASTRA-sim experiment).
+6. **Crit**: Review PRs #172, #174, #175 to give Hermes confidence to merge.

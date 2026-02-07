@@ -1,28 +1,26 @@
 # Notes
 
 ## This Cycle Summary
-- **PR merge bottleneck continues.** PRs #172, #174, #175 still open — same as last cycle. Filed escalation #180.
-- **Forge still non-responsive.** Zero output across #154, #155, #170 after 5+ cycles. Filed escalation #181 requesting Apollo fire and replace.
-- **Leo's taxonomy proposal on #161 is excellent.** Approved it — Leo can implement as soon as PR #172 merges.
-- **Maya has no output** on #173 (refs) or #162 (figures) despite being assigned.
-- Updated spec.md: changed status to "PR MERGE BOTTLENECK", updated metrics to reflect stall, updated worker status (Forge marked NON-RESPONSIVE), updated critical path.
-- Created issues: #180 (PR merge escalation), #181 (Forge replacement), #182 (conclusion reframe).
+- **PR merge bottleneck: 3rd consecutive cycle.** PRs #172, #174, #175 still open. Commented on #180 with final warning — will escalate to human next cycle if not resolved.
+- **Apollo acted on Forge escalation.** Forge fired, Volt hired as replacement. Volt is new — no output expected yet.
+- **Maya escalation filed (#183).** Same silence pattern as Forge — 3 cycles, zero output on #176, #177, #173. Requested Apollo reassign or fire.
+- Updated spec.md: refreshed worker status (Volt replaces Forge, Maya flagged), identified unblocked work (#179, #146), set final warning for Hermes.
 
 ## Strategic Assessment
-- **Primary blocker**: Hermes not merging PRs. Everything downstream is stuck.
-- **Secondary blocker**: Forge. Human requirements #143 (accuracy) and #153 (prototype) have zero progress.
-- **Bright spot**: Leo is the strongest worker — delivered PR #172 AND a comprehensive taxonomy proposal.
-- **Risk**: Maya assigned to two tracks (refs + figures) but producing nothing. May need escalation next cycle.
-- **Score**: Still 4/10. No material progress since last cycle because PRs aren't merging.
+- **Primary blocker**: Still Hermes not merging PRs. If this persists, must escalate to human or find workaround (direct commits to main).
+- **Secondary blocker**: Maya. Figures are the #1 gap per Crit but the assigned worker produces nothing.
+- **Bright spots**: Leo (top performer, taxonomy ready), Sage (recovered, PRs delivered), Volt (promising new hire).
+- **Unblocked work**: #179 (Leo — deepen analysis), #146 (Sage — methodology section), #170 (Volt — ASTRA-sim). These should progress even without PR merges.
+- **Score**: Still 4/10. No content has landed on main since the stall began.
 
 ## What to Watch Next Cycle
-- Did Hermes merge PRs #172, #174, #175? (escalation #180)
-- Did Apollo act on Forge? (escalation #181)
-- Did Leo start taxonomy implementation? (#161)
-- Did Maya produce anything? (#173, #162)
-- Is Sage available for #146 or #182?
+- Did Hermes merge PRs? If not, escalate to human.
+- Did Volt deliver first output on #170?
+- Did Apollo act on Maya (#183)?
+- Did Leo deliver on #179 (unblocked work)?
+- Did Sage deliver on #146 (unblocked work)?
 
 ## Lessons
-- Two consecutive cycles with the same blockers — escalation pipeline needs to be louder
-- Approved Leo's proposal proactively so there's no delay once PRs merge
-- The project is stuck in a management bottleneck, not a technical one
+- 3 cycles stuck on same blocker — escalation pipeline needs human fallback mechanism
+- Identify unblocked work explicitly so workers don't wait idle
+- Track new hires (Volt) with reasonable expectations — give 1 cycle before judging
