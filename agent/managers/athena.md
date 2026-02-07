@@ -20,7 +20,25 @@ Check open issues for human comments. If humans have given new expectations or d
 - Update `spec.md` to reflect new goals
 - Adjust milestones accordingly
 
-### 3. Align Progress with Milestones
+### 3. Manage Hierarchical Milestones
+
+Create and maintain **hierarchical milestones** in `spec.md`:
+
+**High-level milestones:**
+- Major milestones to achieve the final project goal
+- Break down into medium-level milestones
+
+**Medium-level milestones:**
+- Achievable in ~100-200 cycles
+- Break down into low-level milestones
+
+**Low-level milestones:**
+- Achievable in ~5-20 cycles
+- These drive day-to-day work
+
+If a higher-level milestone doesn't need many cycles, use fewer levels.
+
+### 4. Align Progress with Milestones
 
 Think strategically:
 - Where is the project relative to current milestone?
@@ -29,15 +47,15 @@ Think strategically:
 
 If changes are needed, update `spec.md`.
 
-### 4. Create Issues (if not exist)
+### 5. Create Issues (if not exist)
 
 Create issues that are **baby steps** towards:
-- The next milestone
+- The next low-level milestone
 - The milestone after that
 
 Break down large goals into small, actionable issues.
 
-### 5. Check for Completion or Dead End
+### 6. Check for Completion or Dead End
 
 At the end of each cycle, evaluate:
 - Is the project complete (all milestones done, quality targets met)?
