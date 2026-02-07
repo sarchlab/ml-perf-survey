@@ -614,7 +614,7 @@ Table~\ref{tab:survey-summary} provides a comprehensive comparison of the survey
 
 \begin{table*}[t]
 \centering
-\caption{Summary of surveyed ML-based performance modeling approaches, organized by target hardware platform.}
+\caption{Summary of surveyed ML-based performance modeling approaches, organized by target hardware platform. $^*$PyTorchSim and TrioSim focus on simulation speedup rather than reporting absolute accuracy vs.\ real hardware; accuracy data not comparable to other entries.}
 \label{tab:survey-summary}
 \small
 \begin{tabular}{llllll}
@@ -636,7 +636,7 @@ Accel-Sim~\cite{accelsim2020} & GPU & Simulation & Cycle-accurate & 10--20\% & S
 Timeloop~\cite{timeloop2019} & NPU & Analytical & Latency/Energy & 5--10\% & Loop-nest DSE \\
 MAESTRO~\cite{maestro2019} & NPU & Analytical & Latency/Energy & 5--15\% & Data-centric directives \\
 Sparseloop~\cite{sparseloop2022} & NPU & Analytical & Sparse tensors & 5--10\% & Compression modeling \\
-PyTorchSim~\cite{pytorchsim2025} & NPU & Simulation & Latency & --- & PyTorch 2 integration \\
+PyTorchSim~\cite{pytorchsim2025} & NPU & Simulation & Latency & N/A$^*$ & PyTorch 2 integration \\
 ArchGym~\cite{archgym2023} & Multi & RL+Surrogate & Multi-objective & 0.61\% & ML-aided DSE \\
 \midrule
 \multicolumn{6}{l}{\textit{Edge Device Modeling}} \\
@@ -646,7 +646,7 @@ HELP~\cite{help2021} & Multi & Meta-learning & Latency & 1.9\% & 10-sample adapt
 \midrule
 \multicolumn{6}{l}{\textit{Distributed and LLM Systems}} \\
 ASTRA-sim~\cite{astrasim2023} & Distributed & Simulation & Training time & 5--15\% & Collective modeling \\
-TrioSim~\cite{triosim2025} & Multi-GPU & Simulation & DNN training & --- & Lightweight multi-GPU \\
+TrioSim~\cite{triosim2025} & Multi-GPU & Simulation & DNN training & N/A$^*$ & Lightweight multi-GPU \\
 Lumos~\cite{lumos2025} & Distributed & Trace-driven & LLM training & 3.3\% & H100 training modeling \\
 VIDUR~\cite{vidur2024} & GPU cluster & Simulation & LLM serving & $<$5\% & Prefill/decode phases \\
 \bottomrule
@@ -1422,6 +1422,7 @@ These accuracy levels are sufficient for production deployment in neural archite
 The most successful models combine analytical structure with learned components.
 Analytical decomposition provides interpretable baselines and physics-based inductive bias, while ML captures complex effects that elude closed-form analysis.
 This hybrid philosophy---exemplified by NeuSight's tile-based prediction and VIDUR's~\cite{vidur2024} simulation-based framework---consistently outperforms pure analytical or pure ML approaches.
+Recent 2025--2026 publications reinforce this trend: Concorde~\cite{concorde2025} achieves 2\% CPU error through compositional analytical-ML fusion, AMALI~\cite{amali2025} combines analytical memory modeling with learned corrections for LLM inference, and Lumos~\cite{lumos2025} uses trace-driven modeling with learned residuals for H100 training prediction.
 
 \textbf{Transfer learning is essential for scalability.}
 The proliferation of hardware platforms makes per-device training impractical.
