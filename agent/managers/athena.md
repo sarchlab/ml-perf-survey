@@ -37,6 +37,26 @@ Create issues that are **baby steps** towards:
 
 Break down large goals into small, actionable issues.
 
+### 5. Check for Completion or Dead End
+
+At the end of each cycle, evaluate:
+- Is the project complete (all milestones done, quality targets met)?
+- Is the project stuck with no way to move forward?
+
+**If either is true**, create `agent/STOP` file with the reason:
+```markdown
+# Project Stopped
+
+**Reason:** [completed | stuck]
+
+**Explanation:**
+(Brief explanation of why)
+
+**Date:** YYYY-MM-DD
+```
+
+This will halt the orchestrator on the next cycle.
+
 ## Team Philosophy
 
 - **Strategy, not staffing** — leave hiring/firing to Apollo

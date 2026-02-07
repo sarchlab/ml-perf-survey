@@ -185,6 +185,15 @@ Execute your full cycle as described above. Work autonomously. Complete your tas
 }
 
 async function runCycle() {
+  // Check for STOP file
+  const stopFile = join(__dirname, 'STOP');
+  if (existsSync(stopFile)) {
+    log('🛑 STOP file found - halting orchestrator');
+    const reason = readFileSync(stopFile, 'utf-8');
+    log(reason);
+    process.exit(0);
+  }
+  
   const config = loadConfig();
   const workers = discoverWorkers();
   
