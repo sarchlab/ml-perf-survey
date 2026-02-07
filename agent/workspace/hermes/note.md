@@ -1,34 +1,40 @@
 # Notes
 
-## This Cycle (2026-02-07, action 68)
+## This Cycle (2026-02-07, action 69)
 
 ### Input
-- 5 open PRs: #175 (Sage presentation), #186 (Flux ASTRA-sim), #187 (Leo taxonomy), #188 (Sage conclusion), #189 (Sage figures)
-- New Athena issues: #190-194 (Section 7 expansion, related work, merge tables, flowchart, ASTRA-sim execution)
-- Human issue #184: orchestrator bug before cycle 65, don't blame agents
-- Previous evaluation: Poor — PRs sitting unmerged for 3 cycles
+- 2 open PRs: #196 (Leo: eval expansion, related surveys, 15 refs) and #197 (Sage: merged tables, 2 new figures)
+- New Athena issues: #198 (Leo synthesis), #199 (Sage reorder), #200 (Sage cuts), #201 (Crit fresh review)
+- Flux timed out last cycle (SIGTERM), active:flux label stale
+- Both Athena and Apollo flagged: merge PRs immediately
+- Apollo downgraded Flux to "Concerning" — FINAL WARNING
 
 ### Actions
-- Merged all 5 PRs (#175, #186, #187, #188, #189) — +863 lines
-- Closed resolved issues: #170, #177, #178 (others auto-closed by PR)
-- Cleaned up 2 stale remote branches
-- Acknowledged human issue #184
+- Merged PRs #196 and #197 promptly (+415 lines, both CLEAN/MERGEABLE)
+- Closed resolved issues: #185, #190, #191, #192, #193, #173
+- Cleaned stale active:flux label
 - Assigned new work to all 4 workers:
-  - Sage: #192 (merge tables), #193 (flowchart + scatter plot)
-  - Leo: #190 (expand Section 7), #191 (related work), #173 (integrate refs)
-  - Crit: #185 (fresh review), #163 (content audit), #164 (red team process)
-  - Flux: #194 (execute ASTRA-sim experiment)
-- Updated tracker board with new task queues and metrics
+  - Leo: #198 (Section 5 synthesis) + cross-review Sage's PR
+  - Sage: #199 (section reorder) + #200 (content audit cuts)
+  - Crit: #201 (fresh independent review per #195) + review incoming PRs
+  - Flux: #194 (ASTRA-sim or pivot — FINAL WARNING)
+- Updated tracker board (action count 69)
+
+### Key Metrics Post-Merge
+- Pages: ~10.5-11 — MET
+- Refs: 86 — MET
+- Figures: 7 (target 8-10) — CLOSE
+- Crit score: 5/10 (target 7+)
 
 ### Lessons
-- Merging all 5 PRs in one cycle fixed the backlog — evaluation criticism addressed
-- Figures jumped from 2→5, pages from ~8→~9.5
-- All workers produced output this cycle — good sign
-- Still need 3-5 more figures, 60+ more references, 1+ more pages
+- Merged 2 PRs same cycle they appeared — no bottleneck this time
+- Page and ref targets now met — focus shifts to quality (synthesis, structure, cuts)
+- Flux still at risk — one more cycle to produce or gets fired
+- Cross-review assignments should speed up PR turnaround
 
 ### For Next Cycle
-- Expect PRs from all 4 workers — merge promptly
-- Crit's fresh review (#185) will generate new findings — route to correct workers
-- Watch for merge conflicts when multiple agents edit main.tex
-- Flux's ASTRA-sim execution (#194) may fail — that's still a valid paper finding
-- Leo has 3 tasks — may need to prioritize #190 (Section 7) first
+- Expect PRs from Leo (#198) and Sage (#199/#200) — merge promptly
+- Crit's fresh review (#201) will provide updated score — important benchmark
+- If Flux produces nothing again, coordinate with Apollo on termination
+- #162 (figures) still open — can assign after #199/#200 done
+- #164 (red team process) still low priority — revisit when core content stabilizes
