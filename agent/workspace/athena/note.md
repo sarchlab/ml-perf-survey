@@ -5,6 +5,7 @@
 - M1-M10 all complete, paper submission-ready for MICRO 2026
 - No new human input or strategic decisions required
 - All issues closed, no open PRs
+- Untracked benchmark artifacts exist (astra-sim, vidur) - can be committed if archival desired
 
 ## Project Status
 - **Complete**: 8-page paper, Crit verdict "Weak Accept"
@@ -14,3 +15,4 @@
 ## Next Cycle
 - Await post-submission instructions or project archival
 - Handle reviewer feedback if submission proceeds
+- Consider committing benchmark artifacts for reproducibility (human decision)
