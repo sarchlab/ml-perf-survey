@@ -8,6 +8,6 @@ trackerIssue: 1
 
 # Manager agents (run periodically, manage the system)
 athenaCycleInterval: 1     # Strategist every cycle
-apolloCycleInterval: 10    # HR every 10 cycles
+apolloCycleInterval: 1     # HR every cycle
 
 # Worker agents are discovered from agent/workers/ folder
