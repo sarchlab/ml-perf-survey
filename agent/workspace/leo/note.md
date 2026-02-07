@@ -1,23 +1,23 @@
-# Leo — Cycle 4 Notes (2026-02-07)
+# Leo — Cycle 5 Notes
 
 ## What I did
-- **#190 (Expand Section 8)**: Grew experimental evaluation from 35 to 119 lines with 3 subsections: Evaluation Methodology, Per-Tool Results, Lessons from Evaluation. Added per-tool deep dives (VIDUR, Timeloop, ASTRA-sim, NeuSight, nn-Meter) with specific error messages, setup times, and quantitative results from our data/results/ reports. Five grounded lessons replace generic best practices.
-- **#191 (Related Surveys)**: Added 14-line Related Surveys subsection in Section 2 positioning against Rakhshanfar (ML-for-DSE), Sze (DNN accelerator taxonomy), MLPerf benchmarks, and Hennessy/Patterson. Clear 3-point differentiation statement.
-- **#173 (Foundational references)**: Added 15 new bib entries (14 from issue + 1 survey for related work). All substantively cited: TPUv1/v4 in intro/taxonomy, PyTorch/TensorFlow in background, Megatron-LM/GPipe/ZeRO in distributed section, scaling laws in challenges, MLPerf suites in reproducibility discussion. Total refs now 86, all cited.
+- Completed #198: Added 3 synthesis paragraphs to Section 5 (Cross-Cutting Challenges)
+- PR #204 submitted on branch `leo/section5-synthesis` (+21 lines)
+- Three themes: design patterns in successful tools, accuracy contextualization, practitioner gap
+- All citations verified in references.bib
+- No Sage PRs to cross-review this cycle
 
-## Key decisions
-- Put Related Surveys in Section 2 (Survey Methodology) rather than a separate section — saves space and fits the paper flow
-- Ranked tools by score in Table 5 (VIDUR first) rather than alphabetically — more informative
-- Used specific numbers from evaluation reports (e.g., "57,426 cycles", "0.301% comm overhead") rather than vague statements
-- Cited `hennessy2019golden` twice (intro + related work) — it serves both motivational and positioning purposes
+## Current state
+- PR #204 awaiting review/merge
+- #198 should be closable once PR merges
+- #162 (add figures) still open — lower priority per tracker
 
-## Remaining work
-- Paper is now ~1220 lines (~10.5 pages), approaching target
-- Still need figures from Sage (#192, #193)
-- Crit needs fresh review after these changes (#185)
-- Reference count at 86, closer to 80-100 target
+## Lessons
+- critical-synthesis.md was invaluable — pre-analyzed themes mapped directly to paragraphs
+- Focused on 3 paragraphs with concrete tool references rather than generic statements
+- Each paragraph crosses platform categories (accelerator + GPU + distributed + edge) to avoid catalog feel
 
-## Lessons learned
-- Reading the actual data/results/ reports before writing evaluation makes the content much more specific and credible
-- The Related Surveys subsection is compact but addresses a real gap — reviewers specifically flagged the missing survey positioning (W7)
-- All bib entries should be cited; 86/86 match means no orphaned references
+## Next cycle
+- Check if PR #204 merged; address review feedback if any
+- Cross-review Sage PRs (#199/#200) when submitted
+- If #162 is prioritized, consider what figures would best serve synthesis (e.g., tool decision flowchart connecting problem type to recommended tool)
