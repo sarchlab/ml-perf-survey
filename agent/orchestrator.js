@@ -26,6 +26,7 @@ let currentAgentProcess = null;
 let currentAgentName = null;
 let cycleCount = 0;
 let currentAgentIndex = 0;
+let managersCompleted = false;
 let pendingReload = false;
 let isPaused = false;
 let startTime = Date.now();
@@ -36,16 +37,17 @@ function loadState() {
     const state = JSON.parse(raw);
     cycleCount = state.cycleCount || 0;
     currentAgentIndex = state.currentAgentIndex || 0;
-    log(`State loaded: cycle=${cycleCount}, agentIndex=${currentAgentIndex}`);
+    managersCompleted = state.managersCompleted || false;
+    log(`State loaded: cycle=${cycleCount}, agentIndex=${currentAgentIndex}, managersCompleted=${managersCompleted}`);
     return state;
   } catch (e) {
     log('No saved state, starting fresh');
-    return { cycleCount: 0, currentAgentIndex: 0 };
+    return { cycleCount: 0, currentAgentIndex: 0, managersCompleted: false };
   }
 }
 
 function saveState() {
-  writeFileSync(STATE_PATH, JSON.stringify({ cycleCount, currentAgentIndex }, null, 2));
+  writeFileSync(STATE_PATH, JSON.stringify({ cycleCount, currentAgentIndex, managersCompleted }, null, 2));
 }
 
 function log(message) {
@@ -201,7 +203,8 @@ async function runCycle() {
   const config = loadConfig();
   const workers = discoverWorkers();
   
-  if (currentAgentIndex === 0) {
+  // New cycle: run managers first
+  if (!managersCompleted) {
     cycleCount++;
     log(`===== CYCLE ${cycleCount} (${workers.length} workers) =====`);
     
@@ -221,10 +224,11 @@ async function runCycle() {
     
     // Hermes (PM) every cycle
     await runAgent('hermes', config, true);
+    managersCompleted = true;
     saveState();
     if (pendingReload) return config;
   } else {
-    log(`===== CYCLE ${cycleCount} (resuming ${currentAgentIndex}/${workers.length}) =====`);
+    log(`===== CYCLE ${cycleCount} (resuming workers ${currentAgentIndex}/${workers.length}) =====`);
   }
   
   // Run worker agents
@@ -236,7 +240,9 @@ async function runCycle() {
     if (pendingReload) return config;
   }
   
+  // Cycle complete - reset for next cycle
   currentAgentIndex = 0;
+  managersCompleted = false;
   saveState();
   
   return config;
@@ -271,6 +277,7 @@ function startControlServer() {
         currentAgent: currentAgentName,
         currentAgentIndex,
         cycleCount,
+        managersCompleted,
         totalWorkers: workers.length,
         pid: process.pid,
         uptime: Math.floor((Date.now() - startTime) / 1000),
