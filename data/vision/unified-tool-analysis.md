@@ -91,7 +91,7 @@ A unified ML performance modeling tool is **technically feasible** but would req
 | **Documentation** | 2-4 | Medium | All components |
 | **Testing/validation** | 4-8 | High | Ground truth data |
 
-**Total estimate:** 18-40 person-months for MVP
+**Total estimate:** ~28-54 person-months for MVP (2-3 developers over 14-18 months)
 
 ### 3.2 Technical Challenges
 
@@ -150,6 +150,11 @@ A unified ML performance modeling tool is **technically feasible** but would req
 ### 4.2 Core API Interfaces
 
 ```python
+# Note: Pseudocode for illustration; production code would use @dataclass or Pydantic
+
+from dataclasses import dataclass
+from typing import List, Dict, Any, Optional, Tuple, Literal
+
 # Workload specification
 class Workload:
     @classmethod
@@ -173,12 +178,23 @@ class Hardware:
     def get_memory_hierarchy(self) -> MemorySpec: ...
 
 # Prediction query
+@dataclass
 class PredictionQuery:
     workload: Workload
     hardware: Hardware
     target: Literal["latency", "energy", "throughput"]
     scenario: Literal["inference", "training", "serving"]
     batch_size: int = 1
+
+# Prediction result
+@dataclass
+class PredictionResult:
+    value: float
+    unit: str
+    confidence: Optional[Tuple[float, float]]  # 95% CI
+    breakdown: Optional[Dict[str, float]]  # Per-layer/component
+    backend_used: str
+    metadata: Dict[str, Any]
 
 # Unified predictor
 class UnifiedPredictor:
@@ -194,16 +210,9 @@ class UnifiedPredictor:
             return self.nn_meter_backend
         elif query.target == "energy":
             return self.timeloop_backend
-        # ...
-
-# Prediction result
-class PredictionResult:
-    value: float
-    unit: str
-    confidence: Optional[Tuple[float, float]]  # 95% CI
-    breakdown: Optional[Dict[str, float]]  # Per-layer/component
-    backend_used: str
-    metadata: Dict[str, Any]
+        else:
+            # Default fallback to Timeloop for general DNN workloads
+            return self.timeloop_backend
 ```
 
 ### 4.3 Example Usage
@@ -398,7 +407,7 @@ A unified ML performance modeling tool is feasible and valuable. The recommended
 3. **Unified data layer** based on ONNX + hardware database
 4. **Community-focused** design for extensibility
 
-**Estimated total effort:** 14-18 months with 2-3 developers
+**Estimated total effort:** ~28-54 person-months (14-18 months with 2-3 developers)
 
 **Key success factors:**
 - Community buy-in from tool maintainers
