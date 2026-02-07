@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Activity, Users, Sparkles, Settings, ScrollText, RefreshCw, Pause, Play, SkipForward, RotateCcw, Square, Save, MessageSquare, X, GitPullRequest, CircleDot, Clock, User, UserCheck } from 'lucide-react'
+import { Activity, Users, Sparkles, Settings, ScrollText, RefreshCw, Pause, Play, SkipForward, RotateCcw, Square, Save, MessageSquare, X, GitPullRequest, CircleDot, Clock, User, UserCheck, Info } from 'lucide-react'
 import { Modal, ModalHeader, ModalContent } from '@/components/ui/modal'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
@@ -234,26 +234,27 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
     const isSelected = selectedAgent === agent.name
     const runtime = isActive ? orchestratorStatus?.currentAgentRuntime : null
     
+    const handleClick = () => {
+      if (isSelected) {
+        clearAgentFilter()
+      } else {
+        selectAgent(agent.name)
+      }
+    }
+    
     return (
       <div
-        onClick={(e) => {
-          if (e.shiftKey || e.ctrlKey || e.metaKey) {
-            openAgentModal(agent.name)
-          } else {
-            selectAgent(agent.name)
-          }
-        }}
-        onDoubleClick={() => openAgentModal(agent.name)}
+        onClick={handleClick}
         className={`flex items-center justify-between p-2 rounded cursor-pointer transition-colors ${
           isActive ? 'bg-blue-50 border border-blue-200' : isSelected ? 'bg-purple-50 border border-purple-200' : 'bg-neutral-50 hover:bg-neutral-100'
         }`}
-        title="Click to filter reports, double-click for details"
+        title="Click to toggle filter"
       >
         <div className="min-w-0 flex-1">
           <span className="font-medium text-neutral-800 capitalize">{agent.name}</span>
           {agent.role && <p className="text-xs text-neutral-500 truncate">{agent.role}</p>}
         </div>
-        <div className="flex items-center gap-1 ml-2 shrink-0">
+        <div className="flex items-center gap-1.5 ml-2 shrink-0">
           {isActive && runtime !== null && (
             <span className="text-xs text-blue-600 flex items-center gap-1">
               <Clock className="w-3 h-3" />{formatRuntime(runtime)}
@@ -261,6 +262,13 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
           )}
           {isSelected && <Badge variant="secondary">Filter</Badge>}
           {isActive && <Badge variant="success">Active</Badge>}
+          <button
+            onClick={(e) => { e.stopPropagation(); openAgentModal(agent.name) }}
+            className="p-1 rounded hover:bg-neutral-200 text-neutral-400 hover:text-neutral-600"
+            title="View skill"
+          >
+            <Info className="w-4 h-4" />
+          </button>
         </div>
       </div>
     )
