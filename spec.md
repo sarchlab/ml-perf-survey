@@ -65,14 +65,14 @@ Write a paper for **MICRO 2026** that provides:
 - Generate comparison tables and figures
 - **Key finding:** Docker-first tools (ASTRA-sim, VIDUR) succeed; fragile dependencies fail (nn-Meter, Timeloop)
 
-### M8: Unified Tool Architecture (Target: Week 26) 🔄 IN PROGRESS
+### M8: Unified Tool Architecture (Target: Week 26) ✅ COMPLETE
 - Analyze best-performing approaches from each category
 - Design unified architecture combining strengths
 - Document architecture as "future work" content in paper
 - ~~Implement prototype~~ (deferred to post-submission)
-- **Status:** Leo revised Section 6.6 as future work; Sage addressed feedback; awaiting Crit re-review
+- **Status:** PR #111 approved by Crit, ready to merge; PR #112 merged
 
-### M9: Submission Ready (Target: Week 28) 🆕
+### M9: Submission Ready (Target: Week 28) 🔄 IN PROGRESS
 - Complete paper with C1 (taxonomy) + C2 (evaluation) + C3 (future directions)
 - Final polishing and formatting
 - Page limit verification
@@ -80,7 +80,7 @@ Write a paper for **MICRO 2026** that provides:
 
 ## Current Status
 
-**Active Milestone:** M8 - Awaiting Crit re-review of revised PRs
+**Active Milestone:** M9 - Submission Ready
 
 ### M7 Final Results
 | Tool | Ease of Use | Status | Key Finding |
@@ -98,19 +98,14 @@ Write a paper for **MICRO 2026** that provides:
 | PR | Description | Reviews | Status |
 |----|-------------|---------|--------|
 | #110 | M7 evaluation results | ✅ Merged | Complete |
-| #111 | Future work section (Section 6.6) | Leo revised ✅, Sage ✅ | Awaiting Crit re-review |
-| #112 | 2025-2026 papers (6 papers) | Sage revised ✅, Leo ✅ | Awaiting Crit re-review |
-
-### Revision Summary
-**PR #111:** Leo repositioned as "Future Work: Toward Unified Tooling" - removed prescriptive claims, detailed specs, and TikZ figure. Now framed as research directions from empirical findings.
-
-**PR #112:** Sage added footnotes for N/A accuracy, verified HPCA 2026 dates, added narrative on hybrid approach trend.
+| #111 | Future work section (Section 6.6) | Crit ✅ Approved | Ready to merge |
+| #112 | 2025-2026 papers (6 papers) | ✅ Merged | Complete |
 
 ### Path to M9
 1. ✅ **Address PR #111 concerns** - Leo repositioned as future work
 2. ✅ **Address PR #112 concerns** - Sage added clarifications
-3. 🔄 **Crit re-review** - Awaiting verdicts on revised PRs
-4. ⏳ **Merge PRs #111, #112** - Complete M8 content
+3. ✅ **Crit re-review** - Both PRs approved
+4. 🔄 **Merge PR #111** - Waiting on Hermes
 5. ⏳ **Final Crit review** (#113) - Post-merge quality check
 6. ⏳ **Page limit verification** - Ensure within MICRO limits
 7. ⏳ **M9 submission** - Paper ready for MICRO 2026
@@ -118,9 +113,10 @@ Write a paper for **MICRO 2026** that provides:
 ### Open Issues
 | Issue | Description | Status |
 |-------|-------------|--------|
-| #113 | Crit final review before M9 | Blocked on PR merges |
-| #114 | Additional HPCA 2026 papers | Optional - post-M8 |
-| #117 | arXiv 2025-2026 papers (5 papers) | Optional - post-M8 |
+| #113 | Crit final review before M9 | Blocked on PR #111 merge |
+| #114 | Additional HPCA 2026 papers | Optional - if page budget allows |
+| #117 | arXiv 2025-2026 papers (5 papers) | Optional - if page budget allows |
+| #118 | EuroSys 2026 LLM serving papers | Optional - if page budget allows |
 
 ### Deferred Content
-Issues #114 and #117 contain additional papers that could strengthen the survey. Decision: defer until M8 complete. If page budget allows, consider adding in final polish phase.
+Issues #114, #117, and #118 contain additional papers that could strengthen the survey. Decision: defer until M9 final polish phase. If page budget allows after final review, consider adding selected papers.

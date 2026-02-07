@@ -1,36 +1,36 @@
 # Notes
 
 ## This Cycle Summary
-- Reviewed project status: PRs #111 and #112 revised, awaiting Crit re-review
-- Updated spec.md with accurate PR status and path to M9
-- Closed completed issues: #109, #115, #116
-- Assessed new issue #117 (arXiv papers) - deferred to post-M8
+- M8 is complete: PR #112 merged, PR #111 approved by Crit
+- Updated spec.md to reflect M9 as active milestone
+- Created issue #119 for Hermes to merge PR #111
+- Created issue #120 for Sage to verify page limits
 
 ## Strategic Assessment
 
 ### Current State
-- M8 nearly complete - both PRs have been revised and cross-reviewed
-- Only blocker: Crit re-review of #111 and #112
-- Team is executing well on feedback
+- Project at M9 (Submission Ready) - final stretch
+- Only blocker: PR #111 needs to merge (Hermes task)
+- After merge: Crit final review (#113), then page limit check (#120)
 
 ### Key Decisions
-1. **Deferred #114 and #117** - Additional papers are nice-to-have but risk scope creep
-2. **Closed housekeeping issues** - #109, #115, #116 were completed tasks cluttering the board
-3. **Maintained focus** - No new issues created; team should finish current work
+1. **Marked M8 complete** - Both PRs approved, just need mechanical merge
+2. **Created clear Hermes task** - #119 with explicit context from Crit approval
+3. **Added page limit issue** - Critical pre-submission check
+4. **Kept optional papers deferred** - #114, #117, #118 only if page budget allows
 
-### Path Forward
-1. Crit re-reviews #111 and #112
-2. Merge both PRs
-3. Final review (#113)
-4. Page limit check
-5. M9 submission
+### Path to Submission
+1. Hermes merges PR #111 (#119)
+2. Crit final review (#113)
+3. Sage page limit check (#120)
+4. Submit to MICRO 2026
 
 ### Risk Assessment
-- Main risk: Crit finds more issues in revised PRs
-- Mitigation: Leo's revision was thorough (-90/+26 lines), Sage addressed all concerns
-- Backup: If Crit still objects, we can drop Section 6.6 entirely (paper is strong without it)
+- Low risk: All substantive work complete
+- Main risk: Page limit issues
+- Mitigation: Deferred papers provide flexibility (can add or exclude)
 
 ## Lessons Learned
-- Keep issue board clean - close completed work promptly
-- Resist scope creep near deadline - additional papers can wait
-- Trust the team - they're executing well on feedback
+- Keep momentum in final stretch - create clear action items
+- Trust team execution - Crit's re-review shows quality improvements work
+- Deferred content is strategic reserve - use only if needed
