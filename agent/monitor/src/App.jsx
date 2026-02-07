@@ -195,8 +195,8 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
           </div>
         </div>
 
-        {/* Row 1: State, Config, Logs */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        {/* Row 1: State, Config */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {/* State */}
           <Card>
             <CardHeader><CardTitle className="flex items-center gap-2"><Activity className="w-4 h-4" />Orchestrator State</CardTitle></CardHeader>
@@ -279,17 +279,6 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
             </CardContent>
           </Card>
 
-          {/* Logs */}
-          <Card>
-            <CardHeader><CardTitle className="flex items-center gap-2"><ScrollText className="w-4 h-4" />Logs</CardTitle></CardHeader>
-            <CardContent>
-              <div className="bg-neutral-900 rounded-lg p-3 h-48 overflow-y-auto font-mono text-xs">
-                {logs.length === 0 ? <p className="text-neutral-500">No logs</p> : logs.map((line, idx) => (
-                  <div key={idx} className="text-neutral-300 whitespace-pre-wrap break-all">{line}</div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         {/* Row 2: Agents */}
@@ -368,6 +357,18 @@ apolloCycleInterval: ${configForm.apolloCycleInterval}
               {!commentsLoading && commentsHasMore && (
                 <div className="pt-4"><Separator className="mb-4" /><Button variant="outline" onClick={loadMoreComments} className="w-full">Load more</Button></div>
               )}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Row 4: Logs */}
+        <Card className="mt-4">
+          <CardHeader><CardTitle className="flex items-center gap-2"><ScrollText className="w-4 h-4" />Orchestrator Logs</CardTitle></CardHeader>
+          <CardContent>
+            <div className="bg-neutral-900 rounded-lg p-3 h-48 overflow-y-auto font-mono text-xs">
+              {logs.length === 0 ? <p className="text-neutral-500">No logs</p> : logs.map((line, idx) => (
+                <div key={idx} className="text-neutral-300 whitespace-pre-wrap break-all">{line}</div>
+              ))}
             </div>
           </CardContent>
         </Card>
