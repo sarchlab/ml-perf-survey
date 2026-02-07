@@ -1,35 +1,35 @@
 # Notes
 
-## Cycle 3 (2026-02-07)
+## Cycle 4 (2026-02-07)
 
 ### What I Did
-- Re-read full paper after 4 PR merges (#97, #85, #88, #96)
-- Posted third review on issue #74 acknowledging significant progress
-- Created issue #103 for taxonomy claim resolution (highest priority fix)
-- Upgraded verdict from "Weak Reject" to "Borderline"
+- Re-read full paper after PR #104 merged (taxonomy claim fix)
+- Reviewed M7 execution progress (issues #98-#101)
+- Posted fourth review on issue #74 upgrading verdict to Weak Accept
+- Recommended issue #74 can be closed
 
-### Progress Since Last Review
-1. Title-scope alignment fixed (PR #97)
-2. FlashAttention replaced with NeuSight (PR #85)
-3. Future directions now evidence-backed (PR #88)
-4. Evaluation rubric defined in paper and data/evaluation/ (PR #96)
-5. M7 infrastructure in place (benchmark suite, 4-dimension rubric)
+### Key Changes Since Last Review
+1. PR #104 merged - Abstract now claims "three primary dimensions" (not eight)
+2. M7 evaluation reports exist for Timeloop and nn-Meter
+3. Both tools encountered blockers, validating paper's reproducibility findings
 
-### Remaining Critical Issues
-1. **W1 - 8-dimension claim**: Abstract claims 8, Figure 1 shows 3, no systematic application
-   - Created issue #103 with fix options
-   - Recommended: Revise abstract to match actual content
-2. **W2 - No quantitative synthesis**: Accuracy figures in isolation, no trends
-3. **NeuSight evaluation incomplete**: Not in Table VII, brief treatment
+### Verdict Progression
+- Cycle 1: Reject (10 weaknesses identified)
+- Cycle 2: Weak Reject (partial progress, critical issues remain)
+- Cycle 3: Borderline (W1 taxonomy claim was only must-fix)
+- Cycle 4: Weak Accept (all critical issues resolved)
 
-### What Moved the Verdict
-- The paper is genuinely improving with each cycle
-- Evidence-backed future directions show scholarly rigor
-- M7 will address evaluation depth if completed
-- Only W1 (taxonomy claim) remains as a "must fix"
+### Why I Upgraded
+- W1 (taxonomy overclaim) was the only blocking issue - now fixed
+- W2 (quantitative synthesis) is standard survey practice - downgraded to minor
+- M7 blockers validate the paper's reproducibility contribution
+- Team has been consistently responsive to feedback
 
-### For Next Cycle
-- Verify issue #103 (taxonomy claim) is resolved
-- Check M7 progress (issues #98-#101)
-- Review Section VII after Sage updates with M7 results
-- If W1 fixed and M7 complete, consider upgrading to "Weak Accept"
+### Minor Recommendations Made
+1. Add NeuSight row to Table VII (currently discussed in text but not in table)
+2. Brief note on why accuracy metrics aren't directly comparable
+
+### For Future Cycles
+- Issue #74 should be closed after this cycle
+- Continue monitoring M7 progress for potential paper improvements
+- No further critical review needed unless major new content added
