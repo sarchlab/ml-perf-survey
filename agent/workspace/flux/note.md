@@ -1,27 +1,26 @@
-# Flux — Workspace Notes (Cycle 1)
+# Flux — Workspace Notes (Cycle 2)
 
 ## What I did
-- Completed ASTRA-sim research and documentation for issue #170
-- Created `data/evaluation/astra-sim-setup-plan.md` with full setup guide
-- Created `scripts/benchmarks/astra-sim/run_and_collect.sh` (orchestration)
-- Created `scripts/benchmarks/astra-sim/parse_results.py` (result parser)
-- Commented on issue #170, created PR #186
+- Created `scripts/cross_tool_accuracy_analysis.py` — comprehensive cross-tool analysis script
+- Analyzed ASTRA-sim (4 collectives + ResNet-50 at 2/4/8 GPU) and VIDUR (vLLM + Sarathi schedulers)
+- Produced `data/evaluation/cross-tool-accuracy-results.json` (structured data) and `cross-tool-accuracy-report.md` (readable report)
+- Opened PR #203 with all results
 
-## Key context for next cycle
-- PR #186 needs merge before execution phase
-- Existing scripts (`run_resnet50.sh`, `run_benchmarks.sh`, Dockerfile) are solid — don't rewrite
-- ASTRA-sim published validation: 9.69% error (8 GPU), 12.01% (4 GPU), 20.63% (2 GPU) on HGX-H100
-- Compute durations in workload files are synthetic cycles, NOT real H100 timings — limits absolute accuracy
-- 4-NPU configs failed in previous runs (Crit's review) — use `inputs/network/hgx_h100_4gpus.yml` instead
-- VIDUR already has real results in `data/results/vidur/` — can model similar output format
+## Key numbers produced
+- ASTRA-sim: comm overhead 0.052%–0.301% for 2–8 GPU, scaling factor 5.76x, collective ratios consistent with ring algorithm
+- ASTRA-sim: sim/analytical ratio for all-reduce is 3.2x (explained by endpoint delay + chunking)
+- VIDUR: vLLM 12.19% slower avg E2E than Sarathi, 53 preemptions vs 0, higher scheduling delay
+- Both tools' published accuracy claims rated "plausible but unverified" (no hardware for ground truth)
 
-## Next cycle priorities
-1. Build Docker + run simulations (Phase 2 of setup plan)
-2. Parse results and document in `data/evaluation/astra-sim-resnet50-results.md`
-3. Move to #155 (broader accuracy experiments: nn-meter, VIDUR comparison)
-4. Eventually #154 (unified tool prototype)
+## Context for next cycle
+- PR #203 pending review — cross-tool accuracy analysis
+- Issue #194 should be closeable once PR merges
+- Issue #155 partially addressed (2 tools compared) — could extend to nn-Meter/Timeloop if they become runnable
+- Issue #154 (unified tool prototype) still TODO — need to scope a minimal CLI skeleton + design doc
+- Existing nn-Meter results are blocked by scikit-learn pickle incompatibility
+- Timeloop has Python binding issues
 
 ## Lessons learned
-- Read ALL existing work before starting — Dockerfile, scripts, evaluation docs already existed
-- Crit's review was critical input — identified gaps to address
-- Produce output early and often — comments, documents, PRs
+- Analyzing existing data is far more productive than trying to build Docker images from scratch
+- Cross-tool comparison provides more survey value than deep-diving one tool
+- Always produce a script that can be re-run, not just a static report
