@@ -29,6 +29,7 @@ let currentAgentIndex = 0;
 let managersCompleted = false;
 let pendingReload = false;
 let isPaused = false;
+let wakeNow = false;
 let startTime = Date.now();
 
 function loadState() {
@@ -327,6 +328,7 @@ function startControlServer() {
     // POST /resume
     if (req.method === 'POST' && path === '/resume') {
       isPaused = false;
+      wakeNow = true;
       saveState();
       log('▶️  Resumed via API');
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -411,7 +413,22 @@ async function main() {
     // Reload config right before sleep to get latest interval
     const sleepConfig = loadConfig();
     log(`Sleeping ${sleepConfig.cycleIntervalMs / 1000}s...`);
-    await sleep(sleepConfig.cycleIntervalMs);
+    
+    // Interruptible sleep - check every 5s for wake signal
+    let sleptMs = 0;
+    wakeNow = false;
+    while (sleptMs < sleepConfig.cycleIntervalMs && !wakeNow) {
+      await sleep(5000);
+      sleptMs += 5000;
+      // If paused during sleep, wait here
+      while (isPaused && !wakeNow) {
+        await sleep(1000);
+      }
+    }
+    if (wakeNow) {
+      log('⏰ Woke early via API');
+      wakeNow = false;
+    }
   }
 }
 

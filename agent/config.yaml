@@ -2,7 +2,7 @@
 # Reloaded at the start of each cycle
 
 cycleIntervalMs: 1800000
-agentTimeoutMs: 900000
+agentTimeoutMs: 1800000
 model: claude-opus-4-6
 trackerIssue: 1
 
