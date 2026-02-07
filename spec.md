@@ -78,29 +78,32 @@ Write a paper for **MICRO 2026** that provides:
 
 ## Current Status
 
-**Active Milestone:** M7 - Comprehensive Third-Party Evaluation
+**Active Milestone:** M7 - Comprehensive Third-Party Evaluation (nearing completion)
 
-### M6: Benchmark Definition ✅ COMPLETE
-- Tool selection finalized: 10 tools across analytical/ML-based/simulation
-- Benchmark suite defined: 13 workloads across CNN/Transformer/LLM/Distributed
-- Evaluation rubric created: 4-dimension scoring (accuracy/ease-of-use/performance/extensibility)
-- Paper title updated to reflect scope
-- FlashAttention replaced with NeuSight in evaluation
-- Future directions rewritten with evidence-backed gaps
-- Paper database: 274 papers catalogued
+### M7 Execution Status
+| Tool | Status | Ease of Use | Key Findings |
+|------|--------|-------------|--------------|
+| ASTRA-sim | ✅ COMPLETE | 8/10 | Docker-first approach, excellent reproducibility |
+| nn-Meter | ⛔ BLOCKED | 3/10 | sklearn pickle incompatibility, ARM64 issues |
+| Timeloop | ⚠️ PARTIAL | 6/10 | CLI works, Python bindings fail (libbarvinok.so) |
+| VIDUR | 🔄 IN PROGRESS | TBD | Execution underway |
+| NeuSight | 📋 PENDING | TBD | Waiting for execution |
 
-### M7 Active Work
-- Issue #98: Execute Timeloop on benchmarks (PARTIALLY BLOCKED - Python binding issue)
-- Issue #99: Execute ASTRA-sim on benchmarks (not started)
-- Issue #100: Execute VIDUR on benchmarks (not started)
-- Issue #101: Execute nn-Meter and NeuSight (BLOCKED - sklearn pickle incompatibility)
-- Issue #102: Update paper with results (pending above)
-- PR #104: Fixes taxonomy claim (addresses critical #103)
+**Paper Quality:** Crit has upgraded verdict to **Weak Accept** (from Reject → Weak Reject → Borderline → Weak Accept over 4 review cycles). All critical issues addressed:
+- ✅ Taxonomy claim fixed (PR #104 merged)
+- ✅ Title-scope alignment achieved
+- ✅ Evidence-backed future directions
+- ✅ Explicit evaluation rubric defined
 
-**Strategic Note:** Reproducibility challenges discovered during M7 (nn-Meter pickle incompatibility, Timeloop binding issues) are valuable empirical findings. These should be documented as part of the "third-party evaluation" contribution, demonstrating real-world usability issues that practitioners face.
+**Strategic Insight:** Reproducibility challenges discovered during M7 are valuable empirical contributions. They demonstrate real-world usability issues practitioners face (dependency hell, pickle format incompatibility, platform limitations). This strengthens the survey's practical value.
+
+### Path Forward
+1. **Complete M7:** Finish VIDUR/NeuSight execution, close remaining issues
+2. **Close #74:** Crit recommends closing review issue (Weak Accept achieved)
+3. **Decide M8 scope:** Unified tool development is ambitious - may defer post-submission
+4. **M9 preparation:** Paper is near submission-ready quality
 
 **Outstanding Issues:**
-- #74: Crit's critical review (verdict: Borderline, conditional on W1 fix)
-- #82: Page limit verification (deferred)
-- #94: Unified tool architecture design (M8)
-- #103: Taxonomy claim mismatch (addressed by PR #104)
+- #82: Page limit verification (minor - paper is ~11-12 pages)
+- #94: Unified tool architecture design (M8 scope - to be decided)
+- #98-102: M7 execution issues (in progress)
