@@ -1,0 +1,65 @@
+name: NeuSight Prediction Experiment
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'flux/neusight-experiment*'
+    paths:
+      - 'scripts/benchmarks/neusight/**'
+      - '.github/workflows/neusight-experiment.yml'
+
+jobs:
+  neusight-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+
+      - name: Clone NeuSight repository
+        run: |
+          git clone --depth 1 https://github.com/sitar-lab/NeuSight.git /tmp/NeuSight
+          echo "=== NeuSight artifact data ==="
+          ls /tmp/NeuSight/scripts/asplos/summary/ 2>/dev/null || echo "No summary dir"
+          ls /tmp/NeuSight/scripts/asplos/results/prediction/ 2>/dev/null || echo "No prediction dir"
+          ls /tmp/NeuSight/scripts/asplos/label/ 2>/dev/null || echo "No label dir"
+
+      - name: Run NeuSight validation
+        run: |
+          mkdir -p data/evaluation/neusight-results
+          python3 scripts/benchmarks/neusight/run_neusight_prediction.py \
+            --skip-clone \
+            --output-dir data/evaluation/neusight-results
+
+      - name: Display results
+        run: |
+          echo "=== Experiment Results ==="
+          if [ -f data/evaluation/neusight-results/neusight_results.json ]; then
+            python3 -m json.tool data/evaluation/neusight-results/neusight_results.json
+          else
+            echo "No results file found"
+          fi
+
+      - name: Upload results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: neusight-results
+          path: |
+            data/evaluation/neusight-results/
+          if-no-files-found: warn
+
+      - name: Commit results if on branch
+        if: github.ref != 'refs/heads/main'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/evaluation/neusight-results/ || true
+          git diff --staged --quiet || git commit -m "[CI] NeuSight validation results"
+          git push || echo "Push failed - results saved as artifact"

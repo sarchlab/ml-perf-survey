@@ -1,0 +1,1822 @@
+{
+  "experiment": "neusight_validation",
+  "tool": "NeuSight",
+  "paper": "Forecasting GPU Performance for DL Training and Inference (ASPLOS 2025)",
+  "repo": "https://github.com/sitar-lab/NeuSight.git",
+  "method": "json_pair_validation",
+  "description": "Independent validation of NeuSight accuracy claims by comparing prediction JSONs vs label JSONs from the artifact repository. For each device/model config, we read the e2e_latency from both the NeuSight prediction and the ground truth label, then compute APE independently.",
+  "status": "COMPLETED",
+  "data_inventory": {
+    "devices_with_predictions": [
+      "AMD_Instinct_MI100",
+      "AMD_Instinct_MI210",
+      "AMD_Instinct_MI250",
+      "NVIDIA_A100-PCIE-40GB",
+      "NVIDIA_A100-SXM4-40GB",
+      "NVIDIA_A100_80GB_PCIe",
+      "NVIDIA_H100_80GB_HBM3",
+      "NVIDIA_L4",
+      "Tesla_P100-PCIE-16GB",
+      "Tesla_P4",
+      "Tesla_T4",
+      "Tesla_V100-PCIE-32GB"
+    ],
+    "devices_with_labels": [
+      "AMD_Instinct_MI100",
+      "AMD_Instinct_MI210",
+      "AMD_Instinct_MI250",
+      "NVIDIA_A100-PCIE-40GB",
+      "NVIDIA_A100-SXM4-40GB",
+      "NVIDIA_A100_80GB_PCIe",
+      "NVIDIA_H100_80GB_HBM3",
+      "NVIDIA_L4",
+      "Tesla_P100-PCIE-16GB",
+      "Tesla_P4",
+      "Tesla_T4",
+      "Tesla_V100-PCIE-32GB"
+    ],
+    "methods_available": [
+      "habitat",
+      "micro",
+      "neusight",
+      "roofline"
+    ],
+    "model_configs_per_device": {
+      "AMD_Instinct_MI100": {
+        "neusight": 20
+      },
+      "AMD_Instinct_MI210": {
+        "neusight": 20
+      },
+      "AMD_Instinct_MI250": {
+        "neusight": 20
+      },
+      "NVIDIA_A100-PCIE-40GB": {
+        "micro": 12,
+        "neusight": 16,
+        "habitat": 12,
+        "roofline": 12
+      },
+      "NVIDIA_A100-SXM4-40GB": {
+        "neusight": 9
+      },
+      "NVIDIA_A100_80GB_PCIe": {
+        "micro": 12,
+        "neusight": 12,
+        "habitat": 12,
+        "roofline": 12
+      },
+      "NVIDIA_H100_80GB_HBM3": {
+        "micro": 24,
+        "neusight": 39,
+        "habitat": 24,
+        "roofline": 24
+      },
+      "NVIDIA_L4": {
+        "micro": 24,
+        "neusight": 28,
+        "habitat": 24,
+        "roofline": 24
+      },
+      "Tesla_P100-PCIE-16GB": {
+        "micro": 12,
+        "neusight": 12,
+        "habitat": 12,
+        "roofline": 12
+      },
+      "Tesla_P4": {
+        "micro": 12,
+        "neusight": 12,
+        "habitat": 12,
+        "roofline": 12
+      },
+      "Tesla_T4": {
+        "micro": 12,
+        "neusight": 12,
+        "habitat": 12,
+        "roofline": 12
+      },
+      "Tesla_V100-PCIE-32GB": {
+        "micro": 24,
+        "neusight": 24,
+        "habitat": 24,
+        "roofline": 24
+      }
+    }
+  },
+  "claim_comparisons": [
+    {
+      "device": "H100",
+      "mode": "inf",
+      "paper_claimed_error_pct": 2.3,
+      "our_computed_error_pct": 8.74,
+      "difference_pct": 6.44,
+      "verdict": "MISMATCH",
+      "num_models_tested": 16
+    },
+    {
+      "device": "H100",
+      "mode": "train",
+      "paper_claimed_error_pct": 4.1,
+      "our_computed_error_pct": 6.6,
+      "difference_pct": 2.5,
+      "verdict": "CLOSE",
+      "num_models_tested": 18
+    },
+    {
+      "device": "A100_80G_PCIe",
+      "mode": "inf",
+      "paper_claimed_error_pct": 3.1,
+      "our_computed_error_pct": null,
+      "verdict": "NO_DATA"
+    },
+    {
+      "device": "A100_80G_PCIe",
+      "mode": "train",
+      "paper_claimed_error_pct": 5.8,
+      "our_computed_error_pct": 7.59,
+      "difference_pct": 1.79,
+      "verdict": "CLOSE",
+      "num_models_tested": 10
+    },
+    {
+      "device": "V100",
+      "mode": "inf",
+      "paper_claimed_error_pct": 5.2,
+      "our_computed_error_pct": 5.87,
+      "difference_pct": 0.67,
+      "verdict": "MATCH",
+      "num_models_tested": 10
+    },
+    {
+      "device": "V100",
+      "mode": "train",
+      "paper_claimed_error_pct": 7.4,
+      "our_computed_error_pct": 8.91,
+      "difference_pct": 1.51,
+      "verdict": "CLOSE",
+      "num_models_tested": 3
+    },
+    {
+      "device": "L4",
+      "mode": "inf",
+      "paper_claimed_error_pct": 3.8,
+      "our_computed_error_pct": 14.08,
+      "difference_pct": 10.28,
+      "verdict": "MISMATCH",
+      "num_models_tested": 11
+    },
+    {
+      "device": "T4",
+      "mode": "inf",
+      "paper_claimed_error_pct": 6.1,
+      "our_computed_error_pct": 18.51,
+      "difference_pct": 12.41,
+      "verdict": "MISMATCH",
+      "num_models_tested": 5
+    }
+  ],
+  "per_device_summary": {
+    "A100_40G_PCIe_inf": {
+      "device": "A100_40G_PCIe",
+      "mode": "inf",
+      "num_models": 16,
+      "mean_ape_pct": 8.63,
+      "min_ape_pct": 0.38,
+      "max_ape_pct": 17.65,
+      "per_model": [
+        {
+          "config": "bert_large-inf-512-16-fusion",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 345.172,
+          "predicted_ms": 391.522,
+          "ape_pct": 13.43,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-16",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 396.475,
+          "predicted_ms": 414.127,
+          "ape_pct": 4.45,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8-fusion",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 174.758,
+          "predicted_ms": 204.843,
+          "ape_pct": 17.22,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 205.506,
+          "predicted_ms": 216.652,
+          "ape_pct": 5.42,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-inf-1024-4-fusion",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 477.576,
+          "predicted_ms": 537.605,
+          "ape_pct": 12.57,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-4",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 535.821,
+          "predicted_ms": 576.187,
+          "ape_pct": 7.53,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-8-fusion",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 948.537,
+          "predicted_ms": 1107.868,
+          "ape_pct": 16.8,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-8",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 1084.731,
+          "predicted_ms": 1179.424,
+          "ape_pct": 8.73,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_27-inf-2048-2",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 1741.581,
+          "predicted_ms": 1849.897,
+          "ape_pct": 6.22,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_27-inf-2048-8",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 7267.036,
+          "predicted_ms": 7168.134,
+          "ape_pct": 1.36,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_xl-inf-2048-2",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 1749.462,
+          "predicted_ms": 1821.573,
+          "ape_pct": 4.12,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt3_xl-inf-2048-8",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 7479.805,
+          "predicted_ms": 7012.61,
+          "ape_pct": 6.25,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-2",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 987.859,
+          "predicted_ms": 943.881,
+          "ape_pct": 4.45,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-8",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 3722.624,
+          "predicted_ms": 3736.61,
+          "ape_pct": 0.38,
+          "num_layers": 24
+        },
+        {
+          "config": "switchxl4-inf-512-1",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 223.212,
+          "predicted_ms": 262.607,
+          "ape_pct": 17.65,
+          "num_layers": 0
+        },
+        {
+          "config": "switchxl4-inf-512-2",
+          "device_full": "NVIDIA_A100-PCIE-40GB",
+          "device_short": "A100_40G_PCIe",
+          "mode": "inf",
+          "actual_ms": 403.396,
+          "predicted_ms": 449.807,
+          "ape_pct": 11.51,
+          "num_layers": 0
+        }
+      ]
+    },
+    "A100_80G_PCIe_train": {
+      "device": "A100_80G_PCIe",
+      "mode": "train",
+      "num_models": 10,
+      "mean_ape_pct": 7.59,
+      "min_ape_pct": 0.12,
+      "max_ape_pct": 27.9,
+      "per_model": [
+        {
+          "config": "bert_large-train-512-2",
+          "device_full": "NVIDIA_A100_80GB_PCIe",
+          "device_short": "A100_80G_PCIe",
+          "mode": "train",
+          "actual_ms": 213.18,
+          "predicted_ms": 213.434,
+          "ape_pct": 0.12,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-train-512-8",
+          "device_full": "NVIDIA_A100_80GB_PCIe",
+          "device_short": "A100_80G_PCIe",
+          "mode": "train",
+          "actual_ms": 716.219,
+          "predicted_ms": 719.111,
+          "ape_pct": 0.4,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-train-1024-1",
+          "device_full": "NVIDIA_A100_80GB_PCIe",
+          "device_short": "A100_80G_PCIe",
+          "mode": "train",
+          "actual_ms": 524.047,
+          "predicted_ms": 496.556,
+          "ape_pct": 5.25,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-train-1024-4",
+          "device_full": "NVIDIA_A100_80GB_PCIe",
+          "device_short": "A100_80G_PCIe",
+          "mode": "train",
+          "actual_ms": 1635.743,
+          "predicted_ms": 1797.519,
+          "ape_pct": 9.89,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_27-train-2048-1",
+          "device_full": "NVIDIA_A100_80GB_PCIe",
+          "device_short": "A100_80G_PCIe",
+          "mode": "train",
+          "actual_ms": 3012.925,
+          "predicted_ms": 2946.72,
+          "ape_pct": 2.2,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_xl-train-2048-1",
+          "device_full": "NVIDIA_A100_80GB_PCIe",
+          "device_short": "A100_80G_PCIe",
+          "mode": "train",
+          "actual_ms": 2502.185,
+          "predicted_ms": 3200.33,
+          "ape_pct": 27.9,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-train-2048-1",
+          "device_full": "NVIDIA_A100_80GB_PCIe",
+          "device_short": "A100_80G_PCIe",
+          "mode": "train",
+          "actual_ms": 1369.511,
+          "predicted_ms": 1499.198,
+          "ape_pct": 9.47,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-train-2048-2",
+          "device_full": "NVIDIA_A100_80GB_PCIe",
+          "device_short": "A100_80G_PCIe",
+          "mode": "train",
+          "actual_ms": 3188.82,
+          "predicted_ms": 3062.624,
+          "ape_pct": 3.96,
+          "num_layers": 24
+        },
+        {
+          "config": "switchxl4-train-512-1",
+          "device_full": "NVIDIA_A100_80GB_PCIe",
+          "device_short": "A100_80G_PCIe",
+          "mode": "train",
+          "actual_ms": 790.069,
+          "predicted_ms": 879.747,
+          "ape_pct": 11.35,
+          "num_layers": 0
+        },
+        {
+          "config": "switchxl4-train-512-2",
+          "device_full": "NVIDIA_A100_80GB_PCIe",
+          "device_short": "A100_80G_PCIe",
+          "mode": "train",
+          "actual_ms": 1395.079,
+          "predicted_ms": 1469.857,
+          "ape_pct": 5.36,
+          "num_layers": 0
+        }
+      ]
+    },
+    "A100_SXM_train": {
+      "device": "A100_SXM",
+      "mode": "train",
+      "num_models": 3,
+      "mean_ape_pct": 10.51,
+      "min_ape_pct": 8.4,
+      "max_ape_pct": 12.87,
+      "per_model": [
+        {
+          "config": "gpt2_large-train-1024-4-dp4",
+          "device_full": "NVIDIA_A100-SXM4-40GB",
+          "device_short": "A100_SXM",
+          "mode": "train",
+          "actual_ms": 452.3,
+          "predicted_ms": 510.512,
+          "ape_pct": 12.87,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-train-1024-4-pp4_1",
+          "device_full": "NVIDIA_A100-SXM4-40GB",
+          "device_short": "A100_SXM",
+          "mode": "train",
+          "actual_ms": 1597.641,
+          "predicted_ms": 1761.566,
+          "ape_pct": 10.26,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-train-1024-4-tp4",
+          "device_full": "NVIDIA_A100-SXM4-40GB",
+          "device_short": "A100_SXM",
+          "mode": "train",
+          "actual_ms": 484.868,
+          "predicted_ms": 525.582,
+          "ape_pct": 8.4,
+          "num_layers": 0
+        }
+      ]
+    },
+    "AMD_Instinct_MI100_inf": {
+      "device": "AMD_Instinct_MI100",
+      "mode": "inf",
+      "num_models": 8,
+      "mean_ape_pct": 10.8,
+      "min_ape_pct": 1.89,
+      "max_ape_pct": 23.09,
+      "per_model": [
+        {
+          "config": "bert_large-inf-512-16",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "inf",
+          "actual_ms": 261.222,
+          "predicted_ms": 303.004,
+          "ape_pct": 15.99,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "inf",
+          "actual_ms": 134.112,
+          "predicted_ms": 156.861,
+          "ape_pct": 16.96,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-inf-1024-4",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "inf",
+          "actual_ms": 395.679,
+          "predicted_ms": 487.054,
+          "ape_pct": 23.09,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-8",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "inf",
+          "actual_ms": 763.479,
+          "predicted_ms": 884.722,
+          "ape_pct": 15.88,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_27-inf-2048-2",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "inf",
+          "actual_ms": 1240.28,
+          "predicted_ms": 1263.767,
+          "ape_pct": 1.89,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_xl-inf-2048-2",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "inf",
+          "actual_ms": 1088.42,
+          "predicted_ms": 1168.489,
+          "ape_pct": 7.36,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-2",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "inf",
+          "actual_ms": 683.414,
+          "predicted_ms": 666.571,
+          "ape_pct": 2.46,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-8",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "inf",
+          "actual_ms": 2769.21,
+          "predicted_ms": 2692.751,
+          "ape_pct": 2.76,
+          "num_layers": 24
+        }
+      ]
+    },
+    "AMD_Instinct_MI100_train": {
+      "device": "AMD_Instinct_MI100",
+      "mode": "train",
+      "num_models": 3,
+      "mean_ape_pct": 15.62,
+      "min_ape_pct": 9.53,
+      "max_ape_pct": 22.79,
+      "per_model": [
+        {
+          "config": "bert_large-train-512-2",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "train",
+          "actual_ms": 135.006,
+          "predicted_ms": 165.78,
+          "ape_pct": 22.79,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-train-512-8",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "train",
+          "actual_ms": 430.434,
+          "predicted_ms": 493.019,
+          "ape_pct": 14.54,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-train-1024-1",
+          "device_full": "AMD_Instinct_MI100",
+          "device_short": "AMD_Instinct_MI100",
+          "mode": "train",
+          "actual_ms": 351.237,
+          "predicted_ms": 384.723,
+          "ape_pct": 9.53,
+          "num_layers": 36
+        }
+      ]
+    },
+    "AMD_Instinct_MI210_inf": {
+      "device": "AMD_Instinct_MI210",
+      "mode": "inf",
+      "num_models": 10,
+      "mean_ape_pct": 8.4,
+      "min_ape_pct": 4.74,
+      "max_ape_pct": 14.21,
+      "per_model": [
+        {
+          "config": "bert_large-inf-512-16",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "inf",
+          "actual_ms": 245.491,
+          "predicted_ms": 257.136,
+          "ape_pct": 4.74,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "inf",
+          "actual_ms": 124.218,
+          "predicted_ms": 141.871,
+          "ape_pct": 14.21,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-inf-1024-4",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "inf",
+          "actual_ms": 367.442,
+          "predicted_ms": 401.761,
+          "ape_pct": 9.34,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-8",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "inf",
+          "actual_ms": 728.648,
+          "predicted_ms": 770.617,
+          "ape_pct": 5.76,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_27-inf-2048-2",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "inf",
+          "actual_ms": 1288.309,
+          "predicted_ms": 1197.74,
+          "ape_pct": 7.03,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_27-inf-2048-8",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "inf",
+          "actual_ms": 4950.956,
+          "predicted_ms": 4682.9,
+          "ape_pct": 5.41,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_xl-inf-2048-2",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "inf",
+          "actual_ms": 1254.151,
+          "predicted_ms": 1143.916,
+          "ape_pct": 8.79,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt3_xl-inf-2048-8",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "inf",
+          "actual_ms": 4827.62,
+          "predicted_ms": 4445.86,
+          "ape_pct": 7.91,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-2",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "inf",
+          "actual_ms": 637.713,
+          "predicted_ms": 572.22,
+          "ape_pct": 10.27,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-8",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "inf",
+          "actual_ms": 2499.494,
+          "predicted_ms": 2236.3,
+          "ape_pct": 10.53,
+          "num_layers": 24
+        }
+      ]
+    },
+    "AMD_Instinct_MI210_train": {
+      "device": "AMD_Instinct_MI210",
+      "mode": "train",
+      "num_models": 6,
+      "mean_ape_pct": 15.73,
+      "min_ape_pct": 5.71,
+      "max_ape_pct": 33.04,
+      "per_model": [
+        {
+          "config": "bert_large-train-512-2",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "train",
+          "actual_ms": 115.34,
+          "predicted_ms": 138.566,
+          "ape_pct": 20.14,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-train-512-8",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "train",
+          "actual_ms": 404.031,
+          "predicted_ms": 435.335,
+          "ape_pct": 7.75,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-train-1024-1",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "train",
+          "actual_ms": 313.286,
+          "predicted_ms": 351.809,
+          "ape_pct": 12.3,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-train-1024-4",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "train",
+          "actual_ms": 1843.911,
+          "predicted_ms": 1234.747,
+          "ape_pct": 33.04,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_xl-train-2048-1",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "train",
+          "actual_ms": 2122.646,
+          "predicted_ms": 1795.041,
+          "ape_pct": 15.43,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-train-2048-1",
+          "device_full": "AMD_Instinct_MI210",
+          "device_short": "AMD_Instinct_MI210",
+          "mode": "train",
+          "actual_ms": 983.238,
+          "predicted_ms": 927.112,
+          "ape_pct": 5.71,
+          "num_layers": 24
+        }
+      ]
+    },
+    "AMD_Instinct_MI250_inf": {
+      "device": "AMD_Instinct_MI250",
+      "mode": "inf",
+      "num_models": 10,
+      "mean_ape_pct": 7.65,
+      "min_ape_pct": 0.01,
+      "max_ape_pct": 17.07,
+      "per_model": [
+        {
+          "config": "bert_large-inf-512-16",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "inf",
+          "actual_ms": 237.094,
+          "predicted_ms": 257.136,
+          "ape_pct": 8.45,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "inf",
+          "actual_ms": 121.188,
+          "predicted_ms": 141.871,
+          "ape_pct": 17.07,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-inf-1024-4",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "inf",
+          "actual_ms": 354.576,
+          "predicted_ms": 401.761,
+          "ape_pct": 13.31,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-8",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "inf",
+          "actual_ms": 704.066,
+          "predicted_ms": 770.617,
+          "ape_pct": 9.45,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_27-inf-2048-2",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "inf",
+          "actual_ms": 1249.779,
+          "predicted_ms": 1197.74,
+          "ape_pct": 4.16,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_27-inf-2048-8",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "inf",
+          "actual_ms": 4682.358,
+          "predicted_ms": 4682.9,
+          "ape_pct": 0.01,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_xl-inf-2048-2",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "inf",
+          "actual_ms": 1199.737,
+          "predicted_ms": 1143.916,
+          "ape_pct": 4.65,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt3_xl-inf-2048-8",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "inf",
+          "actual_ms": 4611.047,
+          "predicted_ms": 4445.86,
+          "ape_pct": 3.58,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-2",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "inf",
+          "actual_ms": 619.102,
+          "predicted_ms": 572.22,
+          "ape_pct": 7.57,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-8",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "inf",
+          "actual_ms": 2438.841,
+          "predicted_ms": 2236.3,
+          "ape_pct": 8.3,
+          "num_layers": 24
+        }
+      ]
+    },
+    "AMD_Instinct_MI250_train": {
+      "device": "AMD_Instinct_MI250",
+      "mode": "train",
+      "num_models": 6,
+      "mean_ape_pct": 15.81,
+      "min_ape_pct": 5.75,
+      "max_ape_pct": 32.91,
+      "per_model": [
+        {
+          "config": "bert_large-train-512-2",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "train",
+          "actual_ms": 115.179,
+          "predicted_ms": 138.566,
+          "ape_pct": 20.31,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-train-512-8",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "train",
+          "actual_ms": 390.18,
+          "predicted_ms": 435.335,
+          "ape_pct": 11.57,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-train-1024-1",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "train",
+          "actual_ms": 315.754,
+          "predicted_ms": 351.809,
+          "ape_pct": 11.42,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-train-1024-4",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "train",
+          "actual_ms": 1840.406,
+          "predicted_ms": 1234.747,
+          "ape_pct": 32.91,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_xl-train-2048-1",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "train",
+          "actual_ms": 2060.702,
+          "predicted_ms": 1795.041,
+          "ape_pct": 12.89,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-train-2048-1",
+          "device_full": "AMD_Instinct_MI250",
+          "device_short": "AMD_Instinct_MI250",
+          "mode": "train",
+          "actual_ms": 983.647,
+          "predicted_ms": 927.112,
+          "ape_pct": 5.75,
+          "num_layers": 24
+        }
+      ]
+    },
+    "H100_inf": {
+      "device": "H100",
+      "mode": "inf",
+      "num_models": 16,
+      "mean_ape_pct": 8.74,
+      "min_ape_pct": 0.43,
+      "max_ape_pct": 24.57,
+      "per_model": [
+        {
+          "config": "bert_large-inf-512-16-fusion",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 127.013,
+          "predicted_ms": 144.746,
+          "ape_pct": 13.96,
+          "num_layers": 0
+        },
+        {
+          "config": "bert_large-inf-512-16",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 136.784,
+          "predicted_ms": 154.833,
+          "ape_pct": 13.2,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8-fusion",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 64.954,
+          "predicted_ms": 80.912,
+          "ape_pct": 24.57,
+          "num_layers": 0
+        },
+        {
+          "config": "bert_large-inf-512-8",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 69.842,
+          "predicted_ms": 86.176,
+          "ape_pct": 23.39,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-inf-1024-4-fusion",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 174.733,
+          "predicted_ms": 190.62,
+          "ape_pct": 9.09,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-inf-1024-4",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 215.032,
+          "predicted_ms": 208.449,
+          "ape_pct": 3.06,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-8-fusion",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 343.36,
+          "predicted_ms": 409.869,
+          "ape_pct": 19.37,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-inf-1024-8",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 414.35,
+          "predicted_ms": 442.528,
+          "ape_pct": 6.8,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_27-inf-2048-2",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 666.458,
+          "predicted_ms": 671.046,
+          "ape_pct": 0.69,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_27-inf-2048-8",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 2565.905,
+          "predicted_ms": 2577.034,
+          "ape_pct": 0.43,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_xl-inf-2048-2",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 620.043,
+          "predicted_ms": 658.318,
+          "ape_pct": 6.17,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt3_xl-inf-2048-8",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 2413.539,
+          "predicted_ms": 2506.74,
+          "ape_pct": 3.86,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-2",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 340.478,
+          "predicted_ms": 333.513,
+          "ape_pct": 2.05,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-8",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 1349.448,
+          "predicted_ms": 1407.911,
+          "ape_pct": 4.33,
+          "num_layers": 24
+        },
+        {
+          "config": "switchxl4-inf-512-1",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 96.648,
+          "predicted_ms": 90.529,
+          "ape_pct": 6.33,
+          "num_layers": 0
+        },
+        {
+          "config": "switchxl4-inf-512-2",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "inf",
+          "actual_ms": 159.387,
+          "predicted_ms": 163.325,
+          "ape_pct": 2.47,
+          "num_layers": 0
+        }
+      ]
+    },
+    "H100_train": {
+      "device": "H100",
+      "mode": "train",
+      "num_models": 18,
+      "mean_ape_pct": 6.6,
+      "min_ape_pct": 0.14,
+      "max_ape_pct": 17.62,
+      "per_model": [
+        {
+          "config": "bert_large-train-512-2",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 74.751,
+          "predicted_ms": 85.194,
+          "ape_pct": 13.97,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-train-512-8",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 235.983,
+          "predicted_ms": 277.559,
+          "ape_pct": 17.62,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-train-1024-1",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 183.977,
+          "predicted_ms": 214.066,
+          "ape_pct": 16.35,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-train-1024-16-dp4",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 642.081,
+          "predicted_ms": 649.6,
+          "ape_pct": 1.17,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-train-1024-16-pp4_1",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 2384.009,
+          "predicted_ms": 2638.446,
+          "ape_pct": 10.67,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-train-1024-16-tp4",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 729.665,
+          "predicted_ms": 825.059,
+          "ape_pct": 13.07,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-train-1024-4-dp4",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 194.881,
+          "predicted_ms": 214.111,
+          "ape_pct": 9.87,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-train-1024-4-pp4_1",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 637.463,
+          "predicted_ms": 650.218,
+          "ape_pct": 2.0,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-train-1024-4-tp4",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 211.136,
+          "predicted_ms": 228.078,
+          "ape_pct": 8.02,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-train-1024-4",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 638.809,
+          "predicted_ms": 649.555,
+          "ape_pct": 1.68,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_27-train-2048-1",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 998.735,
+          "predicted_ms": 1014.592,
+          "ape_pct": 1.59,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_xl-train-2048-1",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 933.437,
+          "predicted_ms": 944.789,
+          "ape_pct": 1.22,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt3_xl-train-2048-4-pp4_1",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 3554.401,
+          "predicted_ms": 3717.011,
+          "ape_pct": 4.57,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt3_xl-train-2048-4-tp4",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 1010.464,
+          "predicted_ms": 1047.573,
+          "ape_pct": 3.67,
+          "num_layers": 0
+        },
+        {
+          "config": "opt_13-train-2048-1",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 513.28,
+          "predicted_ms": 520.807,
+          "ape_pct": 1.47,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-train-2048-2",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 1015.925,
+          "predicted_ms": 1014.534,
+          "ape_pct": 0.14,
+          "num_layers": 24
+        },
+        {
+          "config": "switchxl4-train-512-1",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 332.273,
+          "predicted_ms": 340.977,
+          "ape_pct": 2.62,
+          "num_layers": 0
+        },
+        {
+          "config": "switchxl4-train-512-2",
+          "device_full": "NVIDIA_H100_80GB_HBM3",
+          "device_short": "H100",
+          "mode": "train",
+          "actual_ms": 511.216,
+          "predicted_ms": 557.785,
+          "ape_pct": 9.11,
+          "num_layers": 0
+        }
+      ]
+    },
+    "L4_inf": {
+      "device": "L4",
+      "mode": "inf",
+      "num_models": 11,
+      "mean_ape_pct": 14.08,
+      "min_ape_pct": 7.41,
+      "max_ape_pct": 28.24,
+      "per_model": [
+        {
+          "config": "bert_large-inf-512-16-fusion",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 724.702,
+          "predicted_ms": 573.418,
+          "ape_pct": 20.88,
+          "num_layers": 0
+        },
+        {
+          "config": "bert_large-inf-512-16",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 855.397,
+          "predicted_ms": 681.149,
+          "ape_pct": 20.37,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8-fusion",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 344.112,
+          "predicted_ms": 294.262,
+          "ape_pct": 14.49,
+          "num_layers": 0
+        },
+        {
+          "config": "bert_large-inf-512-8",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 409.856,
+          "predicted_ms": 350.127,
+          "ape_pct": 14.57,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-inf-1024-4-fusion",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 886.824,
+          "predicted_ms": 952.526,
+          "ape_pct": 7.41,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-inf-1024-4",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 1276.276,
+          "predicted_ms": 1135.938,
+          "ape_pct": 11.0,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-8-fusion",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 1775.091,
+          "predicted_ms": 1943.844,
+          "ape_pct": 9.51,
+          "num_layers": 0
+        },
+        {
+          "config": "gpt2_large-inf-1024-8",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 2562.999,
+          "predicted_ms": 2299.034,
+          "ape_pct": 10.3,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_27-inf-2048-2",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 3495.843,
+          "predicted_ms": 3225.659,
+          "ape_pct": 7.73,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_xl-inf-2048-2",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 3111.857,
+          "predicted_ms": 2790.31,
+          "ape_pct": 10.33,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-2",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "inf",
+          "actual_ms": 2229.276,
+          "predicted_ms": 1599.812,
+          "ape_pct": 28.24,
+          "num_layers": 24
+        }
+      ]
+    },
+    "L4_train": {
+      "device": "L4",
+      "mode": "train",
+      "num_models": 3,
+      "mean_ape_pct": 7.24,
+      "min_ape_pct": 2.81,
+      "max_ape_pct": 15.59,
+      "per_model": [
+        {
+          "config": "bert_large-train-512-2",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "train",
+          "actual_ms": 316.299,
+          "predicted_ms": 326.795,
+          "ape_pct": 3.32,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-train-512-8",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "train",
+          "actual_ms": 1275.441,
+          "predicted_ms": 1076.546,
+          "ape_pct": 15.59,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-train-1024-1",
+          "device_full": "NVIDIA_L4",
+          "device_short": "L4",
+          "mode": "train",
+          "actual_ms": 967.442,
+          "predicted_ms": 940.227,
+          "ape_pct": 2.81,
+          "num_layers": 36
+        }
+      ]
+    },
+    "P100_inf": {
+      "device": "P100",
+      "mode": "inf",
+      "num_models": 5,
+      "mean_ape_pct": 7.07,
+      "min_ape_pct": 0.03,
+      "max_ape_pct": 19.49,
+      "per_model": [
+        {
+          "config": "bert_large-inf-512-16",
+          "device_full": "Tesla_P100-PCIE-16GB",
+          "device_short": "P100",
+          "mode": "inf",
+          "actual_ms": 904.721,
+          "predicted_ms": 943.018,
+          "ape_pct": 4.23,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8",
+          "device_full": "Tesla_P100-PCIE-16GB",
+          "device_short": "P100",
+          "mode": "inf",
+          "actual_ms": 450.076,
+          "predicted_ms": 537.785,
+          "ape_pct": 19.49,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-inf-1024-4",
+          "device_full": "Tesla_P100-PCIE-16GB",
+          "device_short": "P100",
+          "mode": "inf",
+          "actual_ms": 1303.005,
+          "predicted_ms": 1364.297,
+          "ape_pct": 4.7,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-8",
+          "device_full": "Tesla_P100-PCIE-16GB",
+          "device_short": "P100",
+          "mode": "inf",
+          "actual_ms": 2603.175,
+          "predicted_ms": 2782.502,
+          "ape_pct": 6.89,
+          "num_layers": 36
+        },
+        {
+          "config": "opt_13-inf-2048-2",
+          "device_full": "Tesla_P100-PCIE-16GB",
+          "device_short": "P100",
+          "mode": "inf",
+          "actual_ms": 2283.239,
+          "predicted_ms": 2283.921,
+          "ape_pct": 0.03,
+          "num_layers": 24
+        }
+      ]
+    },
+    "P4_inf": {
+      "device": "P4",
+      "mode": "inf",
+      "num_models": 3,
+      "mean_ape_pct": 27.1,
+      "min_ape_pct": 4.71,
+      "max_ape_pct": 65.3,
+      "per_model": [
+        {
+          "config": "bert_large-inf-512-16",
+          "device_full": "Tesla_P4",
+          "device_short": "P4",
+          "mode": "inf",
+          "actual_ms": 3120.131,
+          "predicted_ms": 3267.038,
+          "ape_pct": 4.71,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8",
+          "device_full": "Tesla_P4",
+          "device_short": "P4",
+          "mode": "inf",
+          "actual_ms": 1331.962,
+          "predicted_ms": 1482.282,
+          "ape_pct": 11.29,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-inf-1024-4",
+          "device_full": "Tesla_P4",
+          "device_short": "P4",
+          "mode": "inf",
+          "actual_ms": 3336.925,
+          "predicted_ms": 5516.035,
+          "ape_pct": 65.3,
+          "num_layers": 36
+        }
+      ]
+    },
+    "T4_inf": {
+      "device": "T4",
+      "mode": "inf",
+      "num_models": 5,
+      "mean_ape_pct": 18.51,
+      "min_ape_pct": 4.45,
+      "max_ape_pct": 35.34,
+      "per_model": [
+        {
+          "config": "bert_large-inf-512-16",
+          "device_full": "Tesla_T4",
+          "device_short": "T4",
+          "mode": "inf",
+          "actual_ms": 1485.185,
+          "predicted_ms": 1968.061,
+          "ape_pct": 32.51,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8",
+          "device_full": "Tesla_T4",
+          "device_short": "T4",
+          "mode": "inf",
+          "actual_ms": 694.465,
+          "predicted_ms": 939.879,
+          "ape_pct": 35.34,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-inf-1024-4",
+          "device_full": "Tesla_T4",
+          "device_short": "T4",
+          "mode": "inf",
+          "actual_ms": 2505.221,
+          "predicted_ms": 2616.583,
+          "ape_pct": 4.45,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-8",
+          "device_full": "Tesla_T4",
+          "device_short": "T4",
+          "mode": "inf",
+          "actual_ms": 4822.51,
+          "predicted_ms": 5214.636,
+          "ape_pct": 8.13,
+          "num_layers": 36
+        },
+        {
+          "config": "opt_13-inf-2048-2",
+          "device_full": "Tesla_T4",
+          "device_short": "T4",
+          "mode": "inf",
+          "actual_ms": 3889.724,
+          "predicted_ms": 4361.565,
+          "ape_pct": 12.13,
+          "num_layers": 24
+        }
+      ]
+    },
+    "V100_inf": {
+      "device": "V100",
+      "mode": "inf",
+      "num_models": 10,
+      "mean_ape_pct": 5.87,
+      "min_ape_pct": 1.23,
+      "max_ape_pct": 16.06,
+      "per_model": [
+        {
+          "config": "bert_large-inf-512-16",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "inf",
+          "actual_ms": 518.256,
+          "predicted_ms": 533.468,
+          "ape_pct": 2.94,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-inf-512-8",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "inf",
+          "actual_ms": 257.422,
+          "predicted_ms": 271.402,
+          "ape_pct": 5.43,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-inf-1024-4",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "inf",
+          "actual_ms": 728.77,
+          "predicted_ms": 756.268,
+          "ape_pct": 3.77,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt2_large-inf-1024-8",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "inf",
+          "actual_ms": 1467.649,
+          "predicted_ms": 1525.999,
+          "ape_pct": 3.98,
+          "num_layers": 36
+        },
+        {
+          "config": "gpt3_27-inf-2048-2",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "inf",
+          "actual_ms": 2292.842,
+          "predicted_ms": 2445.659,
+          "ape_pct": 6.66,
+          "num_layers": 32
+        },
+        {
+          "config": "gpt3_xl-inf-2048-2",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "inf",
+          "actual_ms": 2241.953,
+          "predicted_ms": 2403.622,
+          "ape_pct": 7.21,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-2",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "inf",
+          "actual_ms": 1273.745,
+          "predicted_ms": 1188.998,
+          "ape_pct": 6.65,
+          "num_layers": 24
+        },
+        {
+          "config": "opt_13-inf-2048-8",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "inf",
+          "actual_ms": 5103.804,
+          "predicted_ms": 4859.9,
+          "ape_pct": 4.78,
+          "num_layers": 24
+        },
+        {
+          "config": "switchxl4-inf-512-1",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "inf",
+          "actual_ms": 323.107,
+          "predicted_ms": 375.005,
+          "ape_pct": 16.06,
+          "num_layers": 0
+        },
+        {
+          "config": "switchxl4-inf-512-2",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "inf",
+          "actual_ms": 596.304,
+          "predicted_ms": 603.637,
+          "ape_pct": 1.23,
+          "num_layers": 0
+        }
+      ]
+    },
+    "V100_train": {
+      "device": "V100",
+      "mode": "train",
+      "num_models": 3,
+      "mean_ape_pct": 8.91,
+      "min_ape_pct": 3.08,
+      "max_ape_pct": 13.61,
+      "per_model": [
+        {
+          "config": "bert_large-train-512-2",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "train",
+          "actual_ms": 234.258,
+          "predicted_ms": 266.135,
+          "ape_pct": 13.61,
+          "num_layers": 24
+        },
+        {
+          "config": "bert_large-train-512-8",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "train",
+          "actual_ms": 841.124,
+          "predicted_ms": 867.055,
+          "ape_pct": 3.08,
+          "num_layers": 24
+        },
+        {
+          "config": "gpt2_large-train-1024-1",
+          "device_full": "Tesla_V100-PCIE-32GB",
+          "device_short": "V100",
+          "mode": "train",
+          "actual_ms": 576.921,
+          "predicted_ms": 634.801,
+          "ape_pct": 10.03,
+          "num_layers": 36
+        }
+      ]
+    }
+  },
+  "total_configs_validated": 146
+}
