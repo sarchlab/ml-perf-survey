@@ -932,7 +932,7 @@ Note that direct comparison across tools is approximate because accuracy numbers
 Figure~\ref{fig:speed-accuracy} plots representative tools on two axes---evaluation speed versus reported accuracy---revealing the fundamental trade-off space.
 Analytical models (upper-left) achieve the fastest evaluation but sacrifice accuracy on complex workloads.
 Cycle-accurate simulators (lower-right) provide the highest fidelity but at impractical speeds.
-Hybrid approaches (NeuSight, Concorde) occupy the desirable upper-right region: fast evaluation \emph{and} high accuracy, though at the cost of training data requirements and reduced interpretability compared to analytical models.
+Hybrid approaches (NeuSight, Concorde) occupy the desirable upper-left region: fast evaluation \emph{and} low error, though at the cost of training data requirements and reduced interpretability compared to analytical models.
 Trace-driven simulators span a wide range, from VIDUR's seconds-scale LLM serving simulation to ASTRA-sim's minutes-scale distributed training, reflecting the diversity of system-level modeling targets.
 
 \begin{figure}[t]
