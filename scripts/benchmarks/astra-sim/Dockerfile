@@ -47,7 +47,7 @@ WORKDIR /app/astra-sim
 RUN ./build/astra_analytical/build.sh
 
 # Install Python packages for Chakra trace conversion
-RUN pip3 install protobuf pydot
+RUN pip3 install protobuf pydot pyyaml
 
 # Install Chakra from the bundled submodule
 RUN cd /app/astra-sim/extern/graph_frontend/chakra && \
@@ -58,8 +58,9 @@ RUN cd /app/astra-sim/extern/graph_frontend/chakra && \
 RUN git fetch origin ASTRA-sim-1.0 && \
     git show origin/ASTRA-sim-1.0:inputs/workload/Resnet50_DataParallel.txt > /app/Resnet50_DataParallel.txt || true
 
-# Copy the run script
+# Copy scripts
 COPY run_resnet50.sh /app/run_resnet50.sh
+COPY gen_traces.py /app/gen_traces.py
 RUN chmod +x /app/run_resnet50.sh
 
 WORKDIR /app
