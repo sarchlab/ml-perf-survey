@@ -1,0 +1,139 @@
+{
+  "experiment": "neusight_prediction",
+  "tool": "NeuSight",
+  "paper": "Forecasting GPU Performance for DL Training and Inference (ASPLOS 2025)",
+  "repo": "https://github.com/sitar-lab/NeuSight.git",
+  "status": "COMPLETED",
+  "repo_structure": {
+    "scripts": [
+      "train.py",
+      "example",
+      "asplos",
+      "pred.py"
+    ],
+    "scripts/pred.py": "file",
+    "scripts/train.py": "file",
+    "scripts/example": [
+      "gpt3_inference_h100.sh",
+      "bmm_predictor_training.sh"
+    ],
+    "scripts/asplos": [
+      "run_pred_nvidia_micro.py",
+      "results",
+      "run_label_fusion.py",
+      "summary",
+      "fp16mm.csv",
+      "run_train_nvidia_habitat.py",
+      "collect_label_fusion.py",
+      "collect_label_distributed.py",
+      "run_dataset.py",
+      "run_train_nvidia_micro.py",
+      "run_train_nvidia_neusight.py",
+      "install_megatron.sh",
+      "README.md",
+      "run_pred_amd_neusight.py",
+      "run_train_amd_neusight.py",
+      "run_parse_opgraph.py",
+      "trace.py",
+      "parse.py",
+      "run_pred_nvidia_neusight.py",
+      "data"
+    ],
+    "data": "NOT FOUND",
+    "data/device_configs": "NOT FOUND",
+    "neusight": [
+      "Opgraph",
+      "Dataset",
+      "Prediction",
+      "Model",
+      "Tracing",
+      "__init__.py"
+    ],
+    "src": "NOT FOUND",
+    "setup.py": "file",
+    "pyproject.toml": "NOT FOUND",
+    "requirements.txt": "NOT FOUND",
+    "README.md": "file"
+  },
+  "available_configs": {
+    "devices": [],
+    "models": [],
+    "examples": [
+      "gpt3_inference_h100.sh",
+      "bmm_predictor_training.sh",
+      "scripts/asplos/run_pred_nvidia_micro.py",
+      "scripts/asplos/run_label_fusion.py",
+      "scripts/asplos/run_train_nvidia_habitat.py",
+      "scripts/asplos/collect_label_fusion.py",
+      "scripts/asplos/collect_label_distributed.py",
+      "scripts/asplos/run_dataset.py",
+      "scripts/asplos/run_train_nvidia_micro.py",
+      "scripts/asplos/run_train_nvidia_neusight.py",
+      "scripts/asplos/install_megatron.sh",
+      "scripts/asplos/run_pred_amd_neusight.py",
+      "scripts/asplos/run_train_amd_neusight.py",
+      "scripts/asplos/run_parse_opgraph.py",
+      "scripts/asplos/trace.py",
+      "scripts/asplos/parse.py",
+      "scripts/asplos/run_pred_nvidia_neusight.py",
+      "scripts/asplos/summary_nums.py",
+      "scripts/asplos/run_pred_nvidia_habitat.py",
+      "scripts/asplos/run_label_distributed.py",
+      "scripts/asplos/run_label_nvidia.py",
+      "scripts/asplos/run_collect.py",
+      "scripts/asplos/run_label_amd.py",
+      "scripts/asplos/summarize.py",
+      "scripts/asplos/run_collect_opgraph.py",
+      "scripts/asplos/table.py",
+      "scripts/asplos/fp16mm_exp.py",
+      "scripts/asplos/pred_habitat.py",
+      "scripts/asplos/run_pred_nvidia_roofline.py",
+      "scripts/asplos/collect_label.py"
+    ]
+  },
+  "prediction_results": [
+    {
+      "script": "gpt3_inference_h100.sh",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/NeuSight/scripts/example/../pred.py\", line 1, in <module>\n    import neusight\n  File \"/tmp/NeuSight/neusight/__init__.py\", line 11, in <module>\n    from .Dataset.collect import *\n  File \"/tmp/NeuSight/neusight/Dataset/collect.py\", line 17, in <module>\n    starter = torch.cuda.Event(enable_timing=True)\n  File \"/opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages/torch/cuda/streams.py\", line 170, in __new__\n    return super().__new__(\n  File \"/opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages/torch/_utils.py\", line 996, in err_fn\n    raise RuntimeError(f\"Tried to instantiate dummy base class {class_name}\")\nRuntimeError: Tried to instantiate dummy base class Event\n",
+      "elapsed_seconds": 2.92
+    },
+    {
+      "script": "bmm_predictor_training.sh",
+      "exit_code": 1,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/tmp/NeuSight/scripts/example/../train.py\", line 1, in <module>\n    import neusight\n  File \"/tmp/NeuSight/neusight/__init__.py\", line 11, in <module>\n    from .Dataset.collect import *\n  File \"/tmp/NeuSight/neusight/Dataset/collect.py\", line 17, in <module>\n    starter = torch.cuda.Event(enable_timing=True)\n  File \"/opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages/torch/cuda/streams.py\", line 170, in __new__\n    return super().__new__(\n  File \"/opt/hostedtoolcache/Python/3.9.25/x64/lib/python3.9/site-packages/torch/_utils.py\", line 996, in err_fn\n    raise RuntimeError(f\"Tried to instantiate dummy base class {class_name}\")\nRuntimeError: Tried to instantiate dummy base class Event\n",
+      "elapsed_seconds": 2.61
+    }
+  ],
+  "published_results": {
+    "GPT-3_H100": {
+      "model": "GPT-3",
+      "device": "H100",
+      "published_error_pct": 2.3,
+      "published_accuracy_pct": 97.7,
+      "source": "NeuSight Table 2, ASPLOS 2025"
+    },
+    "GPT-3_A100": {
+      "model": "GPT-3",
+      "device": "A100",
+      "published_error_pct": 3.1,
+      "published_accuracy_pct": 96.9,
+      "source": "NeuSight Table 2, ASPLOS 2025"
+    },
+    "BERT_V100": {
+      "model": "BERT",
+      "device": "V100",
+      "published_error_pct": 5.2,
+      "published_accuracy_pct": 94.8,
+      "source": "NeuSight Table 2, ASPLOS 2025"
+    }
+  },
+  "analysis": {
+    "repo_cloned": true,
+    "install_success": true,
+    "num_predictions_run": 2,
+    "num_successful": 0
+  }
+}
