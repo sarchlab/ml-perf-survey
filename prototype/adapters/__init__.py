@@ -4,12 +4,14 @@ from prototype.adapters.timeloop_adapter import TimeloopAdapter
 from prototype.adapters.analytical_adapter import AnalyticalAdapter
 from prototype.adapters.astrasim_adapter import AstraSimAdapter
 from prototype.adapters.neusight_adapter import NeuSightAdapter
+from prototype.adapters.vidur_adapter import VidurAdapter
 
 _ADAPTERS = {
     "timeloop": TimeloopAdapter,
     "analytical": AnalyticalAdapter,
     "astra-sim": AstraSimAdapter,
     "neusight": NeuSightAdapter,
+    "vidur": VidurAdapter,
 }
 
 
