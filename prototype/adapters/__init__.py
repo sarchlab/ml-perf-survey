@@ -2,10 +2,14 @@
 from prototype.adapters.base import ToolAdapter
 from prototype.adapters.timeloop_adapter import TimeloopAdapter
 from prototype.adapters.analytical_adapter import AnalyticalAdapter
+from prototype.adapters.astrasim_adapter import AstraSimAdapter
+from prototype.adapters.neusight_adapter import NeuSightAdapter
 
 _ADAPTERS = {
     "timeloop": TimeloopAdapter,
     "analytical": AnalyticalAdapter,
+    "astra-sim": AstraSimAdapter,
+    "neusight": NeuSightAdapter,
 }
 
 
