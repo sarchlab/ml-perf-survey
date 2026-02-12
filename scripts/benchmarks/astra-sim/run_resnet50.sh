@@ -31,7 +31,7 @@ echo ""
 echo "=== Generating Chakra ET traces ==="
 
 # Write Python trace generator inline
-cat > /app/gen_traces.py << 'PYGEN'
+cat > /app/gen_traces_inline.py << 'PYGEN'
 #!/usr/bin/env python3
 """Convert ASTRA-sim v1.0 text workload to Chakra ET traces for v2.0."""
 import sys
@@ -187,15 +187,27 @@ for npus in 4 8 16; do
 
     # Try chakra_converter first
     if command -v chakra_converter &> /dev/null; then
-        chakra_converter Text \
+        if chakra_converter Text \
             --input "${RESNET_TXT}" \
             --output "${TRACE_PREFIX}" \
             --num-npus "${npus}" \
-            --num-passes 1 2>&1 && continue
+            --num-passes 1 2>&1; then
+            continue
+        fi
+        echo "chakra_converter failed, trying standalone script..."
     fi
 
-    # Fallback to Python script
-    python3 /app/gen_traces.py \
+    # Try standalone gen_traces.py (uses modern protobuf API)
+    if [ -f /app/gen_traces.py ]; then
+        python3 /app/gen_traces.py \
+            --input "${RESNET_TXT}" \
+            --output "${TRACE_PREFIX}" \
+            --num-npus "${npus}" 2>&1 && continue
+        echo "Standalone gen_traces.py failed, trying inline fallback..."
+    fi
+
+    # Fallback to inline Python script
+    python3 /app/gen_traces_inline.py \
         --input "${RESNET_TXT}" \
         --output "${TRACE_PREFIX}" \
         --num-npus "${npus}" 2>&1

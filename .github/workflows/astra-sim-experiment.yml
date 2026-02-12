@@ -1,0 +1,177 @@
+name: ASTRA-sim Experiment
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'flux/astra-sim-experiment*'
+    paths:
+      - 'scripts/benchmarks/astra-sim/**'
+      - '.github/workflows/astra-sim-experiment.yml'
+
+jobs:
+  astra-sim-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build ASTRA-sim Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: scripts/benchmarks/astra-sim
+          load: true
+          tags: mlperf-astra-sim:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Verify binary exists
+        run: |
+          docker run --rm mlperf-astra-sim:latest \
+            test -f /app/astra-sim/build/astra_analytical/build/bin/AstraSim_Analytical_Congestion_Aware
+          echo "Binary verified successfully"
+
+      - name: Run microbenchmark sanity check
+        run: |
+          mkdir -p results
+          docker run --rm \
+            -v ${{ github.workspace }}/results:/app/results \
+            mlperf-astra-sim:latest \
+            bash -c '/app/astra-sim/build/astra_analytical/build/bin/AstraSim_Analytical_Congestion_Aware \
+              --workload-configuration=/app/astra-sim/examples/workload/microbenchmarks/all_reduce/8npus_1MB/all_reduce \
+              --system-configuration=/app/astra-sim/examples/system/native_collectives/HGX-H100-validated.json \
+              --network-configuration=/app/astra-sim/examples/network/analytical/HGX-H100-validated.yml \
+              --remote-memory-configuration=/app/astra-sim/examples/remote_memory/analytical/no_memory_expansion.json \
+              2>&1 | tee /app/results/microbench_all_reduce_8npus.log'
+          echo "=== Microbenchmark Output ==="
+          cat results/microbench_all_reduce_8npus.log
+
+      - name: Run ResNet-50 simulations
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/results:/app/results \
+            mlperf-astra-sim:latest \
+            bash /app/run_resnet50.sh 2>&1 | tee results/resnet50_full.log
+
+      - name: Parse and analyze results
+        run: |
+          mkdir -p data/evaluation/astra-sim-results
+          python3 scripts/benchmarks/astra-sim/parse_results.py results --json \
+            > data/evaluation/astra-sim-results/astra_sim_results.json 2>&1 || true
+          python3 scripts/benchmarks/astra-sim/parse_results.py results 2>&1 || true
+
+          # Also generate a markdown summary
+          python3 - << 'PYEOF'
+          import json, os
+
+          results_file = "data/evaluation/astra-sim-results/astra_sim_results.json"
+          md_file = "data/evaluation/astra-sim-results/astra_sim_summary.md"
+
+          # Published validation numbers
+          published = {2: 20.63, 4: 12.01, 8: 9.69}
+
+          md = ["# ASTRA-sim Experiment Results", ""]
+          from datetime import datetime, timezone
+          md.append(f"**Date:** {datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
+          md.append(f"**Experiment:** ResNet-50 Data-Parallel Training + All-Reduce Microbenchmarks")
+          md.append(f"**Platform:** HGX-H100 validated configuration")
+          md.append("")
+
+          md.append("## Published Validation Numbers (HGX-H100)")
+          md.append("")
+          md.append("| GPU Count | Geomean Error Rate |")
+          md.append("|-----------|-------------------|")
+          for gpus, err in published.items():
+              md.append(f"| {gpus} GPUs | {err}% |")
+          md.append("")
+
+          # Try to parse results
+          if os.path.exists(results_file):
+              try:
+                  with open(results_file) as f:
+                      data = json.load(f)
+                  md.append("## Simulation Results")
+                  md.append("")
+                  for log_data in data.get("log_files", []):
+                      md.append(f"### {log_data['file']}")
+                      if log_data.get("npu_results"):
+                          md.append("")
+                          md.append("| NPU | Total Cycles |")
+                          md.append("|-----|-------------|")
+                          for npu in log_data["npu_results"]:
+                              md.append(f"| {npu['npu_id']} | {npu['total_cycles']:,} |")
+                          cycles = [n["total_cycles"] for n in log_data["npu_results"]]
+                          md.append("")
+                          md.append(f"**Average:** {sum(cycles)/len(cycles):,.0f} cycles")
+                          md.append(f"**Max:** {max(cycles):,} cycles")
+                          md.append(f"**Min:** {min(cycles):,} cycles")
+                      else:
+                          md.append("No cycle counts extracted.")
+
+                      if log_data.get("raw_lines"):
+                          md.append("")
+                          md.append("**Raw output (first 10 lines):**")
+                          md.append("```")
+                          for line in log_data["raw_lines"][:10]:
+                              md.append(line)
+                          md.append("```")
+                      md.append("")
+              except Exception as e:
+                  md.append(f"Error parsing results: {e}")
+          else:
+              md.append("## Results")
+              md.append("")
+              md.append("Results JSON not generated. Check CI logs for raw output.")
+
+          md.append("")
+          md.append("## Analysis")
+          md.append("")
+          md.append("ASTRA-sim simulates distributed training communication patterns.")
+          md.append("The simulator models all-reduce collective operations on the specified")
+          md.append("network topology (HGX-H100 with NVSwitch) and reports cycle counts.")
+          md.append("")
+          md.append("**Key observations:**")
+          md.append("- ASTRA-sim reports cycle counts, not wall-clock time")
+          md.append("- Compute durations in the workload trace are synthetic (from v1.0 format)")
+          md.append("- The validated accuracy claim (9.69% error for 8 GPUs) is for NCCL Ring All-Reduce microbenchmarks, not full training")
+          md.append("- Full ResNet-50 training accuracy depends on trace fidelity")
+
+          with open(md_file, "w") as f:
+              f.write("\n".join(md) + "\n")
+          print(f"Summary written to {md_file}")
+          PYEOF
+
+      - name: Display results summary
+        run: |
+          echo "=== ASTRA-sim Results ==="
+          echo ""
+          if [ -f data/evaluation/astra-sim-results/astra_sim_results.json ]; then
+            python3 -m json.tool data/evaluation/astra-sim-results/astra_sim_results.json
+          fi
+          echo ""
+          echo "=== Result files ==="
+          ls -la results/ 2>/dev/null || echo "No results dir"
+          ls -la data/evaluation/astra-sim-results/ 2>/dev/null || echo "No parsed results"
+
+      - name: Upload results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: astra-sim-results
+          path: |
+            results/
+            data/evaluation/astra-sim-results/
+          if-no-files-found: warn
+
+      - name: Commit results if on branch
+        if: github.ref != 'refs/heads/main'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/evaluation/astra-sim-results/ || true
+          git diff --staged --quiet || git commit -m "[CI] ASTRA-sim experiment results"
+          git push || echo "Push failed - results saved as artifact"
