@@ -195,7 +195,7 @@ LLM inference splits into compute-bound prefill and memory-bound decode phases~\
 
 We classify approaches into four categories.
 \textbf{Analytical models} express performance as closed-form functions (e.g., the roofline model~\cite{williams2009roofline}: $P = \min(\pi, \beta \cdot I)$), offering microsecond evaluation but requiring per-architecture derivation.
-\textbf{Cycle-accurate simulators} (GPGPU-Sim~\cite{gpgpusim2009}, Accel-Sim~\cite{accelsim2020}) achieve high fidelity at $1000$--$10000\times$ slowdown.
+\textbf{Cycle-accurate simulators} (GPGPU-Sim~\cite{gpgpusim2009}, Accel-Sim~\cite{accelsim2020}) achieve high fidelity at $1000$--$10000\times$ slowdown; statistical sampling techniques~\cite{simpoint2002,smarts2003} and checkpoint-driven approaches~\cite{looppoint2022} reduce this cost by identifying representative execution phases, while dedicated memory simulators~\cite{dramsim3_2020,ramulator2_2023} provide cycle-accurate DRAM modeling.
 \textbf{Trace-driven simulators} (ASTRA-sim~\cite{astrasim2023}, VIDUR~\cite{vidur2024}) trade fidelity for orders-of-magnitude speedup.
 \textbf{ML-augmented approaches} learn from profiling data (nn-Meter~\cite{nnmeter2021}, NeuSight~\cite{neusight2025}) but may not generalize beyond training distributions.
 
@@ -203,7 +203,7 @@ We classify approaches into four categories.
 \label{subsec:problem-formulation}
 
 Performance modeling maps workload $\mathcal{W}$ and hardware $\mathcal{H}$ to a metric $y$: $\hat{y} = f(\mathcal{W}, \mathcal{H}; \theta)$, with workloads represented at operator, graph, IR, or trace level, and hardware characterized by specifications, counters, or learned embeddings.
-Prediction targets include latency, throughput, energy, and memory footprint.
+Prediction targets include latency, throughput, energy, and memory footprint; ground-truth measurements typically rely on hardware performance counters accessed via PAPI~\cite{papi2000} or LIKWID~\cite{likwid2010}.
 Accuracy metrics---MAPE, RMSE, and rank correlation (Kendall's $\tau$)---vary across the literature, and differences in benchmarks, hardware targets, and evaluation protocols limit direct comparison (Section~\ref{sec:comparison}).
 
 % ==============================================================================
@@ -513,9 +513,10 @@ GPUs dominate ML training and inference, requiring models for SIMT execution, wa
 
 \textbf{Cycle-accurate simulation.}
 GPGPU-Sim~\cite{gpgpusim2009} and Accel-Sim~\cite{accelsim2020} achieve 0.90--0.97 IPC correlation but at $1000$--$10000\times$ slowdown; reverse-engineering~\cite{dissectinggpu2025} improved Accel-Sim to 13.98\% MAPE.
+These simulators integrate with memory subsystem models---from DRAMSim2~\cite{dramsim2_2011} and Ramulator~\cite{ramulator2015} to their modern successors DRAMSim3~\cite{dramsim3_2020} and Ramulator~2.0~\cite{ramulator2_2023}---for accurate DRAM timing, critical for memory-bound LLM inference.
 
 \textbf{Analytical and hybrid models.}
-AMALI~\cite{amali2025} reduces LLM inference MAPE to 23.6\% via memory hierarchy modeling; the roofline model~\cite{williams2009roofline} provides upper bounds.
+AMALI~\cite{amali2025} reduces LLM inference MAPE to 23.6\% via memory hierarchy modeling; the roofline model~\cite{williams2009roofline} provides upper bounds, with recent extensions adapting it to LLM-specific workloads~\cite{rooflinellm2024}.
 NeuSight~\cite{neusight2025} achieves 2.3\% on GPT-3 via tile-based prediction mirroring CUDA execution; Habitat~\cite{habitat2021} achieves 11.8\% cross-GPU transfer via wave scaling.
 
 \textbf{LLM-specific and compiler models.}
@@ -527,9 +528,9 @@ GPU modeling spans 2\%--24\% error; NeuSight offers the best accuracy--speed tra
 \label{subsec:distributed-modeling}
 
 Distributed systems require modeling communication, synchronization, and parallelism strategies~\cite{megatronlm2020,gpipe2019,zero2020}.
-ASTRA-sim~\cite{astrasim2023} achieves 5--15\% error via Chakra traces~\cite{chakra2023}; SimAI~\cite{simai2025} reaches 1.9\% at Alibaba scale; Lumos~\cite{lumos2025} 3.3\% on H100s; PRISM~\cite{prism2025} provides prediction intervals at 10K+ GPUs.
+ASTRA-sim~\cite{astrasim2023} achieves 5--15\% error via Chakra traces~\cite{chakra2023}; SimAI~\cite{simai2025} reaches 1.9\% at Alibaba scale; Echo~\cite{echo2024} scales simulation to 10K+ devices; Lumos~\cite{lumos2025} 3.3\% on H100s; PRISM~\cite{prism2025} provides prediction intervals at 10K+ GPUs.
 Paleo~\cite{paleo2017} pioneered analytical estimation; MAD Max~\cite{madmax2024} and Sailor~\cite{sailor2025} extend it; Llama~3~\cite{llama3scaling2025} provides validation ground truth at 16K GPUs.
-For inference serving, VIDUR~\cite{vidur2024} models scheduling with vLLM~\cite{vllm2023}; Frontier~\cite{frontier2025} targets MoE; ThrottLL'eM~\cite{throttllem2025} models power effects; speculative decoding~\cite{medusa2024} creates a moving target for all simulators.
+For inference serving, VIDUR~\cite{vidur2024} models scheduling with vLLM~\cite{vllm2023}; DistServe~\cite{distserve2024} disaggregates prefill and decode for goodput optimization; Frontier~\cite{frontier2025} targets MoE; POD-Attention~\cite{podattention2025} and AQUA~\cite{aqua2025} address prefill-decode overlap and memory offloading respectively; ThrottLL'eM~\cite{throttllem2025} models power effects; speculative decoding~\cite{medusa2024} creates a moving target for all simulators.
 
 \subsection{Edge Device Modeling}
 \label{subsec:edge-modeling}
