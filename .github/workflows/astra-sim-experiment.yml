@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - 'flux/astra-sim-experiment*'
+      - 'experiment-runner/astra-sim-accuracy*'
     paths:
       - 'scripts/benchmarks/astra-sim/**'
       - '.github/workflows/astra-sim-experiment.yml'
@@ -146,12 +147,25 @@ jobs:
           print(f"Summary written to {md_file}")
           PYEOF
 
+      - name: Run accuracy analysis
+        run: |
+          python3 scripts/benchmarks/astra-sim/analyze_accuracy.py \
+            data/evaluation/astra-sim-results/astra_sim_results.json \
+            --output data/evaluation/astra-sim-results/accuracy_analysis.json \
+            --report data/evaluation/astra-sim-results/accuracy_report.md \
+            2>&1 || echo "Accuracy analysis failed (non-critical)"
+
       - name: Display results summary
         run: |
           echo "=== ASTRA-sim Results ==="
           echo ""
           if [ -f data/evaluation/astra-sim-results/astra_sim_results.json ]; then
             python3 -m json.tool data/evaluation/astra-sim-results/astra_sim_results.json
+          fi
+          echo ""
+          if [ -f data/evaluation/astra-sim-results/accuracy_report.md ]; then
+            echo "=== Accuracy Report ==="
+            cat data/evaluation/astra-sim-results/accuracy_report.md
           fi
           echo ""
           echo "=== Result files ==="

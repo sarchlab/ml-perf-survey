@@ -1,6 +1,6 @@
 # ASTRA-sim Experiment Results
 
-**Date:** 2026-02-11T23:31:08Z
+**Date:** 2026-02-13T04:20:30Z
 **Experiment:** ResNet-50 Data-Parallel Training + All-Reduce Microbenchmarks
 **Platform:** HGX-H100 validated configuration
 
@@ -36,16 +36,16 @@ No cycle counts extracted.
 
 **Raw output (first 10 lines):**
 ```
-[2026-02-11 23:31:07.966] [workload] [info] sys[4] finished, 57426 cycles, exposed communication 57426 cycles.
-[2026-02-11 23:31:07.966] [statistics] [info] sys[4], Wall time: 57426
-[2026-02-11 23:31:07.966] [statistics] [info] sys[4], Comm time: 57426
-[2026-02-11 23:31:07.966] [workload] [info] sys[5] finished, 57426 cycles, exposed communication 57426 cycles.
-[2026-02-11 23:31:07.966] [statistics] [info] sys[5], Wall time: 57426
-[2026-02-11 23:31:07.966] [statistics] [info] sys[5], Comm time: 57426
-[2026-02-11 23:31:07.966] [workload] [info] sys[6] finished, 57426 cycles, exposed communication 57426 cycles.
-[2026-02-11 23:31:07.966] [statistics] [info] sys[6], Wall time: 57426
-[2026-02-11 23:31:07.966] [statistics] [info] sys[6], Comm time: 57426
-[2026-02-11 23:31:07.966] [workload] [info] sys[7] finished, 57426 cycles, exposed communication 57426 cycles.
+[2026-02-13 04:20:29.376] [workload] [info] sys[4] finished, 57426 cycles, exposed communication 57426 cycles.
+[2026-02-13 04:20:29.376] [statistics] [info] sys[4], Wall time: 57426
+[2026-02-13 04:20:29.376] [statistics] [info] sys[4], Comm time: 57426
+[2026-02-13 04:20:29.376] [workload] [info] sys[5] finished, 57426 cycles, exposed communication 57426 cycles.
+[2026-02-13 04:20:29.376] [statistics] [info] sys[5], Wall time: 57426
+[2026-02-13 04:20:29.376] [statistics] [info] sys[5], Comm time: 57426
+[2026-02-13 04:20:29.376] [workload] [info] sys[6] finished, 57426 cycles, exposed communication 57426 cycles.
+[2026-02-13 04:20:29.376] [statistics] [info] sys[6], Wall time: 57426
+[2026-02-13 04:20:29.376] [statistics] [info] sys[6], Comm time: 57426
+[2026-02-13 04:20:29.376] [workload] [info] sys[7] finished, 57426 cycles, exposed communication 57426 cycles.
 ```
 
 ### microbench_all_reduce_8npus_1MB.log
@@ -67,16 +67,16 @@ No cycle counts extracted.
 
 **Raw output (first 10 lines):**
 ```
-[2026-02-11 23:31:08.708] [workload] [info] sys[4] finished, 57426 cycles, exposed communication 57426 cycles.
-[2026-02-11 23:31:08.708] [statistics] [info] sys[4], Wall time: 57426
-[2026-02-11 23:31:08.708] [statistics] [info] sys[4], Comm time: 57426
-[2026-02-11 23:31:08.708] [workload] [info] sys[5] finished, 57426 cycles, exposed communication 57426 cycles.
-[2026-02-11 23:31:08.708] [statistics] [info] sys[5], Wall time: 57426
-[2026-02-11 23:31:08.708] [statistics] [info] sys[5], Comm time: 57426
-[2026-02-11 23:31:08.708] [workload] [info] sys[6] finished, 57426 cycles, exposed communication 57426 cycles.
-[2026-02-11 23:31:08.708] [statistics] [info] sys[6], Wall time: 57426
-[2026-02-11 23:31:08.708] [statistics] [info] sys[6], Comm time: 57426
-[2026-02-11 23:31:08.708] [workload] [info] sys[7] finished, 57426 cycles, exposed communication 57426 cycles.
+[2026-02-13 04:20:30.186] [workload] [info] sys[4] finished, 57426 cycles, exposed communication 57426 cycles.
+[2026-02-13 04:20:30.186] [statistics] [info] sys[4], Wall time: 57426
+[2026-02-13 04:20:30.186] [statistics] [info] sys[4], Comm time: 57426
+[2026-02-13 04:20:30.186] [workload] [info] sys[5] finished, 57426 cycles, exposed communication 57426 cycles.
+[2026-02-13 04:20:30.186] [statistics] [info] sys[5], Wall time: 57426
+[2026-02-13 04:20:30.186] [statistics] [info] sys[5], Comm time: 57426
+[2026-02-13 04:20:30.186] [workload] [info] sys[6] finished, 57426 cycles, exposed communication 57426 cycles.
+[2026-02-13 04:20:30.186] [statistics] [info] sys[6], Wall time: 57426
+[2026-02-13 04:20:30.186] [statistics] [info] sys[6], Comm time: 57426
+[2026-02-13 04:20:30.186] [workload] [info] sys[7] finished, 57426 cycles, exposed communication 57426 cycles.
 ```
 
 ### resnet50_full.log
@@ -150,16 +150,16 @@ No cycle counts extracted.
 
 **Raw output (first 10 lines):**
 ```
-[2026-02-11 23:31:08.383] [workload] [info] sys[0] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.383] [statistics] [info] sys[0], Wall time: 1098621886
-[2026-02-11 23:31:08.383] [statistics] [info] sys[0], Comm time: 3307886
-[2026-02-11 23:31:08.383] [statistics] [info] sys[0], GPU time: 1095314000
-[2026-02-11 23:31:08.383] [workload] [info] sys[1] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.383] [statistics] [info] sys[1], Wall time: 1098621886
-[2026-02-11 23:31:08.383] [statistics] [info] sys[1], Comm time: 3307886
-[2026-02-11 23:31:08.383] [statistics] [info] sys[1], GPU time: 1095314000
-[2026-02-11 23:31:08.383] [workload] [info] sys[2] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.383] [statistics] [info] sys[2], Wall time: 1098621886
+[2026-02-13 04:20:29.845] [workload] [info] sys[0] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:29.845] [statistics] [info] sys[0], Wall time: 1098621886
+[2026-02-13 04:20:29.845] [statistics] [info] sys[0], Comm time: 3307886
+[2026-02-13 04:20:29.845] [statistics] [info] sys[0], GPU time: 1095314000
+[2026-02-13 04:20:29.845] [workload] [info] sys[1] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:29.845] [statistics] [info] sys[1], Wall time: 1098621886
+[2026-02-13 04:20:29.845] [statistics] [info] sys[1], Comm time: 3307886
+[2026-02-13 04:20:29.845] [statistics] [info] sys[1], GPU time: 1095314000
+[2026-02-13 04:20:29.845] [workload] [info] sys[2] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:29.845] [statistics] [info] sys[2], Wall time: 1098621886
 ```
 
 ### resnet50_hgx-h100-validated_16npus.log
@@ -181,16 +181,16 @@ No cycle counts extracted.
 
 **Raw output (first 10 lines):**
 ```
-[2026-02-11 23:31:08.439] [workload] [info] sys[0] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.439] [statistics] [info] sys[0], Wall time: 1098621886
-[2026-02-11 23:31:08.439] [statistics] [info] sys[0], Comm time: 3307886
-[2026-02-11 23:31:08.439] [statistics] [info] sys[0], GPU time: 1095314000
-[2026-02-11 23:31:08.439] [workload] [info] sys[1] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.439] [statistics] [info] sys[1], Wall time: 1098621886
-[2026-02-11 23:31:08.439] [statistics] [info] sys[1], Comm time: 3307886
-[2026-02-11 23:31:08.439] [statistics] [info] sys[1], GPU time: 1095314000
-[2026-02-11 23:31:08.439] [workload] [info] sys[2] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.439] [statistics] [info] sys[2], Wall time: 1098621886
+[2026-02-13 04:20:29.911] [workload] [info] sys[0] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:29.911] [statistics] [info] sys[0], Wall time: 1098621886
+[2026-02-13 04:20:29.911] [statistics] [info] sys[0], Comm time: 3307886
+[2026-02-13 04:20:29.911] [statistics] [info] sys[0], GPU time: 1095314000
+[2026-02-13 04:20:29.911] [workload] [info] sys[1] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:29.912] [statistics] [info] sys[1], Wall time: 1098621886
+[2026-02-13 04:20:29.912] [statistics] [info] sys[1], Comm time: 3307886
+[2026-02-13 04:20:29.912] [statistics] [info] sys[1], GPU time: 1095314000
+[2026-02-13 04:20:29.912] [workload] [info] sys[2] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:29.912] [statistics] [info] sys[2], Wall time: 1098621886
 ```
 
 ### resnet50_hgx-h100-validated_4npus.log
@@ -215,16 +215,16 @@ No cycle counts extracted.
 
 **Raw output (first 10 lines):**
 ```
-[2026-02-11 23:31:08.383] [workload] [info] sys[0] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.383] [statistics] [info] sys[0], Wall time: 1098621886
-[2026-02-11 23:31:08.383] [statistics] [info] sys[0], Comm time: 3307886
-[2026-02-11 23:31:08.383] [statistics] [info] sys[0], GPU time: 1095314000
-[2026-02-11 23:31:08.383] [workload] [info] sys[1] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.383] [statistics] [info] sys[1], Wall time: 1098621886
-[2026-02-11 23:31:08.383] [statistics] [info] sys[1], Comm time: 3307886
-[2026-02-11 23:31:08.383] [statistics] [info] sys[1], GPU time: 1095314000
-[2026-02-11 23:31:08.383] [workload] [info] sys[2] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.383] [statistics] [info] sys[2], Wall time: 1098621886
+[2026-02-13 04:20:29.845] [workload] [info] sys[0] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:29.845] [statistics] [info] sys[0], Wall time: 1098621886
+[2026-02-13 04:20:29.845] [statistics] [info] sys[0], Comm time: 3307886
+[2026-02-13 04:20:29.845] [statistics] [info] sys[0], GPU time: 1095314000
+[2026-02-13 04:20:29.845] [workload] [info] sys[1] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:29.845] [statistics] [info] sys[1], Wall time: 1098621886
+[2026-02-13 04:20:29.845] [statistics] [info] sys[1], Comm time: 3307886
+[2026-02-13 04:20:29.845] [statistics] [info] sys[1], GPU time: 1095314000
+[2026-02-13 04:20:29.845] [workload] [info] sys[2] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:29.845] [statistics] [info] sys[2], Wall time: 1098621886
 ```
 
 ### resnet50_hgx_h100_16gpu_8npus.log
@@ -248,16 +248,16 @@ No cycle counts extracted.
 
 **Raw output (first 10 lines):**
 ```
-[2026-02-11 23:31:08.598] [workload] [info] sys[0] finished, 1096768270 cycles, exposed communication 1454270 cycles.
-[2026-02-11 23:31:08.598] [statistics] [info] sys[0], Wall time: 1096768270
-[2026-02-11 23:31:08.598] [statistics] [info] sys[0], Comm time: 1454270
-[2026-02-11 23:31:08.598] [statistics] [info] sys[0], GPU time: 1095314000
-[2026-02-11 23:31:08.598] [workload] [info] sys[1] finished, 1096768270 cycles, exposed communication 1454270 cycles.
-[2026-02-11 23:31:08.598] [statistics] [info] sys[1], Wall time: 1096768270
-[2026-02-11 23:31:08.598] [statistics] [info] sys[1], Comm time: 1454270
-[2026-02-11 23:31:08.598] [statistics] [info] sys[1], GPU time: 1095314000
-[2026-02-11 23:31:08.598] [workload] [info] sys[2] finished, 1096768270 cycles, exposed communication 1454270 cycles.
-[2026-02-11 23:31:08.598] [statistics] [info] sys[2], Wall time: 1096768270
+[2026-02-13 04:20:30.078] [workload] [info] sys[0] finished, 1096768270 cycles, exposed communication 1454270 cycles.
+[2026-02-13 04:20:30.078] [statistics] [info] sys[0], Wall time: 1096768270
+[2026-02-13 04:20:30.078] [statistics] [info] sys[0], Comm time: 1454270
+[2026-02-13 04:20:30.078] [statistics] [info] sys[0], GPU time: 1095314000
+[2026-02-13 04:20:30.078] [workload] [info] sys[1] finished, 1096768270 cycles, exposed communication 1454270 cycles.
+[2026-02-13 04:20:30.078] [statistics] [info] sys[1], Wall time: 1096768270
+[2026-02-13 04:20:30.078] [statistics] [info] sys[1], Comm time: 1454270
+[2026-02-13 04:20:30.078] [statistics] [info] sys[1], GPU time: 1095314000
+[2026-02-13 04:20:30.078] [workload] [info] sys[2] finished, 1096768270 cycles, exposed communication 1454270 cycles.
+[2026-02-13 04:20:30.078] [statistics] [info] sys[2], Wall time: 1096768270
 ```
 
 ### resnet50_hgx_h100_8gpu_8npus.log
@@ -279,16 +279,16 @@ No cycle counts extracted.
 
 **Raw output (first 10 lines):**
 ```
-[2026-02-11 23:31:08.687] [workload] [info] sys[0] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.687] [statistics] [info] sys[0], Wall time: 1098621886
-[2026-02-11 23:31:08.687] [statistics] [info] sys[0], Comm time: 3307886
-[2026-02-11 23:31:08.687] [statistics] [info] sys[0], GPU time: 1095314000
-[2026-02-11 23:31:08.687] [workload] [info] sys[1] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.687] [statistics] [info] sys[1], Wall time: 1098621886
-[2026-02-11 23:31:08.687] [statistics] [info] sys[1], Comm time: 3307886
-[2026-02-11 23:31:08.687] [statistics] [info] sys[1], GPU time: 1095314000
-[2026-02-11 23:31:08.687] [workload] [info] sys[2] finished, 1098621886 cycles, exposed communication 3307886 cycles.
-[2026-02-11 23:31:08.687] [statistics] [info] sys[2], Wall time: 1098621886
+[2026-02-13 04:20:30.167] [workload] [info] sys[0] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:30.167] [statistics] [info] sys[0], Wall time: 1098621886
+[2026-02-13 04:20:30.167] [statistics] [info] sys[0], Comm time: 3307886
+[2026-02-13 04:20:30.167] [statistics] [info] sys[0], GPU time: 1095314000
+[2026-02-13 04:20:30.167] [workload] [info] sys[1] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:30.167] [statistics] [info] sys[1], Wall time: 1098621886
+[2026-02-13 04:20:30.167] [statistics] [info] sys[1], Comm time: 3307886
+[2026-02-13 04:20:30.167] [statistics] [info] sys[1], GPU time: 1095314000
+[2026-02-13 04:20:30.167] [workload] [info] sys[2] finished, 1098621886 cycles, exposed communication 3307886 cycles.
+[2026-02-13 04:20:30.167] [statistics] [info] sys[2], Wall time: 1098621886
 ```
 
 
