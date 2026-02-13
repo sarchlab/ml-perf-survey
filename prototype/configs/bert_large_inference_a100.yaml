@@ -1,0 +1,14 @@
+name: bert-large-inference-a100
+model_type: transformer
+model:
+  name: BERT-large
+  layers: 24
+  parameters: 340e6
+task: inference
+batch_size: 8
+hardware:
+  device: A100
+  count: 1
+dataset:
+  name: SQuAD
+  input_shape: [512]

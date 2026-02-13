@@ -1,0 +1,15 @@
+name: resnet50-training-h100-8gpu
+model_type: cnn
+model:
+  name: ResNet-50
+  layers: 50
+  parameters: 25.6e6
+task: training
+batch_size: 32
+hardware:
+  device: H100
+  count: 8
+  interconnect: NVSwitch
+dataset:
+  name: ImageNet
+  input_shape: [3, 224, 224]

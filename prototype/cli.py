@@ -101,6 +101,74 @@ def cmd_compare(args):
     ResultSet.print_comparison(results)
 
 
+def cmd_validate(args):
+    """Run all compatible tools on each workload config and report results."""
+    configs_dir = Path(args.configs) if args.configs else Path(__file__).parent / "configs"
+    if not configs_dir.exists():
+        print(f"Error: configs directory '{configs_dir}' not found.")
+        sys.exit(1)
+
+    yaml_files = sorted(configs_dir.glob("*.yaml"))
+    if not yaml_files:
+        print(f"No workload configs found in {configs_dir}")
+        sys.exit(1)
+
+    adapters = list_adapters()
+    all_results = []
+    errors = []
+
+    print(f"Validating {len(yaml_files)} workload(s) against {len(adapters)} tool(s)")
+    print("=" * 70)
+
+    for yaml_file in yaml_files:
+        spec = WorkloadSpec.from_yaml(str(yaml_file))
+        print(f"\n--- {spec.name} ({spec.model_type}, {spec.task}) ---")
+
+        for name, adapter_cls in adapters.items():
+            adapter = adapter_cls()
+            if not adapter.supports(spec):
+                continue
+            result = adapter.run(spec)
+            all_results.append(result)
+            status = "OK" if result.exit_code == 0 else "FAIL"
+            if result.error:
+                errors.append(f"{spec.name}/{name}: {result.error}")
+                print(f"  {name:<15} {status}  (error: {result.error})")
+            else:
+                metric_summary = ", ".join(
+                    f"{k}={v:.4f}" if isinstance(v, float) else f"{k}={v}"
+                    for k, v in list(result.metrics.items())[:3]
+                )
+                print(f"  {name:<15} {status}  {metric_summary}")
+
+    # Summary
+    ok_count = sum(1 for r in all_results if r.exit_code == 0)
+    fail_count = sum(1 for r in all_results if r.exit_code != 0)
+    print(f"\n{'=' * 70}")
+    print(f"Total: {ok_count} passed, {fail_count} failed, "
+          f"{len(all_results)} total runs across {len(yaml_files)} workloads")
+
+    if errors:
+        print(f"\nErrors ({len(errors)}):")
+        for e in errors:
+            print(f"  - {e}")
+
+    if args.output:
+        output_path = Path(args.output)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        report = {
+            "workloads": len(yaml_files),
+            "tools": len(adapters),
+            "total_runs": len(all_results),
+            "passed": ok_count,
+            "failed": fail_count,
+            "results": [r.to_dict() for r in all_results],
+        }
+        with open(output_path, "w") as f:
+            json.dump(report, f, indent=2)
+        print(f"\nFull report saved to {output_path}")
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="mlperf-model",
@@ -122,6 +190,11 @@ def main():
     cmp_parser.add_argument("--workload", "-w", required=True, help="Path to workload YAML")
     cmp_parser.add_argument("--tools", "-t", required=True, help="Comma-separated tool names")
 
+    # validate
+    val_parser = subparsers.add_parser("validate", help="Run all tools on all workloads")
+    val_parser.add_argument("--configs", "-c", help="Configs directory (default: prototype/configs)")
+    val_parser.add_argument("--output", "-o", help="Output JSON report path")
+
     args = parser.parse_args()
 
     if args.command == "list":
@@ -130,6 +203,8 @@ def main():
         cmd_run(args)
     elif args.command == "compare":
         cmd_compare(args)
+    elif args.command == "validate":
+        cmd_validate(args)
 
 
 if __name__ == "__main__":

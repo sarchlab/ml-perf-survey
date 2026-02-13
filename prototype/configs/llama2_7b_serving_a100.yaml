@@ -1,0 +1,17 @@
+name: llama2-7b-serving-a100
+model_type: llm
+model:
+  name: Llama-2-7b
+  layers: 32
+  parameters: 7e9
+task: serving
+batch_size: 1
+hardware:
+  device: A100
+  count: 1
+dataset:
+  name: synthetic
+  sequence_length: 512
+extra:
+  qps: 2.0
+  num_requests: 100
