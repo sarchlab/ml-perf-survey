@@ -391,7 +391,7 @@ Analytical       & 3 & 3 & 2 & \textbf{0} & \textbf{0} & $\mu$s & None & High & 
 Cycle-Accurate   & 1 & 2 & \textbf{0} & \textbf{0} & 1 & Hours & Binary & High & Scale \\
 Trace-Driven     & \textbf{0} & \textbf{0} & 7 & \textbf{0} & \textbf{0} & Min. & Traces & Med. & Trace fidelity \\
 ML-Augmented     & \textbf{0} & 3 & \textbf{0} & 3 & 1 & ms & Profiling & Low & Distrib.\ shift \\
-Hybrid           & 1 & 3 & \textbf{0} & \textbf{0} & 1 & ms & Mixed & Med. & Training domain \\
+Hybrid           & 1 & 2 & \textbf{0} & \textbf{0} & 1 & ms & Mixed & Med. & Training domain \\
 \bottomrule
 \end{tabular}
 \end{table*}
@@ -1036,9 +1036,9 @@ The interpretability gap is practically significant: architects need to understa
 \label{subsec:methodology-distribution}
 
 Figure~\ref{fig:methodology-breakdown} shows the distribution of surveyed tools across methodology types.
-Trace-driven simulation is the most common approach (7 tools), driven by the recent proliferation of distributed training and LLM serving simulators.
-Analytical and ML-augmented approaches are equally represented (8 tools each), reflecting the field's split between interpretable physics-based models and data-driven prediction.
-Hybrid approaches remain the smallest category (4 tools), despite achieving the best accuracy---suggesting significant room for future work combining analytical structure with learned components.
+Analytical models are the most common approach (8 tools), reflecting the maturity of physics-based performance modeling for accelerators and GPUs.
+Trace-driven and ML-augmented approaches are close behind (7 tools each), with trace-driven tools driven by the recent proliferation of distributed training and LLM serving simulators, and ML-augmented approaches dominating edge device and compiler cost modeling.
+Cycle-accurate simulation (4 tools) and hybrid approaches (4 tools) are the smallest categories; the latter achieve the best accuracy despite their underrepresentation, suggesting significant room for future work combining analytical structure with learned components.
 
 \begin{figure}[t]
 \centering
@@ -1064,13 +1064,13 @@ Hybrid approaches remain the smallest category (4 tools), despite achieving the 
 ]
 \addplot[fill=orange!50, draw=orange!70] coordinates {(7,0)};
 \addplot[fill=blue!50, draw=blue!70] coordinates {(8,1)};
-\addplot[fill=purple!50, draw=purple!70] coordinates {(8,2)};
-\addplot[fill=red!50, draw=red!70] coordinates {(5,3)};
+\addplot[fill=purple!50, draw=purple!70] coordinates {(7,2)};
+\addplot[fill=red!50, draw=red!70] coordinates {(4,3)};
 \addplot[fill=green!50, draw=green!70] coordinates {(4,4)};
 \end{axis}
 \end{tikzpicture}%
 }
-\caption{Distribution of surveyed tools by methodology type. Trace-driven simulation dominates due to the recent growth of distributed training and LLM serving tools. Hybrid approaches are the least represented despite their strong accuracy results.}
+\caption{Distribution of surveyed tools by methodology type. Analytical models lead (8 tools), followed by trace-driven and ML-augmented approaches (7 each). Cycle-accurate simulation and hybrid approaches are tied as the smallest categories (4 each), with hybrid achieving the best accuracy despite limited representation.}
 \label{fig:methodology-breakdown}
 \end{figure}
 
