@@ -820,24 +820,26 @@ nn-Meter & 2 & 0 & 1 & 3/10 \\
 \label{subsec:per-tool-results}
 
 \textbf{VIDUR} (9/10).
-We simulated Llama-2-7B on a simulated A100 (Table~\ref{tab:vidur-results}).
-Sarathi achieves 12.2\% lower latency than vLLM via chunked prefill~\cite{sarathi2024}; TPOT differs by only 3.5\%; vLLM preempted 26.5\% of requests vs.\ zero for Sarathi---matching KV-cache management differences~\cite{vllm2023}.
+We simulated Llama-2-7B on a simulated A100 under two scheduler configurations (Table~\ref{tab:vidur-results}).
+Note that the two schedulers were run at different arrival rates (QPS 2.0 vs.\ 4.0), so their latency metrics are \emph{not directly comparable}; rather, the results illustrate VIDUR's ability to model distinct scheduling behaviors.
+The vLLM scheduler preempted 28\% of requests even at lower load, while Sarathi's chunked prefill~\cite{sarathi2024} avoided preemptions entirely despite 2$\times$ higher arrival rate---consistent with the KV-cache management differences described in the respective papers~\cite{vllm2023,sarathi2024}.
 
 \begin{table}[t]
 \centering
-\caption{VIDUR simulation results for Llama-2-7B inference serving on a simulated A100 GPU. All metrics from our own experiments.}
+\caption{VIDUR simulation results for Llama-2-7B inference serving on a simulated A100 GPU (100 requests each, seed=42). Schedulers use different arrival rates, so latency values are not directly comparable; results illustrate VIDUR's scheduling model fidelity. All metrics from our own experiments.}
 \label{tab:vidur-results}
 \small
 \begin{tabular}{lcc}
 \toprule
 \textbf{Metric} & \textbf{vLLM} & \textbf{Sarathi} \\
 \midrule
-Requests & 200 & 50 \\
-Avg E2E latency (s) & 0.177 & 0.158 \\
-P99 E2E latency (s) & 0.320 & 0.270 \\
-Avg TTFT (s) & 0.027 & 0.025 \\
-Avg TPOT (s) & 0.0093 & 0.0090 \\
-Requests preempted & 53 & 0 \\
+Requests & 100 & 100 \\
+QPS (Poisson) & 2.0 & 4.0 \\
+Avg E2E latency (s) & 0.170 & 0.174 \\
+P99 E2E latency (s) & 0.285 & 0.294 \\
+Avg TTFT (s) & 0.027 & 0.028 \\
+Avg TPOT (s) & 0.0093 & 0.0095 \\
+Requests preempted & 28 & 0 \\
 \bottomrule
 \end{tabular}
 \end{table}
