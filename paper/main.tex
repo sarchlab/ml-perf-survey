@@ -37,6 +37,7 @@
 
 %% Additional packages (acmart already loads amsmath, amsfonts, amssymb, booktabs)
 \usepackage{multirow}
+\usepackage{pifont}
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric,arrows.meta,positioning,fit,backgrounds,patterns,decorations.pathreplacing}
 \usepackage{pgfplots}
@@ -452,23 +453,54 @@ From the 22 surveyed tools, we select 5 for hands-on evaluation using three crit
 This yields: Timeloop (analytical, accelerator), ASTRA-sim (trace-driven, distributed), VIDUR (trace-driven, LLM serving), NeuSight (hybrid, GPU), and nn-Meter (ML-augmented, edge).
 We deliberately include nn-Meter despite known deployment issues because failure cases reveal important lessons about tool reliability.
 
-\subsection{Experimental Design}
-\label{subsec:experimental-design}
+\subsection{LLM Benchmark Suite}
+\label{subsec:llm-benchmark-suite}
 
-We design experiments to match each tool's intended scope rather than forcing all tools onto a common benchmark:
+Rather than evaluating each tool on its own preferred workloads, we define a benchmark suite centered on the workloads that dominate modern ML infrastructure: \textbf{LLM training} and \textbf{LLM inference}.
+Each benchmark represents a concrete decision practitioners face (e.g., ``How long will fine-tuning Llama-70B take on 64 H100s with FSDP?'' or ``Can we serve Llama-7B at 50~QPS with P99 TTFT~$<$~500\,ms?'').
+We then assess which tools can address each scenario.
 
-\begin{itemize}
-    \item \textbf{NeuSight:} 146 model configurations across 12 GPU types (NVIDIA V100, H100, A100-80G, A100-40G, L4, T4, P100, P4; AMD MI100, MI210, MI250), comparing predicted vs.\ measured kernel latency.
-    \item \textbf{ASTRA-sim:} 4 collective operations (All-Reduce, All-Gather, Reduce-Scatter, All-to-All) at 8~NPUs on HGX-H100 configuration, plus ResNet-50 data-parallel training at 2, 4, and 8 GPUs.
-    \item \textbf{VIDUR:} Llama-2-7B serving on simulated A100 under vLLM and Sarathi schedulers, measuring E2E latency, TTFT, TPOT, and preemption behavior.
-    \item \textbf{Timeloop:} ResNet-50 Conv1 on Eyeriss-like architecture, validating energy breakdown structure against published silicon data.
-    \item \textbf{nn-Meter:} Attempted deployment with pre-trained predictors on standard models across 4 edge device targets.
-\end{itemize}
+\textbf{Training benchmarks} span four categories: (1)~\emph{kernel-level} prediction of transformer attention and MLP forward/backward pass latency across GPU types; (2)~\emph{communication-level} modeling of distributed training collectives (AllReduce for data parallelism, AllGather for tensor parallelism, All-to-All for expert parallelism) at 8--64 GPUs with hierarchical NVLink/InfiniBand topologies; (3)~\emph{system-level} training scaling, including memory capacity limits, activation checkpointing tradeoffs, and end-to-end training time estimation; and (4)~\emph{advanced training} scenarios including FP8 mixed-precision, sequence parallelism for long contexts, LoRA fine-tuning, and context window extension---optimizations that are standard practice but change performance characteristics by $2$--$4\times$.
 
-All experiments run on a common platform (Apple M2 Ultra, 192\,GB RAM, Docker-based where available).
-For deterministic tools (Timeloop, ASTRA-sim), we verify bit-identical outputs across three independent runs.
-For stochastic tools (VIDUR with Poisson arrivals), we report mean and P99 latency across fixed random seeds.
-All evaluation scripts and raw data are provided as supplementary material.
+\textbf{Inference benchmarks} cover five categories: (1)~\emph{single-request latency} separating prefill (compute-bound, quadratic in sequence length) from decode (memory-bandwidth-bound) phases at varying context lengths (128--8192 tokens); (2)~\emph{batched serving throughput} under realistic Poisson arrivals (QPS 2--50), testing continuous batching and chunked prefill scheduling; (3)~\emph{KV cache management}, predicting memory consumption as a function of sequence length and concurrency; (4)~\emph{architecture variants} including mixture-of-experts (MoE) routing and grouped-query attention (GQA); and (5)~\emph{production optimizations} including speculative decoding ($\sim$$3\times$ decode speedup), prefix caching for RAG workloads, disaggregated prefill/decode serving, and INT4 quantized inference---techniques deployed at scale by every major LLM provider.
+
+Table~\ref{tab:llm-benchmark-coverage} shows which tools can address each benchmark category.
+Experiments execute on Apple M2 Ultra (192\,GB RAM, Docker where available); deterministic tools verified bit-identical across three runs, stochastic tools report mean and P99 across fixed seeds.
+All scripts and data are provided as supplementary material.
+
+\begin{table}[t]
+\centering
+\caption{LLM benchmark coverage. \ding{51} = tool can produce predictions; ($\sim$) = partial coverage; --- = outside tool scope. 45 total scenarios across training (21) and inference (24).}
+\label{tab:llm-benchmark-coverage}
+\small
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Benchmark Category} & \rotatebox{70}{\textbf{NeuSight}} & \rotatebox{70}{\textbf{ASTRA-sim}} & \rotatebox{70}{\textbf{VIDUR}} & \rotatebox{70}{\textbf{Timeloop}} & \rotatebox{70}{\textbf{nn-Meter}} \\
+\midrule
+\multicolumn{6}{l}{\emph{LLM Training (21 scenarios)}} \\
+T1: Training kernels (5) & ($\sim$) & --- & --- & --- & --- \\
+T2: Distributed comm (6) & --- & 5/6 & --- & --- & --- \\
+T3: Scaling \& memory (5) & --- & ($\sim$) & --- & --- & --- \\
+T4: Advanced training (5) & --- & ($\sim$) & --- & --- & --- \\
+\midrule
+\multicolumn{6}{l}{\emph{LLM Inference (24 scenarios)}} \\
+I1: Single-request latency (5) & ($\sim$) & --- & \ding{51} & --- & --- \\
+I2: Batched serving (6) & --- & --- & \ding{51} & --- & --- \\
+I3: KV cache \& memory (4) & --- & --- & ($\sim$) & --- & --- \\
+I4: Architecture variants (4) & ($\sim$) & --- & ($\sim$) & --- & --- \\
+I5: Production optimizations (5) & --- & --- & --- & --- & --- \\
+\midrule
+\textbf{Full coverage} & 0/45 & 5/45 & 12/45 & 0/45 & 0/45 \\
+\textbf{Partial coverage} & 7/45 & 4/45 & 2/45 & 0/45 & 0/45 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Key observation.} No single tool covers even a third of the LLM benchmark suite.
+VIDUR provides the broadest LLM coverage (12/45 scenarios, all inference-side), while ASTRA-sim covers distributed communication (5/45, all training-side).
+The advanced training (T4) and production inference optimization (I5) categories have \emph{zero} tool coverage---no evaluated tool models FP8 training, LoRA fine-tuning, speculative decoding, prefix caching, or quantized inference, despite these being standard practice.
+Only 17/45 scenarios (38\%) have any tool coverage; \textbf{62\% of modern LLM workload scenarios are completely unaddressed}.
+Sections~\ref{subsec:neusight-results}--\ref{subsec:nnmeter-results} present detailed per-tool results.
 
 \subsection{Limitations}
 \label{subsec:eval-limitations}
@@ -484,8 +516,8 @@ The $N=5$ tool sample provides case-study-level findings; conclusions should be 
 \section{Evaluation Results}
 \label{sec:eval-results}
 
-We evaluate five tools through accuracy-centered experiments, comparing our independently measured results against published claims.
-Table~\ref{tab:accuracy-comparison} summarizes the accuracy findings; Table~\ref{tab:feature-matrix} presents the feature availability matrix.
+We evaluate five tools against our LLM-focused benchmark suite (Section~\ref{subsec:llm-benchmark-suite}), comparing independently measured results against published claims.
+Table~\ref{tab:accuracy-comparison} summarizes accuracy findings; Table~\ref{tab:feature-matrix} presents the feature availability matrix.
 
 \begin{table}[t]
 \centering
@@ -680,7 +712,7 @@ nn-Meter's failure demonstrates that pickle serialization of ML models without v
 \subsection{Cross-Cutting Findings}
 \label{subsec:cross-cutting-findings}
 
-Our accuracy-centered evaluation reveals three findings that would be invisible to a survey based solely on self-reported numbers:
+Our LLM-focused benchmark evaluation reveals four findings that would be invisible to a survey based solely on self-reported numbers:
 
 \emph{First}, \textbf{self-reported accuracy is inversely correlated with tool reliability.}
 Ranking tools by claimed accuracy: nn-Meter ($<$1\%) $>$ NeuSight (2.3\%) $>$ VIDUR ($<$5\%) $>$ Timeloop (5--10\%) $>$ ASTRA-sim (5--15\%).
@@ -699,6 +731,12 @@ NeuSight's kernel-level accuracy is 5--9\% MAPE on datacenter GPUs, but model-le
 The 5--15\% additional error from composition---inter-kernel launch overhead, memory allocation, synchronization barriers---is \emph{larger than most tools' kernel-level error}.
 This means improving kernel predictors has diminishing returns until the composition problem is solved.
 No existing tool addresses this layer (Figure~\ref{fig:error-composition}).
+
+\emph{Fourth}, \textbf{LLM workload coverage is critically sparse} (Table~\ref{tab:llm-benchmark-coverage}).
+Against our 45-scenario LLM benchmark suite, the best tool (VIDUR) covers only 12 scenarios, all on the inference side.
+Only 38\% of scenarios have any tool coverage (full or partial); the remaining 62\% are completely unaddressed.
+Production-critical techniques---FP8 training, LoRA fine-tuning, speculative decoding, prefix caching, quantized inference---have zero tool coverage despite being standard practice.
+End-to-end LLM training time prediction requires manual integration of at least three tools (NeuSight kernels $\rightarrow$ ASTRA-sim communication $\rightarrow$ custom memory model), with no existing framework to orchestrate them.
 
 \subsection{Threats to Validity}
 \label{subsec:threats}
