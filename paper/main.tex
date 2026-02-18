@@ -7,8 +7,11 @@
 \usepackage{multirow}\usepackage{enumitem}\usepackage{tikz}
 \usetikzlibrary{shapes.geometric,arrows.meta,positioning,fit,backgrounds,patterns,decorations.pathreplacing}
 \usepackage{pgfplots}\pgfplotsset{compat=1.18}\usepgfplotslibrary{groupplots}\usetikzlibrary{plotmarks}
-\setlength{\textfloatsep}{4pt plus 1pt minus 2pt}\setlength{\floatsep}{4pt plus 1pt minus 2pt}\setlength{\intextsep}{4pt plus 1pt minus 2pt}
-\setlength{\dbltextfloatsep}{4pt plus 1pt minus 2pt}\setlength{\dblfloatsep}{4pt plus 1pt minus 2pt}\setlength{\abovecaptionskip}{2pt}\setlength{\belowcaptionskip}{1pt}
+\setlength{\textfloatsep}{3pt plus 1pt minus 2pt}\setlength{\floatsep}{3pt plus 1pt minus 2pt}\setlength{\intextsep}{3pt plus 1pt minus 2pt}
+\setlength{\dbltextfloatsep}{3pt plus 1pt minus 2pt}\setlength{\dblfloatsep}{3pt plus 1pt minus 2pt}\setlength{\abovecaptionskip}{1pt}\setlength{\belowcaptionskip}{0pt}
+\setlength{\abovedisplayskip}{3pt plus 1pt minus 1pt}\setlength{\belowdisplayskip}{3pt plus 1pt minus 1pt}
+\setlength{\parskip}{0pt plus 0.5pt}
+\renewcommand{\topfraction}{0.95}\renewcommand{\bottomfraction}{0.95}\renewcommand{\textfraction}{0.05}\renewcommand{\floatpagefraction}{0.9}
 \newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
 \begin{document}
 \title{A Survey of High-Level Modeling and Simulation Methods for Modern Machine Learning Workloads}\subtitle{\normalsize{MICRO 2026 Submission -- Confidential Draft -- Do NOT Distribute!!}}
@@ -28,7 +31,7 @@ We contribute: (1)~a \textbf{28-scenario LLM benchmark suite} revealing 50\% of 
 \section{Survey Methodology}\label{sec:methodology}
 We searched ACM DL, IEEE Xplore, Semantic Scholar, and arXiv (MICRO, ISCA, HPCA, ASPLOS, MLSys, OSDI, SOSP). From 287 candidates, 53 papers (2016--2026) plus 12 foundational works were classified by \emph{methodology type}, \emph{target platform}, and \emph{abstraction level}~\cite{rakhshanfar2021survey}, excluding proprietary tools, simulation infrastructure~\cite{binkert2011gem5,sst2012}, compiler cost models~\cite{halide2013,mlir2020,triton2019}, and cluster schedulers~\cite{pollux2021,sia2023}.
 \section{Background}\label{sec:background}
-ML workloads are computation graphs amenable to analytical modeling; MoE and dynamic inference add input-dependent control flow~\cite{pytorch2019,tensorflow2016}. Performance depends on dataflow/tiling, KV cache~\cite{vllm2023}, and compute--memory--network balance; LLM inference splits into compute-bound prefill and memory-bound decode~\cite{splitwise2024,sarathi2024,orca2022}. Five types span accuracy--speed trade-offs: \textbf{analytical}~\cite{williams2009roofline} ($\mu$s), \textbf{cycle-accurate}~\cite{gpgpusim2009,accelsim2020} ($10^3$--$10^4\times$ slowdown), \textbf{trace-driven}~\cite{astrasim2023,vidur2024} (min.), \textbf{ML-augmented}~\cite{nnmeter2021} (ms), and \textbf{hybrid}~\cite{neusight2025,habitat2021}.
+ML workloads are computation graphs where performance depends on dataflow/tiling, KV cache~\cite{vllm2023}, and compute--memory--network balance; LLM inference splits into compute-bound prefill and memory-bound decode~\cite{splitwise2024,sarathi2024,orca2022}, while MoE and dynamic inference add input-dependent control flow~\cite{pytorch2019,tensorflow2016}. Five modeling types span accuracy--speed trade-offs: \textbf{analytical}~\cite{williams2009roofline} ($\mu$s), \textbf{cycle-accurate}~\cite{gpgpusim2009,accelsim2020} ($10^3$--$10^4\times$ slowdown), \textbf{trace-driven}~\cite{astrasim2023,vidur2024} (min.), \textbf{ML-augmented}~\cite{nnmeter2021} (ms), and \textbf{hybrid}~\cite{neusight2025,habitat2021}.
 \section{Taxonomy}\label{sec:taxonomy}
 We organize the literature by \emph{methodology type}, \emph{target platform}, and \emph{abstraction level} (Table~\ref{tab:taxonomy-matrix}).\begin{table*}[t]
 \centering\caption{Methodology taxonomy: coverage matrix and trade-off profile. \textbf{0} = research gap.}\label{tab:taxonomy-matrix}\footnotesize\begin{tabular}{l|ccccc|cccc}\toprule
@@ -40,7 +43,7 @@ Trace-Driven & \textbf{0} & \textbf{0} & 7 & \textbf{0} & \textbf{0} & Min. & Tr
 ML-Augmented & \textbf{0} & 3 & \textbf{0} & 3 & 1 & ms & Profiling & Low & Distrib.\ shift \\
 Hybrid & 1 & 2 & \textbf{0} & \textbf{0} & 1 & ms & Mixed & Med. & Training domain \\ \bottomrule
 \end{tabular}\end{table*}
-Three gaps emerge (Figure~\ref{fig:tool-architecture}): trace-driven replay is exclusive to distributed systems, edge devices lack hybrid methods, and no ML-augmented tool targets distributed settings.
+Three gaps emerge (Figure~\ref{fig:tool-architecture}): trace-driven methods are exclusive to distributed systems, edge devices lack hybrid tools, and no ML-augmented tool targets distributed settings.
 \begin{figure}[t]
 \centering\resizebox{\columnwidth}{!}{%
 \begin{tikzpicture}[comp/.style={draw=black!60, rounded corners=3pt, minimum width=2.4cm, minimum height=0.45cm, align=center, font=\scriptsize}, input/.style={draw=black!40, dashed, rounded corners=2pt, minimum width=1.8cm, minimum height=0.35cm, align=center, font=\tiny}, arr/.style={-{Stealth[length=3pt]}, thick, black!50}, lbl/.style={font=\tiny, text=black!50}]
@@ -90,7 +93,7 @@ HELP~\cite{help2021} & Multi & M & Latency & 1.9\% & ms & 10-sample adaptation \
 TVM~\cite{tvm2018} & GPU & M & Schedule perf. & $\sim$15\% & ms & Autotuning guidance \\
 Ansor~\cite{ansor2020} & GPU & M & Schedule perf. & $\sim$15\% & ms & Program sampling \\
 TLP~\cite{tlp2023} & GPU & M & Tensor program & $<$10\% & ms & Transformer cost model \\ \bottomrule
-\end{tabular}\end{table*}\textbf{DNN accelerators and GPUs.} Timeloop~\cite{timeloop2019} enumerates loop-nest mappings (5--10\%); MAESTRO~\cite{maestro2019} and Sparseloop~\cite{sparseloop2022} extend to data-centric and sparse tensors; PIM tools~\cite{upimulator2024,attacc2024,neupims2024,paise2025} and ArchGym~\cite{archgym2023} represent newer approaches. Cycle-accurate simulators (GPGPU-Sim~\cite{gpgpusim2009}, Accel-Sim~\cite{accelsim2020}) achieve 0.90--0.97 IPC correlation at $10^3$--$10^4\times$ slowdown; hybrid tools NeuSight~\cite{neusight2025} (2.3\%), Habitat~\cite{habitat2021} (11.8\%), AMALI~\cite{amali2025} (23.6\%), and TVM/Ansor/TLP~\cite{tvm2018,ansor2020,tlp2023,life2025,hermes2025,omniwise2025,swizzleperf2025,synperf2025,tenset2021} trade accuracy for speed. \textbf{Distributed and serving:} ASTRA-sim~\cite{astrasim2023} (5--15\%), SimAI~\cite{simai2025} (1.9\%), VIDUR~\cite{vidur2024}, Lumos~\cite{lumos2025} (3.3\%), and others~\cite{echo2024,paleo2017,distserve2024,frontier2025,podattention2025,aqua2025,throttllem2025,sailor2025} cover distributed and serving; LitePred~\cite{litepred2024} (0.7\%) and HELP~\cite{help2021} (1.9\%) cover mobile~\cite{esm2025,latencypredictorsnas2024}.
+\end{tabular}\end{table*}\textbf{DNN accelerators and GPUs.} Analytical tools---Timeloop~\cite{timeloop2019} (5--10\%), MAESTRO~\cite{maestro2019}, Sparseloop~\cite{sparseloop2022}, PIM tools~\cite{upimulator2024,attacc2024,neupims2024,paise2025}, ArchGym~\cite{archgym2023}---enumerate mappings; cycle-accurate simulators~\cite{gpgpusim2009,accelsim2020} achieve 0.90--0.97 IPC correlation at $10^3$--$10^4\times$ slowdown; hybrid tools~\cite{neusight2025,habitat2021,amali2025,tvm2018,ansor2020,tlp2023,life2025,hermes2025,omniwise2025,swizzleperf2025,synperf2025,tenset2021} trade accuracy for speed. \textbf{Distributed/serving:} ASTRA-sim~\cite{astrasim2023}, SimAI~\cite{simai2025}, VIDUR~\cite{vidur2024}, Lumos~\cite{lumos2025}, and others~\cite{echo2024,paleo2017,distserve2024,frontier2025,podattention2025,aqua2025,throttllem2025,sailor2025} cover training and serving; LitePred~\cite{litepred2024} and HELP~\cite{help2021} cover mobile~\cite{esm2025,latencypredictorsnas2024}.
 \section{Evaluation Methodology}
 \label{sec:eval-framework}
 
@@ -871,7 +874,7 @@ We designed the suite to be extensible: each scenario is specified by a tuple of
 Future versions should expand to at least 40 scenarios to maintain coverage as the LLM deployment landscape diversifies.
 
 \section{Toward a Unified Simulation Pipeline}\label{sec:unified-pipeline}
-No single tool spans kernel execution through serving SLAs. Figure~\ref{fig:pipeline-architecture} shows five layers: hardware design (Timeloop), kernel prediction (NeuSight), \textbf{model composition (CRITICAL GAP)}, distributed training (ASTRA-sim), and serving (VIDUR). NeuSight's 5--9\% kernel MAPE grows to 10--28\% at model level via launch overhead; common formats and cross-hardware transfer remain unsolved.
+No single tool spans kernel execution through serving SLAs. Figure~\ref{fig:pipeline-architecture} shows five layers---hardware design, kernel prediction, \textbf{model composition (CRITICAL GAP)}, distributed training, and serving---where 5--9\% kernel MAPE grows to 10--28\% at model level via launch overhead.
 \begin{figure}[t]
 \centering\resizebox{\columnwidth}{!}{%
 \begin{tikzpicture}[layer/.style={draw=black!60, rounded corners=3pt, minimum width=5.5cm, minimum height=0.6cm, align=center, font=\scriptsize\bfseries}, tool/.style={font=\tiny, text=black!60}, arr/.style={-{Stealth[length=3pt]}, thick, black!50}, data/.style={font=\tiny\itshape, text=blue!50!black}]
@@ -896,7 +899,7 @@ No single tool spans kernel execution through serving SLAs. Figure~\ref{fig:pipe
 \addplot[fill=blue!50, draw=blue!70] coordinates {(2016,2) (2018,2) (2020,4) (2022,3) (2024,2) (2026,0)}; \addplot[fill=orange!50, draw=orange!70] coordinates {(2016,0) (2018,1) (2020,0) (2022,2) (2024,3) (2026,0)}; \addplot[fill=red!50, draw=red!70] coordinates {(2016,0) (2018,0) (2020,1) (2022,1) (2024,8) (2026,2)}; \addplot[fill=green!50, draw=green!70] coordinates {(2016,0) (2018,0) (2020,1) (2022,0) (2024,2) (2026,1)};
 \legend{CNN only, CNN+Transformer, LLM/Distributed, Cross-workload}
 \end{axis}\end{tikzpicture}}\caption{Workload coverage by publication period. MoE and diffusion models remain uncharacterized.}\label{fig:workload-coverage}\end{figure}
-\textbf{(3)~Hardware transfer and network fidelity:} Cross-family transfer (GPU$\rightarrow$TPU$\rightarrow$PIM~\cite{upimulator2024,attacc2024,neupims2024,paise2025}) remains unsolved; analytical abstractions omit congestion~\cite{astrasim2023,triosim2025,ns3_2010}. \textbf{(4)~Standardized evaluation:} No MLPerf~\cite{mlperf_training2020,mlperf_inference2020} equivalent exists for simulators; common benchmarks, portable formats (ONNX, Chakra~\cite{chakra2023}), and continuous validation~\cite{mlperfpower2025} are needed.
+\textbf{(3)~Hardware transfer:} Cross-family transfer (GPU$\rightarrow$TPU$\rightarrow$PIM~\cite{upimulator2024,attacc2024,neupims2024,paise2025}) and congestion modeling~\cite{astrasim2023,triosim2025,ns3_2010} remain unsolved. \textbf{(4)~Standardized evaluation:} No MLPerf~\cite{mlperf_training2020,mlperf_inference2020} equivalent exists for simulators; portable formats~\cite{chakra2023} and continuous validation~\cite{mlperfpower2025} are needed.
 \section{Conclusion}\label{sec:conclusion}
 We survey 22 ML performance tools and independently evaluate five against a 28-scenario LLM benchmark suite, finding self-reported accuracy unreliable (NeuSight: 2.3\% claimed vs.\ 5.87--27.10\% measured; nn-Meter: no output). The tools are complementary but disjoint, and the 5--15\% kernel-to-model composition gap dominates total error; validated composition models, benchmark-driven development, and continuous validation are the most pressing needs.
 \bibliographystyle{ACM-Reference-Format}
