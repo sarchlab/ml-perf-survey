@@ -77,19 +77,17 @@ We contribute an \textbf{accuracy-centered verification framework} replacing sel
 \begin{tikzpicture}[yearnode/.style={font=\scriptsize\bfseries, text=black!70}, eventnode/.style={font=\tiny, text width=2cm, align=center}]
 \draw[thick, ->, black!40] (0,0) -- (9,0);
 \foreach \x/\year in {0.3/2016, 1.5/2018, 3/2020, 4.5/2022, 6/2024, 7.2/2025, 8.5/2026} { \draw[thick, black!40] (\x,-0.1) -- (\x,0.1); \node[yearnode, below] at (\x,-0.12) {\year}; }
-\node[eventnode, above] at (0.3,0.2) {Eyeriss\\Paleo}; \node[eventnode, below] at (1.2,-0.2) {TVM}; \node[eventnode, above] at (2.2,0.2) {Timeloop\\MAESTRO}; \node[eventnode, below] at (3,-0.2) {Ansor\\ASTRA-sim};
-\node[eventnode, above] at (3.8,0.2) {nn-Meter\\Habitat}; \node[eventnode, below] at (4.5,-0.2) {Sparseloop\\Accel-Sim}; \node[eventnode, above] at (5.3,0.2) {TLP\\ASTRA-sim 2.0}; \node[eventnode, below] at (6,-0.2) {VIDUR\\Splitwise};
-\node[eventnode, above] at (7.2,0.2) {NeuSight\\AMALI}; \node[eventnode, below] at (8.5,-0.2) {Frontier\\Lumos};
-\draw[thick, ->, blue!50, dashed] (0.5,0.85) -- (8.2,0.85); \node[font=\tiny, text=blue!60, above] at (4.3,0.85) {Toward hybrid analytical+learned models};
+\node[eventnode, above] at (0.3,0.12) {Eyeriss\\Paleo}; \node[eventnode, below] at (1.2,-0.12) {TVM}; \node[eventnode, above] at (2.2,0.12) {Timeloop\\MAESTRO}; \node[eventnode, below] at (3,-0.12) {Ansor\\ASTRA-sim};
+\node[eventnode, above] at (3.8,0.12) {nn-Meter\\Habitat}; \node[eventnode, below] at (4.5,-0.12) {Sparseloop\\Accel-Sim}; \node[eventnode, above] at (5.3,0.12) {TLP\\ASTRA-sim 2.0}; \node[eventnode, below] at (6,-0.12) {VIDUR\\Splitwise};
+\node[eventnode, above] at (7.2,0.12) {NeuSight\\AMALI}; \node[eventnode, below] at (8.5,-0.12) {Frontier\\Lumos};
+\draw[thick, ->, blue!50, dashed] (0.5,0.7) -- (8.2,0.7); \node[font=\tiny, text=blue!60, above] at (4.3,0.7) {Toward hybrid analytical+learned models};
 \end{tikzpicture}}
 \caption{Evolution of performance modeling tools (2016--2026).}\label{fig:timeline}
 \end{figure}
 \section{Survey Methodology}
 \label{sec:methodology}
 We searched ACM DL, IEEE Xplore, Semantic Scholar, and arXiv (MICRO, ISCA, HPCA, ASPLOS, MLSys, OSDI, SOSP). From 287 candidates, 53 papers (2016--2026) plus 12 foundational works were classified by \emph{methodology type}, \emph{target platform}, and \emph{abstraction level}~\cite{rakhshanfar2021survey}. We exclude proprietary tools (NVIDIA Nsight~\cite{nsightcompute2019}), simulation infrastructure~\cite{binkert2011gem5,sst2012}, compiler cost models~\cite{halide2013,mlir2020,triton2019}, and cluster schedulers~\cite{pollux2021,sia2023}.
-
-\section{Background}
-\label{sec:background}
+\section{Background}\label{sec:background}
 ML workloads are computation graphs with statically known operator shapes amenable to analytical modeling; MoE and dynamic inference add input-dependent control flow~\cite{pytorch2019,tensorflow2016}. Performance depends on dataflow/tiling, KV cache~\cite{vllm2023}, and compute--memory--network interactions; LLM inference splits into compute-bound prefill and memory-bound decode~\cite{splitwise2024,sarathi2024,orca2022}.
 Five methodology types span accuracy--speed trade-offs: \textbf{analytical}~\cite{williams2009roofline} ($\mu$s), \textbf{cycle-accurate}~\cite{gpgpusim2009,accelsim2020} ($10^3$--$10^4\times$ slowdown), \textbf{trace-driven}~\cite{astrasim2023,vidur2024} (min.), \textbf{ML-augmented}~\cite{nnmeter2021} (ms), and \textbf{hybrid}~\cite{neusight2025,habitat2021} (analytical+learned).
 \section{Taxonomy}
@@ -117,32 +115,30 @@ Three gaps emerge (Figure~\ref{fig:tool-architecture}): trace-driven replay is e
 \begin{figure}[t]
 \centering\resizebox{\columnwidth}{!}{%
 \begin{tikzpicture}[comp/.style={draw=black!60, rounded corners=3pt, minimum width=2.4cm, minimum height=0.45cm, align=center, font=\scriptsize}, input/.style={draw=black!40, dashed, rounded corners=2pt, minimum width=1.8cm, minimum height=0.35cm, align=center, font=\tiny}, arr/.style={-{Stealth[length=3pt]}, thick, black!50}, lbl/.style={font=\tiny, text=black!50}]
-\node[input] (wl) at (0,2.5) {Workload\\(ONNX/Chakra)}; \node[input] (hw) at (3,2.5) {Hardware\\config}; \node[input] (prof) at (6,2.5) {Profiling\\data};
-\node[comp, fill=blue!15] (analytical) at (0,1.5) {Analytical\\Engine}; \node[comp, fill=red!15] (simulator) at (3,1.5) {Cycle-Accurate\\Simulator}; \node[comp, fill=purple!15] (mlmodel) at (6,1.5) {ML Cost\\Model};
-\node[comp, fill=green!15, minimum width=3.2cm] (hybrid) at (3,0.6) {Hybrid Composition\\(analytical + learned)}; \node[comp, fill=orange!15, minimum width=6.5cm] (system) at (3,-0.2) {System Orchestrator (trace-driven)}; \node[input, draw=black!60, fill=gray!10] (output) at (3,-0.9) {Latency / Energy / Throughput};
+\node[input] (wl) at (0,2.2) {Workload\\(ONNX/Chakra)}; \node[input] (hw) at (3,2.2) {Hardware\\config}; \node[input] (prof) at (6,2.2) {Profiling\\data};
+\node[comp, fill=blue!15] (analytical) at (0,1.3) {Analytical\\Engine}; \node[comp, fill=red!15] (simulator) at (3,1.3) {Cycle-Accurate\\Simulator}; \node[comp, fill=purple!15] (mlmodel) at (6,1.3) {ML Cost\\Model};
+\node[comp, fill=green!15, minimum width=3.2cm] (hybrid) at (3,0.5) {Hybrid Composition\\(analytical + learned)}; \node[comp, fill=orange!15, minimum width=6.5cm] (system) at (3,-0.2) {System Orchestrator (trace-driven)}; \node[input, draw=black!60, fill=gray!10] (output) at (3,-0.85) {Latency / Energy / Throughput};
 \draw[arr] (wl) -- (analytical); \draw[arr] (hw) -- (analytical); \draw[arr] (hw) -- (simulator); \draw[arr] (wl) -- (simulator); \draw[arr] (prof) -- (mlmodel); \draw[arr] (wl) -- (mlmodel);
 \draw[arr] (analytical) -- (hybrid); \draw[arr] (mlmodel) -- (hybrid); \draw[arr, dashed, gray] (simulator) -- node[lbl, right] {valid.} (hybrid); \draw[arr] (hybrid) -- (system); \draw[arr] (analytical) |- (system); \draw[arr] (system) -- (output);
-\node[font=\tiny, text=blue!60, anchor=east] at (-0.5,1.5) {Timeloop, MAESTRO}; \node[font=\tiny, text=red!60, anchor=east] at (1.2,1.75) {Accel-Sim, GPGPU-Sim}; \node[font=\tiny, text=purple!60, anchor=west] at (7.6,1.5) {nn-Meter, TVM};
-\node[font=\tiny, text=green!50!black, anchor=west] at (5,0.6) {NeuSight, Habitat}; \node[font=\tiny, text=orange!60!black, anchor=west] at (6.7,-0.2) {ASTRA-sim, VIDUR};
+\node[font=\tiny, text=blue!60, anchor=east] at (-0.5,1.3) {Timeloop, MAESTRO}; \node[font=\tiny, text=red!60, anchor=east] at (1.2,1.55) {Accel-Sim, GPGPU-Sim}; \node[font=\tiny, text=purple!60, anchor=west] at (7.6,1.3) {nn-Meter, TVM};
+\node[font=\tiny, text=green!50!black, anchor=west] at (5,0.5) {NeuSight, Habitat}; \node[font=\tiny, text=orange!60!black, anchor=west] at (6.7,-0.2) {ASTRA-sim, VIDUR};
 \end{tikzpicture}}
 \caption{Unified architecture showing how tool methodologies compose.}\label{fig:tool-architecture}
 \end{figure}
-\textbf{Methodology--platform pairings.}
-\label{subsec:by-methodology}
+\textbf{Methodology--platform pairings.}\label{subsec:by-methodology}
 Platform constrains methodology: accelerators use analytical models~\cite{timeloop2019,maestro2019}; GPUs span all five types; distributed systems need trace-driven simulation~\cite{astrasim2023,vidur2024}; edge devices rely on ML-augmented~\cite{nnmeter2021,litepred2024}; CPUs~\cite{concorde2025,granite2022} remain least studied. Errors propagate (Figure~\ref{fig:abstraction-levels}): kernel 2--3\%, model 5--12\%, system 5--15\%.
 \begin{figure}[t]
 \centering\resizebox{\columnwidth}{!}{%
 \begin{tikzpicture}[level/.style={draw, rounded corners=3pt, minimum width=3.2cm, minimum height=0.5cm, align=center, font=\small\bfseries}, tool/.style={font=\scriptsize, text=black!70}, err/.style={font=\scriptsize\itshape, text=red!70!black}, arrow/.style={-{Stealth[length=3pt]}, thick, gray!60}, compos/.style={-{Stealth[length=4pt]}, thick, red!50!black, dashed}]
-\node[level, fill=blue!15, draw=blue!50] (kernel) at (0,0) {Kernel / Operator}; \node[level, fill=green!15, draw=green!50] (model) at (0,0.95) {Model / End-to-End}; \node[level, fill=orange!15, draw=orange!50] (system) at (0,1.9) {System};
+\node[level, fill=blue!15, draw=blue!50] (kernel) at (0,0) {Kernel / Operator}; \node[level, fill=green!15, draw=green!50] (model) at (0,0.8) {Model / End-to-End}; \node[level, fill=orange!15, draw=orange!50] (system) at (0,1.6) {System};
 \draw[arrow] (kernel) -- (model); \draw[arrow] (model) -- (system);
-\node[tool, anchor=east] at (-2.1,0) {NeuSight, nn-Meter,}; \node[tool, anchor=east] at (-2.1,-0.2) {TVM, GRANITE, TLP}; \node[tool, anchor=east] at (-2.1,0.95) {Paleo, Habitat,}; \node[tool, anchor=east] at (-2.1,0.75) {AMALI, Lumos, LIFE}; \node[tool, anchor=east] at (-2.1,1.9) {ASTRA-sim, VIDUR,}; \node[tool, anchor=east] at (-2.1,1.7) {SimAI, Frontier};
-\node[err, anchor=west] at (2.1,0) {2--3\% error}; \node[err, anchor=west] at (2.1,0.95) {5--12\% error}; \node[err, anchor=west] at (2.1,1.9) {5--15\% error};
-\draw[compos] (3.6,0.15) -- (3.6,1.75); \node[font=\scriptsize, text=red!50!black, rotate=90, anchor=south] at (3.9,0.95) {error accumulates};
+\node[tool, anchor=east] at (-2.1,0) {NeuSight, nn-Meter,}; \node[tool, anchor=east] at (-2.1,-0.2) {TVM, GRANITE, TLP}; \node[tool, anchor=east] at (-2.1,0.8) {Paleo, Habitat,}; \node[tool, anchor=east] at (-2.1,0.6) {AMALI, Lumos, LIFE}; \node[tool, anchor=east] at (-2.1,1.6) {ASTRA-sim, VIDUR,}; \node[tool, anchor=east] at (-2.1,1.4) {SimAI, Frontier};
+\node[err, anchor=west] at (2.1,0) {2--3\% error}; \node[err, anchor=west] at (2.1,0.8) {5--12\% error}; \node[err, anchor=west] at (2.1,1.6) {5--15\% error};
+\draw[compos] (3.6,0.15) -- (3.6,1.45); \node[font=\scriptsize, text=red!50!black, rotate=90, anchor=south] at (3.9,0.8) {error accumulates};
 \end{tikzpicture}}
 \caption{Abstraction level hierarchy with error accumulation.}\label{fig:abstraction-levels}
 \end{figure}
-\textbf{Workload coverage.}
-\label{subsec:workload-coverage}
+\textbf{Workload coverage.}\label{subsec:workload-coverage}
 Of 14 tools, 9 validate only on CNNs; post-2023 tools target transformers/LLMs but \textbf{none validates on diffusion or dynamic inference}~\cite{dynamicreasoning2026}, only Frontier~\cite{frontier2025} validates MoE, and none spans the full kernel-to-system stack.
 \section{Survey of Approaches}
 \label{sec:survey}
@@ -190,7 +186,6 @@ TLP~\cite{tlp2023} & GPU & M & Tensor program & $<$10\% & ms & Transformer cost 
 \bottomrule
 \end{tabular}
 \end{table*}
-
 \textbf{DNN accelerators and GPUs.} Timeloop~\cite{timeloop2019} enumerates loop-nest mappings (5--10\%); MAESTRO~\cite{maestro2019} and Sparseloop~\cite{sparseloop2022} extend to data-centric and sparse tensors~\cite{diannao2014,eyeriss2016}; PIM tools~\cite{upimulator2024,attacc2024,neupims2024,paise2025} and PyTorchSim~\cite{pytorchsim2025}/ArchGym~\cite{archgym2023} represent newer approaches. Cycle-accurate simulators (GPGPU-Sim~\cite{gpgpusim2009}, Accel-Sim~\cite{accelsim2020}) achieve 0.90--0.97 IPC correlation at $10^3$--$10^4\times$ slowdown~\cite{dramsim3_2020,ramulator2_2023,dissectinggpu2025}; hybrid tools NeuSight~\cite{neusight2025} (2.3\%), Habitat~\cite{habitat2021} (11.8\%), AMALI~\cite{amali2025} (23.6\%), and TVM/Ansor/TLP~\cite{tvm2018,ansor2020,tlp2023,life2025,hermes2025,omniwise2025,swizzleperf2025,synperf2025,tenset2021} trade accuracy for speed.
 \textbf{Distributed, serving, and edge.} ASTRA-sim~\cite{astrasim2023} replays Chakra traces~\cite{chakra2023} (5--15\%); SimAI~\cite{simai2025} (1.9\%), VIDUR~\cite{vidur2024}, Lumos~\cite{lumos2025} (3.3\%), and others~\cite{echo2024,paleo2017,distserve2024,frontier2025,podattention2025,aqua2025,throttllem2025,sailor2025} provide complementary coverage. nn-Meter~\cite{nnmeter2021} claims $<$1\% but is unverifiable (Section~\ref{sec:eval-results}); LitePred~\cite{litepred2024} (0.7\%) and HELP~\cite{help2021} (1.9\%) cover mobile platforms~\cite{esm2025,latencypredictorsnas2024}.
 \section{Evaluation Methodology}
@@ -972,43 +967,39 @@ Emerging techniques not represented include retrieval-augmented generation (RAG)
 We designed the suite to be extensible: each scenario is specified by a tuple of (model architecture, hardware configuration, parallelism strategy, target metric), allowing new scenarios to be added as techniques mature without restructuring the evaluation framework.
 Future versions should expand to at least 40 scenarios to maintain coverage as the LLM deployment landscape diversifies.
 
-\section{Toward a Unified Simulation Pipeline}
-\label{sec:unified-pipeline}
-No single tool spans kernel execution through serving SLAs (Table~\ref{tab:feature-matrix}); Figure~\ref{fig:pipeline-architecture} shows a five-layer pipeline---hardware design (Timeloop), kernel prediction (NeuSight), \textbf{model composition (CRITICAL GAP)}, distributed training (ASTRA-sim), and serving (VIDUR).
+\section{Toward a Unified Simulation Pipeline}\label{sec:unified-pipeline}
+No single tool spans kernel execution through serving SLAs; Figure~\ref{fig:pipeline-architecture} shows five layers---hardware design (Timeloop), kernel prediction (NeuSight), \textbf{model composition (CRITICAL GAP)}, distributed training (ASTRA-sim), and serving (VIDUR)---where NeuSight's 5--9\% kernel MAPE grows to 10--28\% model-level error via launch overhead and synchronization. Common workload formats and cross-hardware transfer (accuracy degrades $3$--$4\times$ outside training distributions) are also needed.
 \begin{figure}[t]
-\centering
-\resizebox{\columnwidth}{!}{%
+\centering\resizebox{\columnwidth}{!}{%
 \begin{tikzpicture}[layer/.style={draw=black!60, rounded corners=3pt, minimum width=5.5cm, minimum height=0.6cm, align=center, font=\scriptsize\bfseries}, tool/.style={font=\tiny, text=black!60}, arr/.style={-{Stealth[length=3pt]}, thick, black!50}, data/.style={font=\tiny\itshape, text=blue!50!black}]
-\node[layer, fill=purple!12, draw=purple!40] (hw) at (0,0) {Layer 1: Hardware Design}; \node[tool, anchor=west] at (3.2,0) {Timeloop}; \node[layer, fill=blue!12, draw=blue!40] (kernel) at (0,0.95) {Layer 2: Kernel Prediction}; \node[tool, anchor=west] at (3.2,0.95) {NeuSight};
-\node[layer, fill=red!8, draw=red!60, dashed, line width=1pt] (comp) at (0,1.9) {Layer 3: Model Composition}; \node[font=\tiny\bfseries, text=red!60!black, anchor=west] at (3.2,1.9) {CRITICAL GAP}; \node[layer, fill=orange!12, draw=orange!40] (dist) at (0,2.85) {Layer 4: Distributed Training}; \node[tool, anchor=west] at (3.2,2.85) {ASTRA-sim};
-\node[layer, fill=green!12, draw=green!40] (serve) at (0,3.8) {Layer 5: Serving System}; \node[tool, anchor=west] at (3.2,3.8) {VIDUR};
+\node[layer, fill=purple!12, draw=purple!40] (hw) at (0,0) {Layer 1: Hardware Design}; \node[tool, anchor=west] at (3.2,0) {Timeloop}; \node[layer, fill=blue!12, draw=blue!40] (kernel) at (0,0.8) {Layer 2: Kernel Prediction}; \node[tool, anchor=west] at (3.2,0.8) {NeuSight};
+\node[layer, fill=red!8, draw=red!60, dashed, line width=1pt] (comp) at (0,1.6) {Layer 3: Model Composition}; \node[font=\tiny\bfseries, text=red!60!black, anchor=west] at (3.2,1.6) {CRITICAL GAP}; \node[layer, fill=orange!12, draw=orange!40] (dist) at (0,2.4) {Layer 4: Distributed Training}; \node[tool, anchor=west] at (3.2,2.4) {ASTRA-sim};
+\node[layer, fill=green!12, draw=green!40] (serve) at (0,3.2) {Layer 5: Serving System}; \node[tool, anchor=west] at (3.2,3.2) {VIDUR};
 \draw[arr] (hw) -- node[data, right, xshift=2pt] {energy, latency} (kernel); \draw[arr] (kernel) -- node[data, right, xshift=2pt] {per-kernel time} (comp); \draw[arr, draw=red!50, dashed] (comp) -- node[data, right, xshift=2pt, text=red!50!black] {iteration time} (dist); \draw[arr] (dist) -- node[data, right, xshift=2pt] {throughput} (serve);
-\node[font=\tiny, text=black!50, anchor=east] at (-3.2,0) {5--10\% err}; \node[font=\tiny, text=black!50, anchor=east] at (-3.2,0.95) {2--9\% MAPE}; \node[font=\tiny, text=red!60!black, anchor=east] at (-3.2,1.9) {\textbf{5--15\% gap}}; \node[font=\tiny, text=black!50, anchor=east] at (-3.2,2.85) {5--15\% geo.}; \node[font=\tiny, text=black!50, anchor=east] at (-3.2,3.8) {$<$5\% err};
-\draw[decorate, decoration={brace, amplitude=4pt, mirror}, thick, red!50] (-3.4,1.6) -- (-3.4,2.2); \node[font=\tiny, text=red!50!black, anchor=east] at (-3.8,1.9) {unmodeled};
+\node[font=\tiny, text=black!50, anchor=east] at (-3.2,0) {5--10\% err}; \node[font=\tiny, text=black!50, anchor=east] at (-3.2,0.8) {2--9\% MAPE}; \node[font=\tiny, text=red!60!black, anchor=east] at (-3.2,1.6) {\textbf{5--15\% gap}}; \node[font=\tiny, text=black!50, anchor=east] at (-3.2,2.4) {5--15\% geo.}; \node[font=\tiny, text=black!50, anchor=east] at (-3.2,3.2) {$<$5\% err};
+\draw[decorate, decoration={brace, amplitude=4pt, mirror}, thick, red!50] (-3.4,1.3) -- (-3.4,1.9); \node[font=\tiny, text=red!50!black, anchor=east] at (-3.8,1.6) {unmodeled};
 \end{tikzpicture}}
 \caption{Unified pipeline across five layers. Layer~3 (dashed) is the critical gap where 5--15\% unmodeled error accumulates.}\label{fig:pipeline-architecture}
 \end{figure}
-NeuSight's 5--9\% kernel MAPE grows to 10--28\% at model level via launch overhead, data movement, and synchronization---no validated composition model addresses this; common workload formats and cross-hardware transfer (accuracy degrades $3$--$4\times$ outside training distributions) are also needed.
 \section{Open Challenges and Future Directions}\label{sec:challenges}
-\textbf{(1)~Composition gap:} Kernel errors of 2--3\% yield 5--12\% model-level error (Figure~\ref{fig:error-composition}; $\sigma_{\text{model}} \approx \sigma_{\text{kernel}} \cdot \sqrt{N}$) with no validated composition pipeline.
+\textbf{(1)~Composition gap:} Kernel errors of 2--3\% yield 5--12\% model-level error (Figure~\ref{fig:error-composition}; $\sigma_{\text{model}} \approx \sigma_{\text{kernel}} \cdot \sqrt{N}$) with no validated composition pipeline. \textbf{(2)~Frontier workloads:} MoE, diffusion~\cite{dynamicreasoning2026}, and dynamic inference lack validated tools; scaling laws~\cite{kaplan2020scaling,hoffmann2022chinchilla,scalinglaws2024,scalinglawguide2025} predict loss but not latency (Figure~\ref{fig:workload-coverage}).
 \begin{figure}[t]
 \centering\resizebox{\columnwidth}{!}{%
 \begin{tikzpicture}[box/.style={draw=black!60, rounded corners=2pt, minimum width=1.2cm, minimum height=0.45cm, align=center, font=\tiny}, err/.style={font=\tiny\itshape, text=red!60!black}, arr/.style={-{Stealth[length=3pt]}, thick, black!50}, brace/.style={decorate, decoration={brace, amplitude=4pt, mirror}, thick, black!40}]
 \node[box, fill=blue!10] (k1) at (0,0) {Conv}; \node[box, fill=blue!10] (k2) at (1.5,0) {Attn}; \node[box, fill=blue!10] (k3) at (3,0) {FFN}; \node[box, fill=blue!10] (k4) at (4.5,0) {Norm}; \node[box, fill=blue!10] (k5) at (6,0) {Softmax};
 \node[err] at (0,-0.5) {2.3\%}; \node[err] at (1.5,-0.5) {2.1\%}; \node[err] at (3,-0.5) {1.8\%}; \node[err] at (4.5,-0.5) {3.5\%}; \node[err] at (6,-0.5) {2.0\%}; \node[font=\scriptsize\bfseries, anchor=east] at (-0.8,0) {Kernel};
 \draw[arr] (0.5,0) -- (1,0); \draw[arr] (2,0) -- (2.5,0); \draw[arr] (3.5,0) -- (4,0); \draw[arr] (5,0) -- (5.5,0);
-\node[box, fill=yellow!20, dashed, draw=orange!60] (h1) at (0.75,0.6) {Launch\\overhead}; \node[box, fill=yellow!20, dashed, draw=orange!60] (h2) at (2.25,0.6) {Mem\\alloc}; \node[box, fill=yellow!20, dashed, draw=orange!60] (h3) at (3.75,0.6) {Data\\movement}; \node[box, fill=yellow!20, dashed, draw=orange!60] (h4) at (5.25,0.6) {Sync\\barrier};
-\node[box, fill=green!10, minimum width=6.5cm] (model) at (3,1.35) {Model-level prediction}; \node[err] at (3,1.0) {5--12\% (hidden overhead accumulates)}; \node[font=\scriptsize\bfseries, anchor=east] at (-0.8,1.35) {Model};
-\node[box, fill=orange!10, minimum width=6.5cm] (system) at (3,2.1) {System-level prediction}; \node[err] at (3,1.75) {+ communication, scheduling, contention}; \node[font=\scriptsize\bfseries, anchor=east] at (-0.8,2.1) {System}; \node[err] at (3,2.5) {5--15\% total error};
-\draw[brace] (-0.5,-0.75) -- (6.5,-0.75) node[midway, below=4pt, font=\tiny, text=red!60!black] {$\sigma_{\text{model}} \approx \sigma_{\text{kernel}} \cdot \sqrt{N}$ (uncorrelated) to $N \cdot \sigma_{\text{kernel}}$ (correlated)};
+\node[box, fill=yellow!20, dashed, draw=orange!60] (h1) at (0.75,0.55) {Launch\\overhead}; \node[box, fill=yellow!20, dashed, draw=orange!60] (h2) at (2.25,0.55) {Mem\\alloc}; \node[box, fill=yellow!20, dashed, draw=orange!60] (h3) at (3.75,0.55) {Data\\movement}; \node[box, fill=yellow!20, dashed, draw=orange!60] (h4) at (5.25,0.55) {Sync\\barrier};
+\node[box, fill=green!10, minimum width=6.5cm] (model) at (3,1.2) {Model-level prediction}; \node[err] at (3,0.9) {5--12\% (hidden overhead accumulates)}; \node[font=\scriptsize\bfseries, anchor=east] at (-0.8,1.2) {Model};
+\node[box, fill=orange!10, minimum width=6.5cm] (system) at (3,1.9) {System-level prediction}; \node[err] at (3,1.57) {+ communication, scheduling, contention}; \node[font=\scriptsize\bfseries, anchor=east] at (-0.8,1.9) {System}; \node[err] at (3,2.25) {5--15\% total error};
+\draw[brace] (-0.5,-0.7) -- (6.5,-0.7) node[midway, below=4pt, font=\tiny, text=red!60!black] {$\sigma_{\text{model}} \approx \sigma_{\text{kernel}} \cdot \sqrt{N}$ (uncorrelated) to $N \cdot \sigma_{\text{kernel}}$ (correlated)};
 \end{tikzpicture}}
 \caption{Error composition: kernel predictions (2--3\%) accumulate to 5--15\% at system level.}\label{fig:error-composition}
 \end{figure}
-\textbf{(2)~Frontier workloads:} MoE, diffusion~\cite{dynamicreasoning2026}, and dynamic inference lack validated tools; scaling laws~\cite{kaplan2020scaling,hoffmann2022chinchilla,scalinglaws2024,scalinglawguide2025} predict loss but not latency (Figure~\ref{fig:workload-coverage}).
 \begin{figure}[t]
 \centering\resizebox{\columnwidth}{!}{%
 \begin{tikzpicture}
-\begin{axis}[ybar stacked, bar width=14pt, xlabel={Publication year}, ylabel={Number of tools}, ymin=0, ymax=16, xtick={2016,2018,2020,2022,2024,2026}, xticklabels={2016--17,2018--19,2020--21,2022--23,2024--25,2026}, xticklabel style={font=\scriptsize}, yticklabel style={font=\scriptsize}, xlabel style={font=\small}, ylabel style={font=\small}, legend style={at={(0.02,0.98)}, anchor=north west, font=\tiny, draw=none, fill=white, fill opacity=0.9, text opacity=1, legend columns=2}, legend cell align={left}, height=3.0cm, width=8.5cm, enlarge x limits={abs=0.8cm}]
+\begin{axis}[ybar stacked, bar width=14pt, xlabel={Publication year}, ylabel={Number of tools}, ymin=0, ymax=16, xtick={2016,2018,2020,2022,2024,2026}, xticklabels={2016--17,2018--19,2020--21,2022--23,2024--25,2026}, xticklabel style={font=\scriptsize}, yticklabel style={font=\scriptsize}, xlabel style={font=\small}, ylabel style={font=\small}, legend style={at={(0.02,0.98)}, anchor=north west, font=\tiny, draw=none, fill=white, fill opacity=0.9, text opacity=1, legend columns=2}, legend cell align={left}, height=2.5cm, width=8.5cm, enlarge x limits={abs=0.8cm}]
 \addplot[fill=blue!50, draw=blue!70] coordinates {(2016,2) (2018,2) (2020,4) (2022,3) (2024,2) (2026,0)}; \addplot[fill=orange!50, draw=orange!70] coordinates {(2016,0) (2018,1) (2020,0) (2022,2) (2024,3) (2026,0)};
 \addplot[fill=red!50, draw=red!70] coordinates {(2016,0) (2018,0) (2020,1) (2022,1) (2024,8) (2026,2)}; \addplot[fill=green!50, draw=green!70] coordinates {(2016,0) (2018,0) (2020,1) (2022,0) (2024,2) (2026,1)};
 \legend{CNN only, CNN+Transformer, LLM/Distributed, Cross-workload}
@@ -1017,8 +1008,7 @@ NeuSight's 5--9\% kernel MAPE grows to 10--28\% at model level via launch overhe
 \caption{Workload coverage by publication period. MoE and diffusion models remain uncharacterized.}\label{fig:workload-coverage}
 \end{figure}
 \textbf{(3)~Hardware transfer and network fidelity:} Cross-family transfer (GPU$\rightarrow$TPU$\rightarrow$PIM~\cite{upimulator2024,attacc2024,neupims2024,paise2025}) remains unsolved; analytical network abstractions omit congestion~\cite{astrasim2023,triosim2025,ns3_2010}. \textbf{(4)~Standardized evaluation:} No MLPerf~\cite{mlperf_training2020,mlperf_inference2020} equivalent exists; common benchmarks, portable formats (ONNX, Chakra~\cite{chakra2023}), and continuous validation~\cite{mlperfpower2025} are needed---nn-Meter's dependency rot~\cite{flashattention2022} exemplifies this gap.
-\section{Conclusion}
-\label{sec:conclusion}
+\section{Conclusion}\label{sec:conclusion}
 We survey 22 ML performance tools and independently evaluate five against a 28-scenario LLM benchmark suite, finding self-reported accuracy unreliable (NeuSight: 2.3\% claimed vs.\ 5.87--27.10\% measured; nn-Meter: no output). The tools are complementary but disjoint, and the 5--15\% kernel-to-model composition gap dominates total error; validated composition models, benchmark-driven development, and continuous validation are the most pressing needs.
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
