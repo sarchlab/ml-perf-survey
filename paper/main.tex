@@ -46,13 +46,13 @@
 \usetikzlibrary{plotmarks}
 
 % Global spacing reductions for page limit
-\setlength{\textfloatsep}{5pt plus 1pt minus 2pt}
-\setlength{\floatsep}{5pt plus 1pt minus 2pt}
-\setlength{\intextsep}{5pt plus 1pt minus 2pt}
-\setlength{\dbltextfloatsep}{5pt plus 1pt minus 2pt}
-\setlength{\dblfloatsep}{5pt plus 1pt minus 2pt}
-\setlength{\abovecaptionskip}{3pt}
-\setlength{\belowcaptionskip}{2pt}
+\setlength{\textfloatsep}{4pt plus 1pt minus 2pt}
+\setlength{\floatsep}{4pt plus 1pt minus 2pt}
+\setlength{\intextsep}{4pt plus 1pt minus 2pt}
+\setlength{\dbltextfloatsep}{4pt plus 1pt minus 2pt}
+\setlength{\dblfloatsep}{4pt plus 1pt minus 2pt}
+\setlength{\abovecaptionskip}{2pt}
+\setlength{\belowcaptionskip}{1pt}
 
 % Custom commands
 \newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
@@ -95,10 +95,7 @@ We contribute an \textbf{accuracy-centered verification framework} with an \text
 \end{figure}
 \section{Survey Methodology}
 \label{sec:methodology}
-We searched ACM DL, IEEE Xplore, Semantic Scholar, and arXiv targeting architecture (MICRO, ISCA, HPCA, ASPLOS), systems (MLSys, OSDI, SOSP, NSDI), and related venues.
-From 287 candidates, 53 papers (2016--2026) plus 12 foundational works were classified by \emph{methodology type}, \emph{target platform}, and \emph{abstraction level}.
-Prior surveys cover ML for processor DSE~\cite{rakhshanfar2021survey}, DNN hardware~\cite{sze2017efficient}, simulation infrastructure~\cite{gpgpusim2009,binkert2011gem5,sst2012}, and measurement~\cite{mlperf_training2020,mlperf_inference2020}; the closest work~\cite{latencypredictorsnas2024} compares edge predictors for NAS.
-We exclude proprietary tools (NVIDIA Nsight~\cite{nsightcompute2019}), compiler cost models~\cite{halide2013,mlir2020,triton2019}, and cluster schedulers~\cite{pollux2021,sia2023}.
+We searched ACM DL, IEEE Xplore, Semantic Scholar, and arXiv (MICRO, ISCA, HPCA, ASPLOS, MLSys, OSDI, SOSP). From 287 candidates, 53 papers (2016--2026) plus 12 foundational works were classified by \emph{methodology type}, \emph{target platform}, and \emph{abstraction level}~\cite{rakhshanfar2021survey}. We exclude proprietary tools (NVIDIA Nsight~\cite{nsightcompute2019}), simulation infrastructure~\cite{binkert2011gem5,sst2012}, compiler cost models~\cite{halide2013,mlir2020,triton2019}, and cluster schedulers~\cite{pollux2021,sia2023}.
 
 \section{Background}
 \label{sec:background}
@@ -215,8 +212,8 @@ TLP~\cite{tlp2023} & GPU & M & Tensor program & $<$10\% & ms & Transformer cost 
 \end{table*}
 
 \textbf{DNN accelerators and GPUs.}
-Computational regularity~\cite{sze2017efficient} enables analytical tractability~\cite{diannao2014,eyeriss2016}: Timeloop~\cite{timeloop2019} enumerates loop-nest mappings (5--10\%); MAESTRO~\cite{maestro2019} and Sparseloop~\cite{sparseloop2022} extend to data-centric and sparse tensors; PyTorchSim~\cite{pytorchsim2025}, ArchGym~\cite{archgym2023}, and PIM tools~\cite{upimulator2024,attacc2024,neupims2024,paise2025} represent newer approaches. For GPUs, cycle-accurate simulators (GPGPU-Sim~\cite{gpgpusim2009}, Accel-Sim~\cite{accelsim2020}) achieve 0.90--0.97 IPC correlation at $10^3$--$10^4\times$ slowdown~\cite{dramsim3_2020,ramulator2_2023,dissectinggpu2025}; hybrid and ML-augmented tools---NeuSight~\cite{neusight2025} (2.3\%), Habitat~\cite{habitat2021} (11.8\%), AMALI~\cite{amali2025} (23.6\%), TVM~\cite{tvm2018}/Ansor~\cite{ansor2020}/TLP~\cite{tlp2023}~\cite{life2025,hermes2025,omniwise2025,swizzleperf2025,synperf2025,tenset2021}---trade accuracy for speed.
-\textbf{Distributed, serving, and edge.} ASTRA-sim~\cite{astrasim2023} replays Chakra traces~\cite{chakra2023} (5--15\%); SimAI~\cite{simai2025} models NCCL reductions (1.9\%); VIDUR~\cite{vidur2024} simulates request-level LLM serving; Lumos~\cite{lumos2025} (3.3\%), Echo~\cite{echo2024}, Paleo~\cite{paleo2017}, and other tools~\cite{distserve2024,frontier2025,podattention2025,aqua2025,throttllem2025,sailor2025} provide complementary coverage. For edge, nn-Meter~\cite{nnmeter2021} claims $<$1\% but is unverifiable (Section~\ref{sec:eval-results}); LitePred~\cite{litepred2024} achieves 0.7\% across 85 platforms; HELP~\cite{help2021} reaches 1.9\% with 10-sample meta-learning~\cite{esm2025,latencypredictorsnas2024}.
+Timeloop~\cite{timeloop2019} enumerates loop-nest mappings (5--10\%); MAESTRO~\cite{maestro2019} and Sparseloop~\cite{sparseloop2022} extend to data-centric and sparse tensors~\cite{diannao2014,eyeriss2016}; PyTorchSim~\cite{pytorchsim2025}, ArchGym~\cite{archgym2023}, and PIM tools~\cite{upimulator2024,attacc2024,neupims2024,paise2025} represent newer approaches. Cycle-accurate simulators (GPGPU-Sim~\cite{gpgpusim2009}, Accel-Sim~\cite{accelsim2020}) achieve 0.90--0.97 IPC correlation at $10^3$--$10^4\times$ slowdown~\cite{dramsim3_2020,ramulator2_2023,dissectinggpu2025}; hybrid tools NeuSight~\cite{neusight2025} (2.3\%), Habitat~\cite{habitat2021} (11.8\%), AMALI~\cite{amali2025} (23.6\%), and TVM/Ansor/TLP~\cite{tvm2018,ansor2020,tlp2023,life2025,hermes2025,omniwise2025,swizzleperf2025,synperf2025,tenset2021} trade accuracy for speed.
+\textbf{Distributed, serving, and edge.} ASTRA-sim~\cite{astrasim2023} replays Chakra traces~\cite{chakra2023} (5--15\%); SimAI~\cite{simai2025} models NCCL reductions (1.9\%); VIDUR~\cite{vidur2024} simulates LLM serving; Lumos~\cite{lumos2025} (3.3\%) and other tools~\cite{echo2024,paleo2017,distserve2024,frontier2025,podattention2025,aqua2025,throttllem2025,sailor2025} provide complementary coverage. For edge, nn-Meter~\cite{nnmeter2021} claims $<$1\% but is unverifiable (Section~\ref{sec:eval-results}); LitePred~\cite{litepred2024} (0.7\%) and HELP~\cite{help2021} (1.9\%) cover mobile platforms~\cite{esm2025,latencypredictorsnas2024}.
 \section{Evaluation Methodology}
 \label{sec:eval-framework}
 
@@ -1000,8 +997,7 @@ Future versions should expand to at least 40 scenarios to maintain coverage as t
 \section{Toward a Unified Simulation Pipeline}
 \label{sec:unified-pipeline}
 
-No single tool spans kernel execution through distributed training to serving SLAs (Table~\ref{tab:feature-matrix}).
-Figure~\ref{fig:pipeline-architecture} shows a five-layer pipeline: hardware design (Timeloop), kernel prediction (NeuSight), \textbf{model composition (CRITICAL GAP)}, distributed training (ASTRA-sim), and serving (VIDUR).
+No single tool spans kernel execution through distributed training to serving SLAs (Table~\ref{tab:feature-matrix}); Figure~\ref{fig:pipeline-architecture} shows a five-layer pipeline: hardware design (Timeloop), kernel prediction (NeuSight), \textbf{model composition (CRITICAL GAP)}, distributed training (ASTRA-sim), and serving (VIDUR).
 
 \begin{figure}[t]
 \centering
@@ -1023,7 +1019,7 @@ Figure~\ref{fig:pipeline-architecture} shows a five-layer pipeline: hardware des
 \label{fig:pipeline-architecture}
 \end{figure}
 
-\textbf{Critical gap:} NeuSight's 5--9\% kernel MAPE grows to 10--28\% at model level via launch overhead, data movement, and synchronization---no validated composition model addresses this layer. Realizing the full pipeline requires common workload formats and cross-hardware transfer (accuracy degrades $3$--$4\times$ outside training distributions).
+\textbf{Critical gap:} NeuSight's 5--9\% kernel MAPE grows to 10--28\% at model level via launch overhead, data movement, and synchronization---no validated composition model addresses this. The full pipeline further requires common workload formats and cross-hardware transfer (accuracy degrades $3$--$4\times$ outside training distributions).
 
 \section{Open Challenges and Future Directions}
 \label{sec:challenges}
@@ -1062,8 +1058,8 @@ Figure~\ref{fig:pipeline-architecture} shows a five-layer pipeline: hardware des
 \caption{Workload coverage by publication period. MoE and diffusion models remain uncharacterized.}
 \label{fig:workload-coverage}
 \end{figure}
-\textbf{(3)~Hardware transfer and network fidelity:} Cross-family transfer (GPU$\rightarrow$TPU$\rightarrow$PIM~\cite{upimulator2024,attacc2024,neupims2024,paise2025}) remains unsolved, and tools~\cite{astrasim2023,triosim2025} use analytical network abstractions omitting congestion modeled only by NS-3~\cite{ns3_2010}.
-\textbf{(4)~Standardized evaluation:} No MLPerf~\cite{mlperf_training2020,mlperf_inference2020} equivalent exists for prediction tools; the community needs common benchmarks, portable formats (ONNX, Chakra~\cite{chakra2023}), and continuous validation~\cite{mlperfpower2025}---nn-Meter's dependency rot exemplifies invalidation by software evolution~\cite{flashattention2022}.
+\textbf{(3)~Hardware transfer and network fidelity:} Cross-family transfer (GPU$\rightarrow$TPU$\rightarrow$PIM~\cite{upimulator2024,attacc2024,neupims2024,paise2025}) remains unsolved; tools use analytical network abstractions that omit congestion~\cite{astrasim2023,triosim2025,ns3_2010}.
+\textbf{(4)~Standardized evaluation:} No MLPerf~\cite{mlperf_training2020,mlperf_inference2020} equivalent exists; common benchmarks, portable formats (ONNX, Chakra~\cite{chakra2023}), and continuous validation~\cite{mlperfpower2025} are needed---nn-Meter's dependency rot~\cite{flashattention2022} exemplifies this gap.
 
 \section{Conclusion}
 \label{sec:conclusion}
