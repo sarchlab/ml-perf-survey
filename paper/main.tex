@@ -52,12 +52,6 @@
 \title{A Survey of High-Level Modeling and Simulation Methods for Modern Machine Learning Workloads}
 \subtitle{\normalsize{MICRO 2026 Submission -- Confidential Draft -- Do NOT Distribute!!}}
 
-%%
-%% The abstract is a short summary of the work to be presented in the
-%% article.
-
-%%%%%% -- PAPER CONTENT STARTS-- %%%%%%%%
-
 \begin{abstract}
 We survey 22 performance modeling tools from 53 papers (2016--2026) and independently evaluate five---NeuSight, ASTRA-sim, VIDUR, Timeloop, nn-Meter---through accuracy-centered experiments spanning 146 GPU configurations, collective benchmarks, LLM serving simulations, energy validation, and reproducibility testing.
 Three findings emerge.
@@ -75,11 +69,8 @@ Third, the kernel-to-model composition gap (2--9\% kernel error growing to 10--2
 \section{Introduction}
 \label{sec:introduction}
 
-Machine learning workloads dominate compute across datacenters and edge devices~\cite{tpuv1_2017,tpuv4_2023}, and the shift toward domain-specific architectures~\cite{hennessy2019golden} makes performance prediction critical for design space exploration, parallelization selection, and hardware-software co-design.
-A rich ecosystem has emerged---analytical models (Timeloop~\cite{timeloop2019}, MAESTRO~\cite{maestro2019}), trace-driven simulators (ASTRA-sim~\cite{astrasim2023}, VIDUR~\cite{vidur2024}), and hybrid approaches (NeuSight~\cite{neusight2025})---yet no prior work examines \emph{why} certain approaches succeed on certain platforms or how errors propagate across the abstraction stack; existing surveys focus on ML \emph{techniques} for modeling~\cite{granite2022} or specific hardware~\cite{timeloop2019}.
-
-Our central contribution is an \textbf{accuracy-centered independent verification framework} paired with an \textbf{LLM-focused benchmark suite}, replacing self-reported accuracy with reproducible evaluation revealing claimed error rates are overstated by $2$--$4\times$.
-We make four contributions:
+Domain-specific architectures~\cite{hennessy2019golden,tpuv1_2017,tpuv4_2023} make performance prediction critical for ML workload deployment, yet no prior work examines \emph{why} certain approaches succeed---analytical models~\cite{timeloop2019,maestro2019}, trace-driven simulators~\cite{astrasim2023,vidur2024}, hybrid approaches~\cite{neusight2025}---or how errors propagate across the abstraction stack; existing surveys focus on ML \emph{techniques} for modeling~\cite{granite2022} or specific hardware~\cite{timeloop2019}.
+We contribute an \textbf{accuracy-centered independent verification framework} paired with an \textbf{LLM-focused benchmark suite}, replacing self-reported accuracy with reproducible evaluation revealing claimed error rates are overstated by $2$--$4\times$:
 \begin{itemize}
     \item A \textbf{28-scenario LLM benchmark suite} spanning training and inference, revealing 50\% of scenarios have zero tool support (Section~\ref{sec:eval-framework}).
     \item \textbf{Independent accuracy verification} of five tools (146 GPU configurations, collective benchmarks, LLM serving simulations, energy validation), showing self-reported claims are systematically overstated (Section~\ref{sec:eval-results}).
@@ -106,14 +97,10 @@ We make four contributions:
 \section{Survey Methodology}
 \label{sec:methodology}
 
-We searched ACM Digital Library, IEEE Xplore, Semantic Scholar, and arXiv for ML performance modeling papers, targeting architecture (MICRO, ISCA, HPCA, ASPLOS), systems (MLSys, OSDI, SOSP, NSDI), and related venues (NeurIPS, MobiSys, DAC, ISPASS).
-From 287 candidates, screening yielded 53 papers supplemented by 12 foundational works, covering 2016--2026 and classified by \emph{methodology type}, \emph{target platform}, and \emph{abstraction level}.
-
-\textbf{Related surveys.}
-Prior work addresses ML for processor DSE~\cite{rakhshanfar2021survey}, DNN hardware design~\cite{sze2017efficient}, simulation infrastructure~\cite{gpgpusim2009,binkert2011gem5,sst2012}, and standardized measurement~\cite{mlperf_training2020,mlperf_inference2020}; the closest work~\cite{latencypredictorsnas2024} compares edge predictors for NAS.
-
-\textbf{Scope boundaries.}
-We exclude proprietary tools (NVIDIA Nsight~\cite{nsightcompute2019}, Google TPU models) as non-reproducible; compiler cost models (Halide~\cite{halide2013}, MLIR~\cite{mlir2020}, Triton~\cite{triton2019}) and cluster schedulers (Pollux~\cite{pollux2021}, Sia~\cite{sia2023}) share techniques but serve distinct use cases.
+We searched ACM Digital Library, IEEE Xplore, Semantic Scholar, and arXiv, targeting architecture (MICRO, ISCA, HPCA, ASPLOS), systems (MLSys, OSDI, SOSP, NSDI), and related venues.
+From 287 candidates, screening yielded 53 papers (2016--2026) supplemented by 12 foundational works, classified by \emph{methodology type}, \emph{target platform}, and \emph{abstraction level}.
+Prior surveys address ML for processor DSE~\cite{rakhshanfar2021survey}, DNN hardware design~\cite{sze2017efficient}, simulation infrastructure~\cite{gpgpusim2009,binkert2011gem5,sst2012}, and standardized measurement~\cite{mlperf_training2020,mlperf_inference2020}; the closest work~\cite{latencypredictorsnas2024} compares edge predictors for NAS.
+We exclude proprietary tools (NVIDIA Nsight~\cite{nsightcompute2019}, Google TPU models); compiler cost models~\cite{halide2013,mlir2020,triton2019} and cluster schedulers~\cite{pollux2021,sia2023} share techniques but serve distinct use cases.
 
 \section{Background}
 \label{sec:background}
@@ -1055,50 +1042,17 @@ We propose a five-layer pipeline (Figure~\ref{fig:pipeline-architecture}):
 \begin{figure}[t]
 \centering
 \resizebox{\columnwidth}{!}{%
-\begin{tikzpicture}[
-    layer/.style={draw=black!60, rounded corners=3pt, minimum width=5.5cm, minimum height=0.7cm, align=center, font=\scriptsize\bfseries},
-    tool/.style={font=\tiny, text=black!60},
-    arr/.style={-{Stealth[length=3pt]}, thick, black!50},
-    data/.style={font=\tiny\itshape, text=blue!50!black},
-]
-
-% Layer 1: Hardware Design
-\node[layer, fill=purple!12, draw=purple!40] (hw) at (0,0) {Layer 1: Hardware Design};
-\node[tool, anchor=west] at (3.2,0) {Timeloop};
-
-% Layer 2: Kernel Prediction
-\node[layer, fill=blue!12, draw=blue!40] (kernel) at (0,1.3) {Layer 2: Kernel Prediction};
-\node[tool, anchor=west] at (3.2,1.3) {NeuSight};
-
-% Layer 3: Model Composition (GAP)
-\node[layer, fill=red!8, draw=red!60, dashed, line width=1pt] (comp) at (0,2.6) {Layer 3: Model Composition};
-\node[font=\tiny\bfseries, text=red!60!black, anchor=west] at (3.2,2.6) {CRITICAL GAP};
-
-% Layer 4: Distributed Training
-\node[layer, fill=orange!12, draw=orange!40] (dist) at (0,3.9) {Layer 4: Distributed Training};
-\node[tool, anchor=west] at (3.2,3.9) {ASTRA-sim};
-
-% Layer 5: Serving System
-\node[layer, fill=green!12, draw=green!40] (serve) at (0,5.2) {Layer 5: Serving System};
-\node[tool, anchor=west] at (3.2,5.2) {VIDUR};
-
-% Arrows between layers
-\draw[arr] (hw) -- node[data, right, xshift=2pt] {energy, latency} (kernel);
-\draw[arr] (kernel) -- node[data, right, xshift=2pt] {per-kernel time} (comp);
-\draw[arr, draw=red!50, dashed] (comp) -- node[data, right, xshift=2pt, text=red!50!black] {model iteration time} (dist);
-\draw[arr] (dist) -- node[data, right, xshift=2pt] {per-device throughput} (serve);
-
-% Error annotations (left side)
-\node[font=\tiny, text=black!50, anchor=east] at (-3.2,0) {5--10\% RTL err};
-\node[font=\tiny, text=black!50, anchor=east] at (-3.2,1.3) {2--9\% MAPE};
-\node[font=\tiny, text=red!60!black, anchor=east] at (-3.2,2.6) {\textbf{5--15\% gap}};
-\node[font=\tiny, text=black!50, anchor=east] at (-3.2,3.9) {5--15\% geo.};
-\node[font=\tiny, text=black!50, anchor=east] at (-3.2,5.2) {$<$5\% err};
-
-% Brace for composition gap
-\draw[decorate, decoration={brace, amplitude=4pt, mirror}, thick, red!50] (-3.4,2.2) -- (-3.4,3.0);
-\node[font=\tiny, text=red!50!black, anchor=east] at (-3.8,2.6) {unmodeled};
-
+\begin{tikzpicture}[layer/.style={draw=black!60, rounded corners=3pt, minimum width=5.5cm, minimum height=0.7cm, align=center, font=\scriptsize\bfseries}, tool/.style={font=\tiny, text=black!60}, arr/.style={-{Stealth[length=3pt]}, thick, black!50}, data/.style={font=\tiny\itshape, text=blue!50!black}]
+\node[layer, fill=purple!12, draw=purple!40] (hw) at (0,0) {Layer 1: Hardware Design}; \node[tool, anchor=west] at (3.2,0) {Timeloop};
+\node[layer, fill=blue!12, draw=blue!40] (kernel) at (0,1.3) {Layer 2: Kernel Prediction}; \node[tool, anchor=west] at (3.2,1.3) {NeuSight};
+\node[layer, fill=red!8, draw=red!60, dashed, line width=1pt] (comp) at (0,2.6) {Layer 3: Model Composition}; \node[font=\tiny\bfseries, text=red!60!black, anchor=west] at (3.2,2.6) {CRITICAL GAP};
+\node[layer, fill=orange!12, draw=orange!40] (dist) at (0,3.9) {Layer 4: Distributed Training}; \node[tool, anchor=west] at (3.2,3.9) {ASTRA-sim};
+\node[layer, fill=green!12, draw=green!40] (serve) at (0,5.2) {Layer 5: Serving System}; \node[tool, anchor=west] at (3.2,5.2) {VIDUR};
+\draw[arr] (hw) -- node[data, right, xshift=2pt] {energy, latency} (kernel); \draw[arr] (kernel) -- node[data, right, xshift=2pt] {per-kernel time} (comp);
+\draw[arr, draw=red!50, dashed] (comp) -- node[data, right, xshift=2pt, text=red!50!black] {model iteration time} (dist); \draw[arr] (dist) -- node[data, right, xshift=2pt] {per-device throughput} (serve);
+\node[font=\tiny, text=black!50, anchor=east] at (-3.2,0) {5--10\% RTL err}; \node[font=\tiny, text=black!50, anchor=east] at (-3.2,1.3) {2--9\% MAPE}; \node[font=\tiny, text=red!60!black, anchor=east] at (-3.2,2.6) {\textbf{5--15\% gap}};
+\node[font=\tiny, text=black!50, anchor=east] at (-3.2,3.9) {5--15\% geo.}; \node[font=\tiny, text=black!50, anchor=east] at (-3.2,5.2) {$<$5\% err};
+\draw[decorate, decoration={brace, amplitude=4pt, mirror}, thick, red!50] (-3.4,2.2) -- (-3.4,3.0); \node[font=\tiny, text=red!50!black, anchor=east] at (-3.8,2.6) {unmodeled};
 \end{tikzpicture}%
 }
 \caption{Proposed unified simulation pipeline across five layers. Layer~3 (model composition, dashed red border) is the critical gap: no existing tool validates the kernel-to-model composition step, where 5--15\% error is introduced by unmodeled inter-kernel overheads.}
@@ -1159,16 +1113,9 @@ Our evaluation exposes six research directions.
 \section{Conclusion}
 \label{sec:conclusion}
 
-We survey 22 ML performance modeling tools and independently evaluate five against a 28-scenario LLM benchmark suite.
-Self-reported accuracy is unreliable (NeuSight: 2.3\% claimed vs.\ 5.87--27.10\% measured; nn-Meter: no output).
-The five tools are complementary but disjoint, motivating a unified pipeline---yet the 5--15\% kernel-to-model composition gap exceeds kernel-level error, and 50\% of modern LLM techniques lack any tool support.
-The most pressing needs are validated composition models, benchmark-driven development for uncovered scenarios, and continuous validation.
+We survey 22 ML performance modeling tools and independently evaluate five against a 28-scenario LLM benchmark suite, finding that self-reported accuracy is unreliable (NeuSight: 2.3\% claimed vs.\ 5.87--27.10\% measured; nn-Meter: no output).
+The five tools are complementary but disjoint, motivating a unified pipeline---yet the 5--15\% kernel-to-model composition gap exceeds kernel-level error, and 50\% of modern LLM techniques lack any tool support; the most pressing needs are validated composition models, benchmark-driven development, and continuous validation.
 
-%%%%%%% -- PAPER CONTENT ENDS -- %%%%%%%%
-
-%%
-%% The next two lines define the bibliography style to be used, and
-%% the bibliography file.
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
 
