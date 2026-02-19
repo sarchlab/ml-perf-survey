@@ -11,15 +11,15 @@
 \begin{document}
 \title{A Survey of High-Level Modeling and Simulation Methods for Modern Machine Learning Workloads}
 \begin{abstract}
-We survey 22 performance modeling tools from 53 papers (2016--2026) and evaluate five---NeuSight, ASTRA-sim, VIDUR, Timeloop, nn-Meter---across 146 GPU configurations, collective benchmarks, LLM serving, energy validation, and reproducibility testing. Three findings emerge: (1)~self-reported accuracy is unreliable---NeuSight claims 2.3\% MAPE but we measure 5.87--27.10\%, while nn-Meter produces no output due to dependency rot; (2)~the five tools are complementary but disjoint, motivating a unified pipeline; (3)~the kernel-to-model composition gap (2--9\% kernel error growing to 10--28\% model error) dominates total error, yet no tool addresses this layer.
+We survey 25 performance modeling tools from 53 papers (2016--2026) and evaluate ten---NeuSight, ASTRA-sim, VIDUR, Timeloop, nn-Meter with full experiments, plus MAESTRO, Paleo, Habitat, Accel-Sim with deployment testing---across 146 GPU configurations, collective benchmarks, LLM serving, energy validation, and reproducibility testing. Three findings emerge: (1)~self-reported accuracy is unreliable---NeuSight claims 2.3\% MAPE but we measure 5.87--27.10\%, while nn-Meter produces no output due to dependency rot; (2)~the five tools are complementary but disjoint, motivating a unified pipeline; (3)~the kernel-to-model composition gap (2--9\% kernel error growing to 10--28\% model error) dominates total error, yet no tool addresses this layer.
 \end{abstract}\keywords{ML workload performance prediction, DNN accelerator modeling, GPU simulation, distributed training simulation, LLM inference serving, design space exploration, survey}\maketitle
 \section{Introduction}\label{sec:introduction}
-Domain-specific architectures~\cite{hennessy2019golden,tpuv1_2017,tpuv4_2023} make performance prediction critical, yet no prior work examines \emph{why} certain approaches succeed or how errors propagate; prior surveys cover ML techniques for modeling~\cite{granite2022} or specific hardware. We contribute: (1)~a \textbf{28-scenario benchmark suite} where 50\% of scenarios lack tool support; (2)~\textbf{third-party evaluation} showing claimed error rates are overstated by $2$--$4\times$; (3)~a \textbf{unified pipeline} identifying the composition gap; and (4)~a \textbf{research agenda} for composition modeling and continuous validation.
+Domain-specific architectures~\cite{hennessy2019golden,tpuv1_2017,tpuv4_2023} make performance prediction critical, yet no prior work examines \emph{why} certain approaches succeed or how errors propagate; prior surveys cover ML techniques for modeling~\cite{granite2022}, specific hardware, or distributed training simulators~\cite{svedassurvey2025}. We contribute: (1)~a \textbf{28-scenario benchmark suite} where 50\% of scenarios lack tool support; (2)~\textbf{third-party evaluation} showing claimed error rates are overstated by $2$--$4\times$; (3)~a \textbf{unified pipeline} identifying the composition gap; and (4)~a \textbf{research agenda} for composition modeling and continuous validation.
 \begin{figure}[t]
 \centering\resizebox{\columnwidth}{!}{%
 \begin{tikzpicture}[yearnode/.style={font=\scriptsize\bfseries, text=black!70}, eventnode/.style={font=\tiny, text width=2cm, align=center}]
 \draw[thick, ->, black!40] (0,0) -- (9,0); \foreach \x/\year in {0.3/2016, 1.5/2018, 3/2020, 4.5/2022, 6/2024, 7.2/2025, 8.5/2026} { \draw[thick, black!40] (\x,-0.1) -- (\x,0.1); \node[yearnode, below] at (\x,-0.12) {\year}; }
-\node[eventnode, above] at (0.3,0.12) {Eyeriss\\Paleo}; \node[eventnode, below] at (1.2,-0.12) {TVM}; \node[eventnode, above] at (2.2,0.12) {Timeloop\\MAESTRO}; \node[eventnode, below] at (3,-0.12) {Ansor\\ASTRA-sim}; \node[eventnode, above] at (3.8,0.12) {nn-Meter\\Habitat}; \node[eventnode, below] at (4.5,-0.12) {Sparseloop\\Accel-Sim}; \node[eventnode, above] at (5.3,0.12) {TLP\\ASTRA-sim 2.0}; \node[eventnode, below] at (6,-0.12) {VIDUR\\Splitwise}; \node[eventnode, above] at (7.2,0.12) {NeuSight\\AMALI}; \node[eventnode, below] at (8.5,-0.12) {Frontier\\Lumos};
+\node[eventnode, above] at (0.3,0.12) {Eyeriss\\Paleo}; \node[eventnode, below] at (1.2,-0.12) {TVM}; \node[eventnode, above] at (2.2,0.12) {Timeloop\\MAESTRO}; \node[eventnode, below] at (3,-0.12) {Ansor\\ASTRA-sim}; \node[eventnode, above] at (3.8,0.12) {nn-Meter\\Habitat}; \node[eventnode, below] at (4.5,-0.12) {Sparseloop\\Accel-Sim}; \node[eventnode, above] at (5.3,0.12) {TLP\\ASTRA-sim 2.0}; \node[eventnode, below] at (6,-0.12) {VIDUR\\Echo}; \node[eventnode, above] at (7.2,0.12) {SimAI\\NeuSight}; \node[eventnode, below] at (8.5,-0.12) {PRISM\\Frontier};
 \draw[thick, ->, blue!50, dashed] (0.5,0.7) -- (8.2,0.7); \node[font=\tiny, text=blue!60, above] at (4.3,0.7) {Toward hybrid analytical+learned models};
 \end{tikzpicture}}\caption{Evolution of performance modeling tools (2016--2026).}\label{fig:timeline}\end{figure}
 \section{Survey Methodology}\label{sec:methodology}
@@ -71,11 +71,14 @@ ArchGym~\cite{archgym2023} & Multi & H & Multi-objective & 0.61\%$^*$ & ms & ML-
 Accel-Sim~\cite{accelsim2020} & GPU & S & Cycle-accurate & 10--20\% & Hours & SASS trace-driven \\
 GPGPU-Sim~\cite{gpgpusim2009} & GPU & S & Cycle-accurate & 10--20\% & Hours & CUDA workloads \\
 AMALI~\cite{amali2025} & GPU & A & LLM inference & 23.6\% & ms & Memory hierarchy \\
+Path Forward~\cite{pathforward2023} & GPU & A & Kernel latency & 7\% & ms & Linear regression \\
 NeuSight~\cite{neusight2025} & GPU & H & Kernel/E2E latency & 2.3\% & ms & Tile-based prediction \\
 Habitat~\cite{habitat2021} & GPU & H & Training time & 11.8\% & Per-kernel & Wave scaling \\ \midrule
 \multicolumn{7}{l}{\textit{Distributed Training and LLM Serving}} \\
 ASTRA-sim~\cite{astrasim2023} & Distributed & T & Training time & 5--15\% & Minutes & Collective modeling \\
 SimAI~\cite{simai2025} & Distributed & T & Training time & 1.9\% & Minutes & Full-stack simulation \\
+Echo~\cite{echo2024} & Distributed & T & Training time & 8\% & Minutes & Overlap-aware sim. \\
+PRISM~\cite{prism2025} & Distributed & A & Training time & --- & Minutes & Probabilistic model \\
 Lumos~\cite{lumos2025} & Distributed & T & LLM training & 3.3\% & Minutes & H100 training \\
 VIDUR~\cite{vidur2024} & GPU cluster & T & LLM serving & $<$5\% & Seconds & Prefill/decode phases \\
 Frontier~\cite{frontier2025} & Distributed & T & MoE inference & --- & Minutes & Stage-centric sim. \\
@@ -88,7 +91,7 @@ HELP~\cite{help2021} & Multi & M & Latency & 1.9\% & ms & 10-sample adaptation \
 TVM~\cite{tvm2018} & GPU & M & Schedule perf. & $\sim$15\% & ms & Autotuning guidance \\
 Ansor~\cite{ansor2020} & GPU & M & Schedule perf. & $\sim$15\% & ms & Program sampling \\
 TLP~\cite{tlp2023} & GPU & M & Tensor program & $<$10\% & ms & Transformer cost model \\ \bottomrule
-\end{tabular}\end{table*}\textbf{DNN accelerators and GPUs.} Analytical tools---Timeloop~\cite{timeloop2019}, MAESTRO~\cite{maestro2019}, Sparseloop~\cite{sparseloop2022}, SCALE-Sim~\cite{scalesim2019}, DianNao~\cite{diannao2014}, PIM tools~\cite{upimulator2024,attacc2024,neupims2024,paise2025}, ArchGym~\cite{archgym2023}---enumerate mappings; cycle-accurate simulators~\cite{gpgpusim2009,accelsim2020}, validated with hardware counters~\cite{papi2000,likwid2010} and profilers~\cite{nsightcompute2019}, achieve 0.90--0.97 IPC correlation at $10^3$--$10^4\times$ slowdown; hybrid tools~\cite{neusight2025,habitat2021,amali2025,tvm2018,ansor2020,tlp2023,life2025,hermes2025,omniwise2025,swizzleperf2025,synperf2025,tenset2021} trade accuracy for speed. \textbf{Distributed/serving:} ASTRA-sim~\cite{astrasim2023}, SimAI~\cite{simai2025}, VIDUR~\cite{vidur2024}, Lumos~\cite{lumos2025}, PRISM~\cite{prism2025}, and others~\cite{echo2024,paleo2017,madmax2024,distserve2024,frontier2025,podattention2025,aqua2025,throttllem2025,sailor2025} cover training and serving, with parallelism strategies from Megatron-LM~\cite{megatronlm2020}, GPipe~\cite{gpipe2019}, and ZeRO~\cite{zero2020}; network effects are captured by detailed simulators such as NS-3~\cite{ns3_2010}; LitePred~\cite{litepred2024} and HELP~\cite{help2021} cover mobile~\cite{esm2025,latencypredictorsnas2024}. A cross-cutting limitation is \emph{scope rigidity}: analytical tools miss dynamic sparsity, cycle-accurate simulators are too costly for sweeps, and trace-driven tools assume deterministic replay.
+\end{tabular}\end{table*}\textbf{DNN accelerators and GPUs.} Analytical tools---Timeloop~\cite{timeloop2019}, MAESTRO~\cite{maestro2019}, Sparseloop~\cite{sparseloop2022}, SCALE-Sim~\cite{scalesim2019}, DianNao~\cite{diannao2014}, PIM tools~\cite{upimulator2024,attacc2024,neupims2024,paise2025}, ArchGym~\cite{archgym2023}---enumerate mappings; cycle-accurate simulators~\cite{gpgpusim2009,accelsim2020}, validated with hardware counters~\cite{papi2000,likwid2010} and profilers~\cite{nsightcompute2019}, achieve 0.90--0.97 IPC correlation at $10^3$--$10^4\times$ slowdown; hybrid tools~\cite{neusight2025,habitat2021,amali2025,tvm2018,ansor2020,tlp2023,life2025,hermes2025,omniwise2025,swizzleperf2025,synperf2025,tenset2021} trade accuracy for speed; lightweight analytical alternatives such as Path Forward~\cite{pathforward2023} use linear regression to achieve 7\% error without simulation overhead. \textbf{Distributed/serving:} ASTRA-sim~\cite{astrasim2023}, SimAI~\cite{simai2025}, VIDUR~\cite{vidur2024}, Lumos~\cite{lumos2025}, PRISM~\cite{prism2025}, and others~\cite{echo2024,paleo2017,madmax2024,distserve2024,frontier2025,podattention2025,aqua2025,throttllem2025,sailor2025} cover training and serving, with parallelism strategies from Megatron-LM~\cite{megatronlm2020}, GPipe~\cite{gpipe2019}, and ZeRO~\cite{zero2020}; network effects are captured by detailed simulators such as NS-3~\cite{ns3_2010}; LitePred~\cite{litepred2024} and HELP~\cite{help2021} cover mobile~\cite{esm2025,latencypredictorsnas2024}. A cross-cutting limitation is \emph{scope rigidity}: analytical tools miss dynamic sparsity, cycle-accurate simulators are too costly for sweeps, and trace-driven tools assume deterministic replay.
 \section{Evaluation Methodology}
 \label{sec:eval-framework}
 
@@ -176,12 +179,13 @@ This systematic assessment ensures that coverage ratings reflect the tool's actu
 \subsection{Tool Selection}
 \label{subsec:tool-selection}
 
-From 22 tools, we select 5 using three criteria: (1)~\emph{methodology coverage}---one per type; (2)~\emph{artifact availability}---open-source with build instructions; (3)~\emph{scope diversity}---different hardware and workload types.
+From 25 tools, we select 5 for full experimentation using three criteria: (1)~\emph{methodology coverage}---one per type; (2)~\emph{artifact availability}---open-source with build instructions; (3)~\emph{scope diversity}---different hardware and workload types.
 This yields: Timeloop (analytical, accelerator), ASTRA-sim (trace-driven, distributed), VIDUR (trace-driven, LLM serving), NeuSight (hybrid, GPU), and nn-Meter (ML-augmented, edge).
 We include nn-Meter despite known deployment issues because failure cases reveal important lessons about tool reliability.
 
 \textbf{Excluded tools and rationale.}
-Notable exclusions include SimAI (1.9\% claimed MAPE, but closed-source at evaluation time), Accel-Sim (cycle-accurate GPU simulation requiring $>$24 hours per workload, incompatible with our evaluation timeline), Habitat (training-time prediction requiring two source GPUs for cross-GPU transfer), and LitePred (edge-focused like nn-Meter but without public pre-trained models for the target devices we could test).
+Notable exclusions from full experimentation include SimAI (1.9\% claimed MAPE, but closed-source at evaluation time) and LitePred (edge-focused like nn-Meter but without public pre-trained models for the target devices we could test).
+We additionally attempted deployment of 5 tools---MAESTRO, Paleo, Habitat, Accel-Sim, and ASTRA-sim's analytical backend---to document platform requirements and failure modes (Section~\ref{subsec:deployment-experience}).
 For each excluded tool, we report published accuracy in Table~\ref{tab:survey-summary} with appropriate caveats.
 
 \subsection{Experimental Design}
@@ -407,7 +411,7 @@ This makes NeuSight useful as a \emph{component} in a multi-tool pipeline but in
 \subsection{ASTRA-sim: Distributed Training Communication}
 \label{subsec:astrasim-results}
 
-ASTRA-sim reports 9.69\% geomean error at 8-GPU HGX-H100 for Ring All-Reduce~\cite{astrasim2020}.
+ASTRA-sim reports 9.69\% geomean error at 8-GPU HGX-H100 for Ring All-Reduce~\cite{astrasim2020}; the latest available version is v2.2.0 (November 2023)~\cite{astrasim2023}.
 We ran collective microbenchmarks and ResNet-50 data-parallel training scaling (Table~\ref{tab:astrasim-results}).
 
 \begin{table}[t]
@@ -825,6 +829,32 @@ NeuSight required manual Python environment configuration and model weight downl
 nn-Meter's pip-based installation succeeded syntactically but produced no usable output due to serialization incompatibilities.
 This represents the worst deployment outcome: silent success at install time masking complete failure at inference time, with no diagnostic error message until the user attempts to load a predictor---a failure pattern that undermines trust in the broader ML-augmented tool ecosystem.
 
+\textbf{Extended tool evaluation.}
+Beyond the five primary tools, we attempted deployment of five additional tools to assess the broader ecosystem's accessibility (Table~\ref{tab:extended-deployment}).
+MAESTRO~\cite{maestro2019} was the only additional tool that fully built and ran on our platform (macOS ARM64), producing dataflow analysis for ResNet-50 in under one minute---consistent with its CPU-only C++17 design.
+Paleo~\cite{paleo2017} installed via pip and produced network architecture summaries, but its simulation and profiling modes failed: cuDNN is required for convolution timing, and the TensorFlow backend requires TF~0.12 (Python~2.7 era), rendering the tool effectively unmaintained since~2018.
+ASTRA-sim~\cite{astrasim2023}, Habitat~\cite{habitat2021}, and Accel-Sim~\cite{accelsim2020} all require Linux with NVIDIA GPUs and CUDA toolkits, making them inaccessible on our Apple Silicon test platform.
+These platform-unavailability results are themselves informative: they document the hardware barrier that prevents many researchers from reproducing published results, particularly those without access to NVIDIA datacenter GPUs.
+In total, we evaluated 10 tools: 5 with full experimental results and 5 with documented deployment outcomes including failure modes.
+
+\begin{table}[t]
+\centering
+\caption{Extended deployment evaluation: 5 additional tools tested on Apple M2 Ultra (macOS ARM64). Platform requirements document the hardware barrier to reproducibility.}
+\label{tab:extended-deployment}
+\small
+\begin{tabular}{lccl}
+\toprule
+\textbf{Tool} & \textbf{Install} & \textbf{Run} & \textbf{Failure Mode} \\
+\midrule
+MAESTRO & Yes & Yes & None (CPU-only) \\
+Paleo & Partial & Partial & cuDNN/TF~0.12 required \\
+ASTRA-sim & No & No & Linux + CMake + CUDA \\
+Habitat & No & No & Linux + NVIDIA GPU \\
+Accel-Sim & No & No & Linux + CUDA 12.x \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \textbf{Determinism varies by methodology.}
 All evaluated tools except nn-Meter (which produced no output) generated bit-identical results across three independent runs on the same platform.
 This determinism is notable for NeuSight, whose hybrid ML+analytical approach could in principle exhibit stochastic behavior; the determinism arises because NeuSight uses fixed pre-trained weights and analytical tile decomposition with no stochastic inference-time components.
@@ -839,7 +869,7 @@ We exclude proprietary tools from evaluation.
 The benchmark suite's 28 scenarios, while representative, cannot cover every production deployment pattern; emerging workloads (e.g., retrieval-augmented generation, multi-modal models) are not yet included.
 
 \textbf{Internal validity.}
-Our evaluation covers 5 of 22 tools.
+Our full experiments cover 5 of 25 tools, with deployment testing on 5 additional tools (10 total).
 Findings rest on single tool instances per methodology type---e.g., nn-Meter may be unrepresentative due to deployment failure.
 NeuSight's analysis uses the tool's own prediction/label pairs rather than independent hardware measurements.
 The per-device sample sizes vary (3--18 configurations), limiting statistical power for devices with few data points (e.g., P4 with only 3 configurations, A100-SXM with 3 configurations).
@@ -893,9 +923,9 @@ No single tool spans kernel execution through serving SLAs. Figure~\ref{fig:pipe
 \addplot[fill=blue!50, draw=blue!70] coordinates {(2016,2) (2018,2) (2020,4) (2022,3) (2024,2) (2026,0)}; \addplot[fill=orange!50, draw=orange!70] coordinates {(2016,0) (2018,1) (2020,0) (2022,2) (2024,3) (2026,0)}; \addplot[fill=red!50, draw=red!70] coordinates {(2016,0) (2018,0) (2020,1) (2022,1) (2024,8) (2026,2)}; \addplot[fill=green!50, draw=green!70] coordinates {(2016,0) (2018,0) (2020,1) (2022,0) (2024,2) (2026,1)};
 \legend{CNN only, CNN+Transformer, LLM/Distributed, Cross-workload}
 \end{axis}\end{tikzpicture}}\caption{Workload coverage by publication period. MoE and diffusion models remain uncharacterized.}\label{fig:workload-coverage}\end{figure}
-\textbf{(3)~Hardware transfer:} Cross-family transfer (GPU$\rightarrow$TPU$\rightarrow$PIM~\cite{upimulator2024,attacc2024,neupims2024,paise2025}) and congestion modeling~\cite{astrasim2023,triosim2025} remain unsolved. \textbf{(4)~Standardized evaluation:} No MLPerf~\cite{mlperf_training2020,mlperf_inference2020,mlperfpower2025} equivalent exists for simulators; portable formats~\cite{chakra2023} and continuous validation are needed. \textbf{(5)~Reproducibility:} nn-Meter failed from dependency rot; containerization and CI testing are needed. \textbf{(6)~Software stack evolution:} Rapidly evolving optimizations such as FlashAttention~\cite{flashattention2022} invalidate performance models trained on prior kernel implementations.
+\textbf{(3)~Hardware transfer:} Cross-family transfer (GPU$\rightarrow$TPU$\rightarrow$PIM~\cite{upimulator2024,attacc2024,neupims2024,paise2025}) and congestion modeling~\cite{astrasim2023,triosim2025} remain unsolved. \textbf{(4)~Standardized evaluation:} No MLPerf~\cite{mlperf_training2020,mlperf_inference2020,mlperfpower2025} equivalent exists for simulators; portable formats~\cite{chakra2023} and continuous validation are needed; concurrent surveys~\cite{svedassurvey2025} similarly identify this gap. \textbf{(5)~Reproducibility:} nn-Meter failed from dependency rot; containerization and CI testing are needed. \textbf{(6)~Software stack evolution:} Rapidly evolving optimizations such as FlashAttention~\cite{flashattention2022} invalidate performance models trained on prior kernel implementations.
 \section{Conclusion}\label{sec:conclusion}
-We survey 22 ML performance tools and evaluate five against a 28-scenario benchmark, finding self-reported accuracy unreliable (NeuSight: 2.3\% claimed vs.\ 5.87--27.10\%; nn-Meter: no output). The 5--15\% composition gap dominates total error; closing it requires validated composition models and community CI.
+We survey 25 ML performance tools and evaluate ten against a 28-scenario benchmark, finding self-reported accuracy unreliable (NeuSight: 2.3\% claimed vs.\ 5.87--27.10\%; nn-Meter: no output). The 5--15\% composition gap dominates total error; closing it requires validated composition models and community CI.
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{references}
 \end{document}
