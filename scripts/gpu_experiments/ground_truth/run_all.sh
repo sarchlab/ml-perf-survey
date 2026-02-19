@@ -51,7 +51,7 @@ fi
 python3 -c "
 import torch
 props = torch.cuda.get_device_properties(0)
-print(f'GPU: {props.name} ({props.total_mem / (1024**3):.1f} GB)')
+print(f'GPU: {props.name} ({props.total_memory / (1024**3):.1f} GB)')
 print(f'CUDA: {torch.version.cuda}, PyTorch: {torch.__version__}')
 print(f'GPU Count: {torch.cuda.device_count()}')
 "

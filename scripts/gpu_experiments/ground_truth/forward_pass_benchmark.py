@@ -142,7 +142,7 @@ def get_gpu_info():
     props = torch.cuda.get_device_properties(0)
     return {
         "gpu_name": props.name,
-        "gpu_memory_gb": round(props.total_mem / (1024**3), 1),
+        "gpu_memory_gb": round(props.total_memory / (1024**3), 1),
         "cuda_version": torch.version.cuda,
         "pytorch_version": torch.__version__,
         "gpu_count": torch.cuda.device_count(),
