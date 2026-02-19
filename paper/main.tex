@@ -11,7 +11,7 @@
 \begin{document}
 \title{A Survey of High-Level Modeling and Simulation Methods for Modern Machine Learning Workloads}
 \begin{abstract}
-We survey 25 performance modeling tools from 53 papers (2016--2026) and evaluate ten---NeuSight, ASTRA-sim, VIDUR, Timeloop, nn-Meter with full experiments, plus MAESTRO, Paleo, Habitat, Accel-Sim with deployment testing---across 146 GPU configurations, collective benchmarks, LLM serving, energy validation, and reproducibility testing. Three findings emerge: (1)~self-reported accuracy is unreliable---NeuSight claims 2.3\% MAPE but we measure 5.87--27.10\%, while nn-Meter produces no output due to dependency rot; (2)~the five tools are complementary but disjoint, motivating a unified pipeline; (3)~the kernel-to-model composition gap (2--9\% kernel error growing to 10--28\% model error) dominates total error, yet no tool addresses this layer.
+We survey 25 performance modeling tools from 53 papers (2016--2026) and evaluate ten---NeuSight, ASTRA-sim, VIDUR, Timeloop, nn-Meter with full experiments, plus MAESTRO, Paleo, Habitat, Accel-Sim with deployment testing---across 146 GPU configurations, collective benchmarks, LLM serving, energy validation, and reproducibility testing. Three findings emerge: (1)~self-reported accuracy is unreliable---NeuSight claims 2.3\% MAPE but we measure 5.87--27.10\%, while nn-Meter produces no output due to dependency rot; (2)~the five fully-evaluated tools are complementary but disjoint, motivating a unified pipeline; (3)~the kernel-to-model composition gap (2--9\% kernel error growing to 10--28\% model error) dominates total error, yet no tool addresses this layer.
 \end{abstract}\keywords{ML workload performance prediction, DNN accelerator modeling, GPU simulation, distributed training simulation, LLM inference serving, design space exploration, survey}\maketitle
 \section{Introduction}\label{sec:introduction}
 Domain-specific architectures~\cite{hennessy2019golden,tpuv1_2017,tpuv4_2023} make performance prediction critical, yet no prior work examines \emph{why} certain approaches succeed or how errors propagate; prior surveys cover ML techniques for modeling~\cite{granite2022}, specific hardware, or distributed training simulators~\cite{svedassurvey2025}. We contribute: (1)~the \textbf{MLPerf-Survey-2026} benchmark suite of \textbf{36 scenarios} where 56\% of scenarios lack tool support; (2)~\textbf{third-party evaluation} showing claimed error rates are overstated by $2$--$4\times$; (3)~a \textbf{unified pipeline} identifying the composition gap; and (4)~a \textbf{research agenda} for composition modeling and continuous validation.
@@ -443,19 +443,21 @@ Table~\ref{tab:benchmark-coverage} evaluates each tool against our 36-scenario b
 \toprule
 \textbf{Category} & \textbf{\#} & \textbf{Neu.} & \textbf{AST.} & \textbf{VID.} & \textbf{TL} & \textbf{nn-M} \\
 \midrule
-T1: Data parallel  & 3 & 2P & 3S & --- & --- & --- \\
-T2: Tensor parallel & 2 & 2P & 2S & --- & --- & --- \\
-T3: Pipeline parallel & 2 & 2P & 2S & --- & --- & --- \\
-T4: Advanced train. & 4 & --- & 2P & --- & --- & --- \\
+T1: Data parallel  & 4 & 2P & 3S & --- & --- & --- \\
+T2: Tensor parallel & 3 & 1P & 2S & --- & --- & --- \\
+T3: Pipeline parallel & 2 & --- & 2S & --- & --- & --- \\
+T4: Advanced train. & 6 & --- & 4P & --- & --- & --- \\
 \midrule
-I1: Single request & 3 & 2S,1P & --- & 2S,1P & --- & --- \\
-I2: Batched serving & 3 & --- & --- & 3S & --- & --- \\
-I3: KV cache & 2 & --- & --- & 1S,1P & --- & --- \\
-I4: Multi-model & 1 & --- & --- & --- & --- & --- \\
+I1: Single request & 5 & 5S & --- & 2S,1P & --- & --- \\
+I2: Batched serving & 4 & --- & --- & 3S & --- & --- \\
+I3: KV cache & 3 & --- & --- & 1S,2P & --- & --- \\
+I4: Multi-model & 2 & --- & --- & --- & --- & --- \\
 I5: Production opt. & 4 & --- & --- & --- & --- & --- \\
 \midrule
+D1: Diffusion & 3 & --- & --- & --- & --- & --- \\
+\midrule
 \textbf{Supported} & & 5 & 7 & 6 & 0 & 0 \\
-\textbf{Partial} & & 3 & 2 & 2 & 0 & 0 \\
+\textbf{Partial} & & 3 & 4 & 3 & 0 & 0 \\
 \textbf{Coverage} & & 18\% & 25\% & 21\% & 0\% & 0\% \\
 \bottomrule
 \end{tabular}
@@ -553,21 +555,32 @@ I5: Production opt. & 4 & --- & --- & --- & --- & --- \\
 \node[cell, fill=red!15] at (4.9,-4.5) {U};
 \node[cell, fill=red!15] at (6.1,-4.5) {U};
 
+% Separator line (diffusion)
+\draw[black!30, thin] (-0.2,-4.78) -- (6.7,-4.78);
+
+% D1
+\node[hdr, anchor=east] at (0.4,-5.05) {D1};
+\node[cell, fill=red!15] at (1.3,-5.05) {U};
+\node[cell, fill=red!15] at (2.5,-5.05) {U};
+\node[cell, fill=red!15] at (3.7,-5.05) {U};
+\node[cell, fill=red!15] at (4.9,-5.05) {U};
+\node[cell, fill=red!15] at (6.1,-5.05) {U};
+
 % Grid lines
-\foreach \y in {0.15,-0.4,-0.95,-1.5,-2.08,-2.58,-3.13,-3.68,-4.23,-4.78} {
+\foreach \y in {0.15,-0.4,-0.95,-1.5,-2.08,-2.58,-3.13,-3.68,-4.23,-4.78,-5.33} {
     \draw[black!15, thin] (-0.2,\y) -- (6.7,\y);
 }
 \foreach \x in {0.7,1.9,3.1,4.3,5.5,6.7} {
-    \draw[black!15, thin] (\x,0.15) -- (\x,-4.78);
+    \draw[black!15, thin] (\x,0.15) -- (\x,-5.33);
 }
 
 % Legend
-\node[cell, fill=green!40, minimum width=0.5cm] at (1.3,-5.3) {S};
-\node[font=\footnotesize, anchor=west] at (1.65,-5.3) {Supported};
-\node[cell, fill=yellow!40, minimum width=0.5cm] at (3.1,-5.3) {P};
-\node[font=\footnotesize, anchor=west] at (3.45,-5.3) {Partial};
-\node[cell, fill=red!15, minimum width=0.5cm] at (4.9,-5.3) {U};
-\node[font=\footnotesize, anchor=west] at (5.25,-5.3) {Unsupported};
+\node[cell, fill=green!40, minimum width=0.5cm] at (1.3,-5.85) {S};
+\node[font=\footnotesize, anchor=west] at (1.65,-5.85) {Supported};
+\node[cell, fill=yellow!40, minimum width=0.5cm] at (3.1,-5.85) {P};
+\node[font=\footnotesize, anchor=west] at (3.45,-5.85) {Partial};
+\node[cell, fill=red!15, minimum width=0.5cm] at (4.9,-5.85) {U};
+\node[font=\footnotesize, anchor=west] at (5.25,-5.85) {Unsupported};
 
 \end{tikzpicture}%
 }
@@ -599,7 +612,7 @@ By claimed accuracy: nn-Meter ($<$1\%) $>$ NeuSight (2.3\%) $>$ VIDUR ($<$5\%) $
 By actual reliability the ranking reverses: VIDUR/ASTRA-sim (Docker, valid output in $<$30\,min) $>$ Timeloop $>$ NeuSight (overstated) $>$ nn-Meter (broken).
 ML-augmented components are the primary reliability risk.
 
-\emph{Second}, \textbf{the five tools are complementary, not competing.}
+\emph{Second}, \textbf{the five fully-evaluated tools are complementary, not competing.}
 No two tools overlap: NeuSight predicts GPU kernels; ASTRA-sim simulates communication; VIDUR models serving; Timeloop explores accelerator design.
 The field needs a \emph{unified pipeline} (Section~\ref{sec:unified-pipeline}).
 
