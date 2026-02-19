@@ -1,0 +1,266 @@
+{
+  "suite": "PerfSim-Survey-2026",
+  "timestamp": "2026-02-19T14:30:37.485342",
+  "gpu": "NVIDIA H100 PCIe",
+  "gpu_count": 1,
+  "gpu_memory_gb": 79.2,
+  "cuda_version": "12.8",
+  "pytorch_version": "2.10.0+cu128",
+  "dtype": "fp16",
+  "warmup": 5,
+  "iterations": 50,
+  "scenarios": {
+    "T1.1": {
+      "description": "DP pre-training: Llama-2-7B, 4\u00d7A100, DDP",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T1.2": {
+      "description": "DP pre-training: Llama-2-13B, 8\u00d7A100, DDP",
+      "status": "fail",
+      "elapsed_seconds": 2,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T1.3": {
+      "description": "DP pre-training: GPT-2-XL, 4\u00d7A100, FSDP",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T1.4": {
+      "description": "DP pre-training: Llama-2-7B, 8\u00d7H100, FSDP",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T2.1": {
+      "description": "TP pre-training: Llama-2-70B, 8\u00d7A100, TP=8",
+      "status": "fail",
+      "elapsed_seconds": 2,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T2.2": {
+      "description": "TP pre-training: Mixtral-8x7B, 8\u00d7H100, TP=8",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T2.3": {
+      "description": "TP pre-training: QWen-2.5-72B, 8\u00d7H100, TP=8",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T3.1": {
+      "description": "PP pre-training: Llama-2-70B, 16\u00d7A100, PP=4 DP=4",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T3.2": {
+      "description": "PP pre-training: GPT-3-175B, 128\u00d7H100, PP=8 DP=16",
+      "status": "fail",
+      "elapsed_seconds": 2,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T4.1": {
+      "description": "FP8 training: Llama-2-7B, 4\u00d7H100, FP8 compute",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T4.2": {
+      "description": "LoRA fine-tuning: Llama-2-13B, 1\u00d7A100, rank=16",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "gemm_benchmark.py",
+      "results": {}
+    },
+    "T4.3": {
+      "description": "Sequence parallel: Llama-2-70B, 8\u00d7H100, SP+TP",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T4.4": {
+      "description": "MoE training: DeepSeek-V2, 8\u00d7H100, EP=8",
+      "status": "fail",
+      "elapsed_seconds": 2,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T4.5": {
+      "description": "MoE training: DeepSeek-V3, 16\u00d7H100, EP=8 TP=2",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "T4.6": {
+      "description": "QLoRA fine-tuning: Llama-2-70B, 1\u00d7A100, 4-bit",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "gemm_benchmark.py",
+      "results": {}
+    },
+    "I1.1": {
+      "description": "Single-request inference: Llama-2-7B, 1\u00d7A100, prefill seq=2048",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I1.2": {
+      "description": "Single-request inference: Llama-2-13B, 1\u00d7A100, prefill seq=4096",
+      "status": "fail",
+      "elapsed_seconds": 2,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I1.3": {
+      "description": "Single-request inference: Llama-2-70B, 4\u00d7A100, TP=4 prefill",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I1.4": {
+      "description": "Single-request inference: GPT-2-XL, 1\u00d7A100, decode 512 tokens",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "I1.5": {
+      "description": "Single-request inference: QWen-2.5-7B, 1\u00d7H100, prefill+decode",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I2.1": {
+      "description": "Batched serving: Llama-2-7B, 1\u00d7A100, vLLM bs=32",
+      "status": "fail",
+      "elapsed_seconds": 2,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I2.2": {
+      "description": "Batched serving: Llama-2-13B, 2\u00d7A100, vLLM continuous batching",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I2.3": {
+      "description": "Batched serving: Llama-2-7B, 1\u00d7A100, Sarathi chunked prefill",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I2.4": {
+      "description": "Batched serving: Llama-2-70B, 4\u00d7H100, vLLM TP=4 bs=64",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I3.1": {
+      "description": "KV cache: Llama-2-7B, 1\u00d7A100, PagedAttention",
+      "status": "fail",
+      "elapsed_seconds": 2,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I3.2": {
+      "description": "KV cache: Llama-2-13B, 1\u00d7A100, prefix caching",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I3.3": {
+      "description": "KV cache: QWen-2.5-7B, 1\u00d7H100, multi-query attention",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I4.1": {
+      "description": "Multi-model: Llama-2-7B + Llama-2-13B co-located, 2\u00d7A100",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "I4.2": {
+      "description": "Multi-model: 3 models multiplexed, 4\u00d7A100, time-sharing",
+      "status": "fail",
+      "elapsed_seconds": 2,
+      "script": "forward_pass_benchmark.py",
+      "results": {}
+    },
+    "I5.1": {
+      "description": "Speculative decoding: Llama-2-70B + 7B draft, 4\u00d7A100",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "I5.2": {
+      "description": "INT4 quantized inference: Llama-2-70B, 1\u00d7A100, GPTQ",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "gemm_benchmark.py",
+      "results": {}
+    },
+    "I5.3": {
+      "description": "FP8 quantized inference: Llama-2-70B, 1\u00d7H100, FP8",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "gemm_benchmark.py",
+      "results": {}
+    },
+    "I5.4": {
+      "description": "Disaggregated serving: Llama-2-70B, 8\u00d7A100, splitwise",
+      "status": "fail",
+      "elapsed_seconds": 2,
+      "script": "attention_benchmark.py",
+      "results": {}
+    },
+    "D1.1": {
+      "description": "Diffusion inference: SDXL, 1\u00d7A100, 50 steps",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "ffn_benchmark.py",
+      "results": {}
+    },
+    "D1.2": {
+      "description": "Diffusion inference: FLUX.1-dev, 1\u00d7H100, 28 steps",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "ffn_benchmark.py",
+      "results": {}
+    },
+    "D1.3": {
+      "description": "Diffusion inference: SDXL, 4\u00d7A100, batch=8",
+      "status": "fail",
+      "elapsed_seconds": 1,
+      "script": "ffn_benchmark.py",
+      "results": {}
+    }
+  }
+}
