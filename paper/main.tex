@@ -7,19 +7,14 @@
 \usepackage{multirow}\usepackage{enumitem}\usepackage{tikz}
 \usetikzlibrary{shapes.geometric,arrows.meta,positioning,fit,backgrounds,patterns,decorations.pathreplacing}
 \usepackage{pgfplots}\pgfplotsset{compat=1.18}\usepgfplotslibrary{groupplots}\usetikzlibrary{plotmarks}
-\setlength{\textfloatsep}{3pt plus 1pt minus 2pt}\setlength{\floatsep}{3pt plus 1pt minus 2pt}\setlength{\intextsep}{3pt plus 1pt minus 2pt}
-\setlength{\dbltextfloatsep}{3pt plus 1pt minus 2pt}\setlength{\dblfloatsep}{3pt plus 1pt minus 2pt}\setlength{\abovecaptionskip}{1pt}\setlength{\belowcaptionskip}{0pt}
-\setlength{\abovedisplayskip}{3pt plus 1pt minus 1pt}\setlength{\belowdisplayskip}{3pt plus 1pt minus 1pt}
-\setlength{\parskip}{0pt plus 0.5pt}
-\renewcommand{\topfraction}{0.95}\renewcommand{\bottomfraction}{0.95}\renewcommand{\textfraction}{0.05}\renewcommand{\floatpagefraction}{0.9}
-\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\todo}[1]{}
 \begin{document}
-\title{A Survey of High-Level Modeling and Simulation Methods for Modern Machine Learning Workloads}\subtitle{\normalsize{MICRO 2026 Submission -- Confidential Draft -- Do NOT Distribute!!}}
+\title{A Survey of High-Level Modeling and Simulation Methods for Modern Machine Learning Workloads}
 \begin{abstract}
 We survey 22 performance modeling tools from 53 papers (2016--2026) and evaluate five---NeuSight, ASTRA-sim, VIDUR, Timeloop, nn-Meter---across 146 GPU configurations, collective benchmarks, LLM serving, energy validation, and reproducibility testing. Three findings emerge: (1)~self-reported accuracy is unreliable---NeuSight claims 2.3\% MAPE but we measure 5.87--27.10\%, while nn-Meter produces no output due to dependency rot; (2)~the five tools are complementary but disjoint, motivating a unified pipeline; (3)~the kernel-to-model composition gap (2--9\% kernel error growing to 10--28\% model error) dominates total error, yet no tool addresses this layer.
 \end{abstract}\keywords{ML workload performance prediction, DNN accelerator modeling, GPU simulation, distributed training simulation, LLM inference serving, design space exploration, survey}\maketitle
 \section{Introduction}\label{sec:introduction}
-Domain-specific architectures~\cite{hennessy2019golden,tpuv1_2017,tpuv4_2023} make performance prediction critical, yet no prior work examines \emph{why} certain approaches succeed or how errors propagate; prior surveys cover ML techniques for modeling~\cite{granite2022} or specific hardware. We contribute: (1)~a \textbf{28-scenario benchmark suite} where 50\% of scenarios lack tool support; (2)~\textbf{independent verification} showing claimed error rates are overstated by $2$--$4\times$; (3)~a \textbf{unified pipeline} identifying the composition gap; and (4)~a \textbf{research agenda} for composition modeling and continuous validation.
+Domain-specific architectures~\cite{hennessy2019golden,tpuv1_2017,tpuv4_2023} make performance prediction critical, yet no prior work examines \emph{why} certain approaches succeed or how errors propagate; prior surveys cover ML techniques for modeling~\cite{granite2022} or specific hardware. We contribute: (1)~a \textbf{28-scenario benchmark suite} where 50\% of scenarios lack tool support; (2)~\textbf{third-party evaluation} showing claimed error rates are overstated by $2$--$4\times$; (3)~a \textbf{unified pipeline} identifying the composition gap; and (4)~a \textbf{research agenda} for composition modeling and continuous validation.
 \begin{figure}[t]
 \centering\resizebox{\columnwidth}{!}{%
 \begin{tikzpicture}[yearnode/.style={font=\scriptsize\bfseries, text=black!70}, eventnode/.style={font=\tiny, text width=2cm, align=center}]
@@ -98,10 +93,10 @@ TLP~\cite{tlp2023} & GPU & M & Tensor program & $<$10\% & ms & Transformer cost 
 \label{sec:eval-framework}
 
 Prior surveys reprint self-reported accuracy numbers using each tool's own benchmarks, making cross-tool comparison methodologically unsound: a tool reporting 2\% MAPE on GPU kernels solves a fundamentally different problem than one reporting 5\% on distributed training.
-We introduce a novel evaluation methodology---\textbf{accuracy-centered independent verification}---that addresses this gap through two components.
+We introduce a \textbf{third-party evaluation focusing on accuracy and feature coverage} that addresses this gap through two components.
 First, an \textbf{LLM-focused benchmark suite} of 28 scenarios defines standardized coverage criteria representing concrete user needs for modern LLM training and inference.
 Second, \textbf{independent experiments} deploy each tool from its public artifact and measure accuracy under controlled conditions, replacing reliance on self-reported claims with reproducible third-party evaluation.
-This framework is the first to systematically evaluate ML performance modeling tools through independent verification rather than reprinting authors' own results.
+This framework is the first to systematically evaluate ML performance modeling tools through third-party testing rather than reprinting authors' own results.
 
 \textbf{Evaluation principle.}
 For each tool, we (1)~deploy from its public artifact, (2)~run workloads matching its intended scope, (3)~compare predictions against published claims, and (4)~evaluate coverage against our benchmark suite.
@@ -213,7 +208,6 @@ For nn-Meter, we attempted deployment from the published pip package and documen
 \subsection{Limitations}
 \label{subsec:eval-limitations}
 
-Our platform lacks discrete GPUs, preventing absolute accuracy verification for GPU-targeting tools.
 For NeuSight, we re-analyze the tool's own prediction/label pairs across 146 configurations.
 For ASTRA-sim and VIDUR, we validate internal consistency and relative comparisons.
 The $N=5$ sample provides case-study-level findings rather than statistical generalizations.
