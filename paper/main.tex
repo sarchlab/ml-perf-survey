@@ -46,9 +46,7 @@ We provide the first unified evaluation of multiple tools on standardized criter
 This cross-tool perspective is absent from any individual tool paper and motivates the unified pipeline we propose in Section~\ref{sec:unified-pipeline}.
 
 \section{Survey Methodology}\label{sec:methodology}
-From an initial pool of 287 candidate papers identified via keyword search on ACM DL, IEEE Xplore, Semantic Scholar, and arXiv (full search methodology in supplementary material), 53 papers (2016--2026) plus 12 foundational works were classified by methodology, platform, and abstraction level~\cite{rakhshanfar2021survey}, excluding proprietary tools, infrastructure~\cite{binkert2011gem5,sst2012}, compilers~\cite{halide2013,mlir2020,triton2019}, and schedulers~\cite{pollux2021,sia2023}.
-\textbf{Background.}
-ML workloads are computation graphs~\cite{pytorch2019,tensorflow2016} where performance depends on dataflow, KV cache management~\cite{vllm2023}, and compute--memory--network balance; LLM inference splits into compute-bound prefill and memory-bound decode~\cite{splitwise2024,sarathi2024,orca2022}. Five modeling types span accuracy--speed trade-offs: \textbf{analytical}~\cite{williams2009roofline,rooflinellm2024} ($\mu$s), \textbf{cycle-accurate}~\cite{gpgpusim2009,accelsim2020,dissectinggpu2025} ($10^3$--$10^4\times$ slowdown), \textbf{trace-driven}~\cite{astrasim2023,vidur2024} (min.), \textbf{ML-augmented}~\cite{nnmeter2021} (ms), and \textbf{hybrid}~\cite{neusight2025,habitat2021}.
+ML workloads are computation graphs~\cite{pytorch2019,tensorflow2016} whose performance depends on dataflow, KV cache management~\cite{vllm2023}, and compute--memory--network balance; LLM inference further splits into compute-bound prefill and memory-bound decode phases~\cite{splitwise2024,sarathi2024,orca2022}. From an initial pool of 287 candidate papers identified via keyword search on ACM DL, IEEE Xplore, Semantic Scholar, and arXiv (full search methodology in supplementary material), 53 papers (2016--2026) plus 12 foundational works were classified by methodology (analytical~\cite{williams2009roofline,rooflinellm2024}, cycle-accurate~\cite{dissectinggpu2025}, trace-driven, ML-augmented, and hybrid), platform, and abstraction level~\cite{rakhshanfar2021survey}, excluding proprietary tools, infrastructure~\cite{binkert2011gem5,sst2012}, compilers~\cite{halide2013,mlir2020,triton2019}, and schedulers~\cite{pollux2021,sia2023}.
 \section{Taxonomy}\label{sec:taxonomy}
 We organize the literature by \emph{methodology type}, \emph{target platform}, and \emph{abstraction level} (Table~\ref{tab:taxonomy-matrix}).\begin{table*}[t]
 \centering\caption{Methodology taxonomy: coverage matrix and trade-off profile. \textbf{0} = research gap.}\label{tab:taxonomy-matrix}\footnotesize\begin{tabular}{l|ccccc|cccc}\toprule
@@ -897,7 +895,7 @@ Paleo~\cite{paleo2017} fits this pattern: NeuralPower's third-party evaluation s
     width=8cm,
     enlarge x limits={abs=0.7cm},
     nodes near coords,
-    every node near coord/.append style={font=\scriptsize, rotate=55, anchor=west},
+    every node near coord/.append style={font=\footnotesize, rotate=55, anchor=west},
     point meta=explicit symbolic,
 ]
 % Self-reported accuracy
