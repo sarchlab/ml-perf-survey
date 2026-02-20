@@ -745,6 +745,120 @@ Even the highest-coverage tool (ASTRA-sim at 25\% weighted coverage, 7 supported
 The union of all six tools covers at most 16 of 36 scenarios (44\%), and the uncovered scenarios---FP8 training, speculative decoding, disaggregated serving, diffusion inference---represent the fastest-growing deployment patterns.
 Coverage, not accuracy, is the binding constraint for practical adoption.
 
+\subsection{Within-Category Comparative Evaluation}
+\label{subsec:within-category}
+
+The cross-tool comparison above contrasts tools from \emph{different} categories.
+We now compare tools \emph{within} each category using published head-to-head evaluations, revealing systematic gaps between self-reported and third-party accuracy.
+
+\subsubsection{GPU Kernel Prediction}
+\label{subsubsec:kernel-comparison}
+
+Table~\ref{tab:kernel-comparison} compares NeuSight, Path Forward~\cite{pathforward2023}, and Habitat~\cite{habitat2021} on identical transformer workloads from NeuSight's own evaluation~\cite{neusight2025}.
+
+\begin{table}[t]
+\centering
+\caption{GPU kernel prediction: head-to-head on transformer workloads (BERT-Large, GPT-2/3, OPT-1.3B, Switch Transformer across 8 GPUs). All errors from NeuSight's Table~3~\cite{neusight2025}. Self-reported accuracy (``Self'') from each tool's own paper on its own benchmarks. $^\dagger$Third-party re-evaluation by SynPerf~\cite{synperf2025}.}
+\label{tab:kernel-comparison}
+\footnotesize
+\begin{tabular}{lrrrl}
+\toprule
+\textbf{Tool} & \textbf{Inf.} & \textbf{Train.} & \textbf{Self} & \textbf{Note} \\
+\midrule
+NeuSight & 9.7\% & 7.3\% & 8.9\% & Transformers, 8 GPUs \\
+Path Forward & 61.2\% & 58.3\% & $\sim$7\% & Self: CNN only (A100) \\
+Habitat & 220.9\% & 725.8\% & $\sim$16\% & Self: cross-GPU CNN \\
+Roofline & 31.2\% & 31.9\% & --- & Analytical baseline \\
+\midrule
+\multicolumn{5}{l}{\emph{SynPerf third-party re-evaluation$^\dagger$}} \\
+NeuSight & \multicolumn{2}{c}{34.5--45.1\%} & 8.9\% & Qwen2.5-14B, newer HW \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+NeuSight reports the lowest error on its own evaluation (8.9\% overall MAPE), but this advantage narrows when considering three caveats.
+First, the comparison is on NeuSight's home turf---transformer workloads that match its training data.
+Path Forward reports $\sim$7\% MAPE on CNNs (its own benchmark) but degrades to 61\% on transformers; Habitat claims $\sim$16\% on cross-GPU CNNs but collapses to 726\% on training transformers.
+Second, SynPerf~\cite{synperf2025} independently re-evaluated NeuSight on newer workloads (Qwen2.5-14B) and hardware, finding 34--45\% error---a $4$--$5\times$ inflation from the published 8.9\%.
+Third, out-of-distribution GPU generalization is poor across all tools: NeuSight 8.1\%, Path Forward 94\%, Habitat 724\% average error on unseen GPUs.
+These results suggest that \emph{self-reported accuracy is a poor predictor of real-world performance} across all kernel prediction tools, not just NeuSight.
+
+\subsubsection{Distributed Training Simulation}
+\label{subsubsec:distributed-comparison}
+
+Table~\ref{tab:distributed-comparison} compares distributed training simulators using Echo's evaluation~\cite{echo2024} on identical H800 workloads, supplemented by SimAI's comparison~\cite{simai2025} with ASTRA-sim at larger scales.
+
+\begin{table}[t]
+\centering
+\caption{Distributed training simulation: head-to-head on H800 LLM workloads (Echo eval~\cite{echo2024}) and large-scale comparison (SimAI eval~\cite{simai2025}). Self-reported accuracy from each tool's own paper. ASTRA-sim error at 512 GPUs is from SimAI's evaluation.}
+\label{tab:distributed-comparison}
+\footnotesize
+\begin{tabular}{lp{1.4cm}rrr}
+\toprule
+\textbf{Tool} & \textbf{Workload} & \textbf{Error} & \textbf{Self} & \textbf{GPUs} \\
+\midrule
+\multicolumn{5}{l}{\emph{Echo evaluation (identical H800 workloads)}} \\
+Echo & GPT-13B & 9\% & 8\% & 64 \\
+Echo & GPT-175B & 8\% & 8\% & 96 \\
+Proteus & GPT-13B & 23\% & 3\% & 64 \\
+Proteus & GPT-175B & 25\% & 3\% & 96 \\
+FlexFlow & GPT-13B & 23\% & $\sim$30\% & 64 \\
+FlexFlow & GPT-175B & 37\% & $\sim$30\% & 96 \\
+\midrule
+\multicolumn{5}{l}{\emph{SimAI evaluation (scaling behavior)}} \\
+SimAI & LLM training & $\sim$1.9\% & $\sim$1.9\% & 128--1024 \\
+ASTRA-sim & LLM training & 45.9\% & $\sim$5\% & 128 \\
+ASTRA-sim & LLM training & 530.2\% & $\sim$5\% & 512 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Two findings stand out.
+First, the \emph{self-reported vs.\ third-party gap is dramatic}: Proteus claims 3\% error on its own benchmarks (small-scale ResNet/VGG) but shows 23--25\% on Echo's H800 LLM workloads---an $8\times$ inflation.
+Both Proteus and FlexFlow fail to capture Megatron-LM fused operations, causing $>$90\% error on GPT-13B under Megatron~\cite{echo2024}.
+Second, \emph{scale sensitivity is critical}: ASTRA-sim reports $\sim$5\% error at 4--16 GPUs but balloons to 530\% at 512 GPUs per SimAI's evaluation~\cite{simai2025}, demonstrating that tools must be evaluated at their target deployment scale.
+
+\subsubsection{LLM Inference Serving}
+\label{subsubsec:inference-comparison}
+
+Table~\ref{tab:inference-comparison} compares published accuracy for inference serving simulators.
+Unlike kernel prediction and distributed training, no single paper provides a head-to-head comparison across all tools on identical workloads.
+
+\begin{table}[t]
+\centering
+\caption{LLM inference serving: published accuracy. No common workload exists across all four tools. Vidur attention error is from Frontier's evaluation~\cite{frontier2025}. $^\dagger$SLO attainment (coarser metric). $^\ddagger$Per-step iteration time (profiling-based).}
+\label{tab:inference-comparison}
+\footnotesize
+\begin{tabular}{lp{1.6cm}rl}
+\toprule
+\textbf{Tool} & \textbf{Metric} & \textbf{Error} & \textbf{Workload} \\
+\midrule
+Vidur & P95 latency & $\leq$3.3\% & Llama-7B/70B, A100 \\
+Vidur & TTFT/TBT & $<$9\% & 95\% capacity \\
+Vidur & Attention op & $>$55\% & Heterog.\ batch \\
+Splitwise & Per-step$^\ddagger$ & $<$3\% & Llama-70B, DGX \\
+DistServe & SLO att.$^\dagger$ & $\leq$2\% & OPT-13B, 32$\times$A100 \\
+Frontier & Attention op & $<$10\% & Qwen2-7B, 8$\times$A800 \\
+Frontier & E2E throughput & 19--23\% & PD disaggregated \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Frontier's evaluation~\cite{frontier2025} reveals that Vidur's attention operator predictions degrade to $>$55\% error on heterogeneous batches (0.151\,ms predicted vs.\ 0.340\,ms actual), despite Vidur's strong aggregate metrics ($\leq$3.3\% P95 latency).
+DistServe reports the tightest accuracy ($\leq$2\%) but measures SLO attainment---a coarser, near-binary metric---rather than fine-grained latency.
+Splitwise's $<$3\% error derives from profiling-based per-step models, closer to interpolation than prediction.
+Frontier is the only tool supporting MoE inference with expert parallelism, achieving $<$6\% error on GroupedGEMM operators, but its end-to-end throughput error (19--23\%) is the highest.
+The absence of a common benchmark across all four tools prevents definitive ranking.
+
+\subsubsection{Accelerator Modeling}
+\label{subsubsec:accelerator-comparison}
+
+MAESTRO~\cite{maestro2019} and Timeloop~\cite{timeloop2019} share a rare common validation target: the Eyeriss accelerator~\cite{eyeriss2016}.
+MAESTRO reports 3.9\% average error for runtime prediction on Eyeriss (168 PEs) and MAERI (64 PEs) running AlexNet and VGG16, with $1029$--$4116\times$ speedup over RTL simulation.
+Timeloop reports $\sim$5\% error for energy prediction on Eyeriss, validated against 65\,nm post-layout simulation.
+The two tools measure complementary metrics (runtime vs.\ energy) on the same target, achieving similar accuracy (3.9\% vs.\ $\sim$5\%), and both deliver $>$1000$\times$ speedup over RTL---making them practical for design-space exploration.
+Their shared validation on Eyeriss is one of the few cases in this survey where two tools are evaluated against the same ground truth, providing an unusually strong basis for comparison.
+
 \subsection{Cross-Cutting Findings}
 \label{subsec:cross-cutting-findings}
 
