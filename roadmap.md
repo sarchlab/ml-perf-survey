@@ -1,73 +1,66 @@
 # Roadmap — ML Performance Survey Paper
 
-**Last updated:** 2026-02-19 by Athena (Cycle 13 — M10 complete, defining M11)
+**Last updated:** 2026-02-20 by Athena (Cycle 14 — M11 complete, defining M12)
 **Target venue:** MICRO 2026
-**Current state:** Paper at 882 lines, 10 content pages (13 total w/ 3 ref pages). M10 complete: 7/7 quantitative criteria passed (Raj). Red team ran, all findings fixed (Leo). Human now requests comparative within-category evaluation and H100 results integration.
+**Current state:** Paper at ~1120 lines, 15 pages, 9 figures, 101 refs. M11 complete: within-category comparisons in 4 categories, H100 data integrated, no regressions. Apollo verified (Elena 4/4, Raj 9/9). Ready for final red team and submission polish.
 
-## Current Assessment
+## What's Done (M1–M11)
 
-### What's Done (M1–M10)
-- **M1-M4 complete**: Literature, taxonomy, deep analysis, paper draft
-- **M5-M8 complete**: Fix rounds, evaluation restructuring, compression, hostile review
-- **M9 complete**: GPU scripts, 10 tools evaluated (5 full + 5 deployment), benchmark suite (36 scenarios), multi-backend scripts
-- **M10 complete**: Paper expanded to 10 content pages, 8 figures, 98 refs. 3-reviewer red team (Diana hostile, Felix paragraph, Maya comparative). All findings fixed. Raj verified 7/7 pass.
-- **Paper metrics**: 882 lines, 10 content pages, 13 total PDF pages, 8 figures, 98 refs
+- **M1-M4**: Literature, taxonomy, deep analysis, paper draft
+- **M5-M8**: Fix rounds, evaluation restructuring, compression, hostile review
+- **M9**: GPU scripts, 10 tools evaluated (5 full + 5 deployment), PerfSim-Survey-2026 benchmark (36 scenarios), multi-backend scripts
+- **M10**: Paper expanded to 10 content pages, 8 figures, 98 refs. 3-reviewer red team ran, all findings fixed, 7/7 pass.
+- **M11**: Within-category comparative evaluation (4 categories, 2+ tools each), H100 ground-truth integration (33/36 scenarios), self-reported vs third-party accuracy figure, 3 new comparison tables (kernel, distributed, inference), Paleo + TrioSim added. Paper now 15 pages, 9 figures, 101 refs.
 
-### Key Findings Established
-- Self-reported accuracy unreliable (NeuSight 2.3% claimed vs 5.87–27.10% measured)
+### Key Findings
+- Self-reported accuracy unreliable (NeuSight 2.3% claimed vs 8.74% measured on H100)
 - Composition gap (5–9% kernel → 10–28% model error) dominates total error
 - nn-Meter fails due to dependency rot
-- 50% of PerfSim-Survey-2026 scenarios lack tool support
-- Tools are complementary, not competing (no two tools overlap in scope)
+- 56% of PerfSim-Survey-2026 scenarios lack tool support (20/36)
+- Tools are complementary, not competing
+- H100 ground-truth validates accuracy overstatement pattern
 
-### New Human Directives (Open — drive M11)
-- **#36**: "More tools need to be evaluated. Each category needs to have comparison or multiple tools. For NeuSight, we can compare Paleo, Path Forward, etc. For ASTRA-sim, we can compare with TrioSim."
-- **#35**: "How is the H100 results used?" — H100 ground-truth data exists in scripts/gpu_experiments/results/ but paper line 123 still says "hardware we lack (e.g., H100 GPUs)". Must integrate.
-- **#37**: "Let's remove the page limit for now. Write concisely, but ignore the limit." — Page constraint lifted.
-- **#3** (partially open): Several items from human's original suggestion list remain relevant (evaluate all tools, Paleo/Path Forward missing, writing style consistency, supplementary materials).
-
-### Previous Human Directives (Closed)
-- **#198**: Deep insights + 50% eval weight ✅ MET
-- **#243/#244**: Accuracy-centered eval ✅ DONE
-- **#246**: NS-3 network sim discussion ✅ DONE
-- **#250**: LLM-focused benchmark suite ✅ DONE
-- **#258**: Hostile reviewer ✅ DONE
-- **#25**: Multi-backend GPU scripts ✅ DONE
-- **#21**: Page count ✅ DONE (M10)
+### Human Directives Status
+- **#36** (comparative eval): ✅ DONE — 4 categories with 2+ tools
+- **#35** (H100 results): ✅ DONE — integrated with validation subsection
+- **#37** (page limit relaxed): ✅ DONE — 15 pages, concise writing
+- **#3** (original suggestions): Mostly addressed. Remaining minor items: background section length, figure text readability, benchmark parameter table format, supplementary materials preparation
 
 ## Remaining Milestones
 
-### M10: Paper Expansion + Red Team Review ✅ COMPLETE
-All 7/7 quantitative criteria passed. Paper at 10 content pages. Red team ran 3-reviewer protocol. All findings fixed and verified.
+### M11: Comparative Tool Evaluation + H100 Integration ✅ COMPLETE
+Elena verified 4/4 within-category criteria. Raj verified 9/9 quantitative criteria. No regressions.
 
-### M11: Comparative Tool Evaluation + H100 Integration (15 cycles) ← CURRENT
+### M12: Final Red Team Review + Submission Polish (10 cycles) ← NEXT
 
-The human's core feedback is that the evaluation is too narrow: each category has at most one fully-evaluated tool, preventing within-category comparison. This must change. Additionally, H100 ground-truth results exist but aren't used.
+This is the final milestone before submission. Two parallel tracks:
 
-**P0 tasks (blocking):**
-1. **Within-category comparative evaluation**: Evaluate additional tools to enable head-to-head comparison:
-   - **GPU kernel prediction**: NeuSight vs Paleo vs Path Forward approach. Attempt to run Paleo on the same workloads as NeuSight and compare accuracy.
-   - **Distributed training**: ASTRA-sim vs TrioSim. Attempt to run TrioSim and compare with ASTRA-sim results.
-   - **Other categories**: Identify which other categories can have a second tool evaluated. Prioritize feasible tools (those with Docker/working artifacts).
-2. **Integrate H100 ground-truth results**: The human ran PerfSim-Survey-2026 on H100. Results are in scripts/gpu_experiments/results/. Remove "hardware we lack" claim. Use H100 data as ground-truth for validating tool predictions where applicable.
-3. **Update paper evaluation sections**: Add comparison subsections showing head-to-head results within categories. Update cross-tool comparison table and findings.
-4. **Literature search for newly-evaluated tools**: Ensure any newly-evaluated tools are properly cited and contextualized in the survey section.
+**Track A: Red Team Review (fresh, independent per #195)**
+1. **Hostile reviewer** — fresh MICRO PC review, no memory of prior reviews. Score the paper 1-6, identify top weaknesses.
+2. **Paragraph reviewer** — line-by-line review checking: unsupported claims, logical gaps, numerical errors, writing quality.
+3. **Comparative reviewer** — compare against 2-3 top-tier MICRO/ISCA survey papers. Identify structural and depth gaps.
 
-**P1 tasks (important):**
-5. **Update figures**: Add comparison charts (bar charts or tables) showing within-category accuracy comparisons.
-6. **Remaining items from #3**: Fix writing style consistency, consider supplementary materials for detailed configs.
+**Track B: Remaining Polish (from #3 and general assessment)**
+1. **Figure readability**: Check all figures for text size issues. Human specifically complained about text being too small (#3.5). Ensure figure text is comparable to main text size.
+2. **Background section**: Currently only 2 lines (#3.4). Either expand to useful length or remove entirely — 2 lines adds no value.
+3. **Benchmark parameter table**: Consider replacing "Concrete benchmark parameterization" paragraph with a comprehensive table (#3.13).
+4. **Numerical accuracy**: Verify Felix's M10 findings were fixed (VIDUR 12.2% → actual 10.7%, GPU count inconsistency, ASTRA-sim scaling claim).
 
-**Pass/fail for Apollo (M11):**
-- At least 3 categories have 2+ tools evaluated with head-to-head comparison on same workloads
-- H100 ground-truth data integrated into evaluation section; no "hardware we lack" claim remains
-- Each new tool evaluation includes: setup effort, accuracy measurement, comparison with category peer
-- No regression: existing content quality maintained (≥8 figures, ≥80 refs, no overclaims)
-- All stated findings still supported by evidence
+**Track C: Fix Round**
+After red team reports, fix all findings. Then verify fixes.
 
-### M12: Final Red Team + Submission (8 cycles)
-- Fresh 3-reviewer red team on updated paper
-- Address findings
-- Final verification and submission
+**Pass/fail for Apollo (M12):**
+- Red team hostile reviewer scores ≥4/6 (Weak Accept or better)
+- All numerical claims verified — no unsupported numbers
+- No figure readability issues — all figure text at readable size
+- No overclaims, no TODOs, no broken references
+- All #3 items either addressed or explicitly out of scope with justification
+- Paper compiles cleanly with no warnings
+
+### Post-M12: Submission Preparation
+- Prepare supplementary materials package (scripts, configs, Docker files)
+- Final PDF build and review
+- Submit to MICRO 2026
 
 ## Lessons Learned
 
@@ -78,12 +71,11 @@ The human's core feedback is that the evaluation is too narrow: each category ha
 5. **Prototype gap**: Code was written but never discussed in paper — always ensure implementation work appears in manuscript.
 6. **Compression danger**: M7's compression from 907→715 lines lost 3 pages of content. Don't compress below the page limit.
 7. **Script portability**: Always test scripts on multiple GPU backends from the start.
-8. **Evaluation breadth matters**: Reviewing 25 tools but only evaluating 5 leaves the paper vulnerable to "why didn't you evaluate X?" criticism. Within-category comparison is essential for a survey.
+8. **Evaluation breadth matters**: Within-category comparison is essential for a survey paper.
+9. **M11 efficiency**: Parallel worker execution (Maya research → Leo integration) completed M11 in ~3 cycles. Use this pattern again.
 
 ## Risk Assessment
 
-- **Top risk (M11)**: Tool installation failures. Many tools have fragile dependencies (nn-Meter precedent). Budget cycles for failed attempts.
-  - Mitigation: Attempt tool installs early. If a tool fails, document the failure (as with nn-Meter) and move on. Failed evaluations are still informative.
-- **Top risk (M11)**: H100 results may not align with tool predictions, requiring narrative changes.
-  - Mitigation: Be honest about discrepancies. They strengthen the paper's "self-reported accuracy is unreliable" finding.
-- **Budget**: M11 allocated 15 cycles. If comparative evaluation takes >10 cycles, narrow scope to 2 categories instead of 3.
+- **Top risk (M12)**: Red team finds deep structural issues requiring significant rewrite. Mitigation: 10 cycles budgeted; if hostile score is ≤2/6, escalate to Athena for re-scoping.
+- **Medium risk**: Figure readability fixes break layout or page flow. Mitigation: Make minimal changes, test PDF after each fix.
+- **Low risk**: Numerical verification uncovers data errors requiring table rebuilds. Mitigation: Source data is well-documented in worker workspaces.
